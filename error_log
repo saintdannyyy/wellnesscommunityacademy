@@ -1,0 +1,30 @@
+[12-Nov-2024 17:20:14 UTC] PHP Warning:  require(../PHPMailer-master/src/Exception.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/visit.php on line 5
+[12-Nov-2024 17:20:14 UTC] PHP Warning:  require(../PHPMailer-master/src/Exception.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/visit.php on line 5
+[12-Nov-2024 17:20:14 UTC] PHP Fatal error:  require(): Failed opening required '../PHPMailer-master/src/Exception.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home2/wellnes1/public_html/visit.php on line 5
+[12-Nov-2024 17:21:23 UTC] PHP Warning:  require(.PHPMailer-master/src/Exception.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/visit.php on line 5
+[12-Nov-2024 17:21:23 UTC] PHP Warning:  require(.PHPMailer-master/src/Exception.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/visit.php on line 5
+[12-Nov-2024 17:21:23 UTC] PHP Fatal error:  require(): Failed opening required '.PHPMailer-master/src/Exception.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home2/wellnes1/public_html/visit.php on line 5
+[12-Nov-2024 17:21:40 UTC] PHP Warning:  require(.PHPMailer-master/src/Exception.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/visit.php on line 5
+[12-Nov-2024 17:21:40 UTC] PHP Warning:  require(.PHPMailer-master/src/Exception.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/visit.php on line 5
+[12-Nov-2024 17:21:40 UTC] PHP Fatal error:  require(): Failed opening required '.PHPMailer-master/src/Exception.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home2/wellnes1/public_html/visit.php on line 5
+[12-Nov-2024 17:38:41 UTC] PHP Warning:  include_once(../admin/db/login_conn.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/visit.php on line 130
+[12-Nov-2024 17:38:41 UTC] PHP Warning:  include_once(): Failed opening '../admin/db/login_conn.php' for inclusion (include_path='.:/opt/alt/php74/usr/share/pear') in /home2/wellnes1/public_html/visit.php on line 130
+[12-Nov-2024 17:38:41 UTC] PHP Notice:  Undefined variable: mysqli in /home2/wellnes1/public_html/visit.php on line 131
+[12-Nov-2024 17:38:41 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home2/wellnes1/public_html/visit.php:131
+Stack trace:
+#0 {main}
+  thrown in /home2/wellnes1/public_html/visit.php on line 131
+[12-Nov-2024 17:45:21 UTC] PHP Warning:  include_once(../admin/db/login_conn.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/visit.php on line 130
+[12-Nov-2024 17:45:21 UTC] PHP Warning:  include_once(): Failed opening '../admin/db/login_conn.php' for inclusion (include_path='.:/opt/alt/php74/usr/share/pear') in /home2/wellnes1/public_html/visit.php on line 130
+[12-Nov-2024 17:45:21 UTC] PHP Notice:  Undefined variable: mysqli in /home2/wellnes1/public_html/visit.php on line 131
+[12-Nov-2024 17:45:21 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home2/wellnes1/public_html/visit.php:131
+Stack trace:
+#0 {main}
+  thrown in /home2/wellnes1/public_html/visit.php on line 131
+[12-Nov-2024 17:46:25 UTC] PHP Warning:  include_once(../conn/conn.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/visit.php on line 130
+[12-Nov-2024 17:46:25 UTC] PHP Warning:  include_once(): Failed opening '../conn/conn.php' for inclusion (include_path='.:/opt/alt/php74/usr/share/pear') in /home2/wellnes1/public_html/visit.php on line 130
+[12-Nov-2024 17:46:25 UTC] PHP Notice:  Undefined variable: mysqli in /home2/wellnes1/public_html/visit.php on line 131
+[12-Nov-2024 17:46:25 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home2/wellnes1/public_html/visit.php:131
+Stack trace:
+#0 {main}
+  thrown in /home2/wellnes1/public_html/visit.php on line 131

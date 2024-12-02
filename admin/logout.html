@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout | City of Sellinstar</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.logout-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.logout-message {
+    text-align: center;
+}
+
+.logout-message h1 {
+    font-size: 24px;
+    color: red; /* Green */
+    margin-bottom: 15px;
+}
+
+.logout-message p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.login-btn {
+    background-color: red; /* Blue */
+    color: white;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: #27ae60; /* Green on hover */
+}
+
+    </style>
+</head>
+<body>
+    <div class="logout-container">
+        <div class="logout-message">
+            <h1>Confirm Logout</h1>
+            <p>Do you want to logout?</p>
+            <!-- Link to the logout.php script to actually log the user out -->
+            <a href="./auth/logout.php" class="login-btn">Log Out</a>
+        </div>
+    </div>
+</body>
+</html>

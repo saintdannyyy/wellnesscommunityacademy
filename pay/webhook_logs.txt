@@ -1,0 +1,10 @@
+Payment successful: DONATION_855153514 - 15 GHS
+Kartra Response: {"status":"Error","message":"App Id cannot be empty. Please get an App Id first","type":"238"}
+Payment successful: DONATION_527257639 - 15 GHS
+Kartra Response: {"status":"Error","message":"App Id cannot be empty. Please get an App Id first","type":"238"}
+Payment successful: DONATION_985673840 - 120 GHS
+Kartra Response: {"status":"Error","message":"App Id cannot be empty. Please get an App Id first","type":"238"}
+Payment successful: PROG356041297 - 6368.04 GHS
+Kartra Response: {"status":"Error","message":"App Id cannot be empty. Please get an App Id first","type":"238"}
+Payment successful: PROG618577877 - 6368.04 GHS
+Kartra Response: {"status":"Error","message":"App Id cannot be empty. Please get an App Id first","type":"238"}

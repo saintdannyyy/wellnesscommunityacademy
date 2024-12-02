@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOnation</title>
+    <style>
+        /* Basic styling */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f4f4f9; font-family: Arial, sans-serif; }
+        .form-container { width: 100%; max-width: 400px; background-color: #ffffff; padding: 2rem; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); text-align: left; }
+        h2 { text-align: center; color: #333333; margin-bottom: 1.5rem; font-size: 1.8rem; }
+        .form-step { display: none; }
+        .form-step.active { display: block; }
+        label { font-weight: bold; color: #555555; display: block; margin-bottom: 0.5rem; }
+        input[type="text"], input[type="email"], input[type="number"] { width: 100%; padding: 0.75rem; margin-bottom: 1.25rem; border: 1px solid #cccccc; border-radius: 5px; font-size: 1rem; }
+        button { width: 100%; padding: 0.75rem; background-color: #008cdd; color: #ffffff; border: none; border-radius: 5px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: background-color 0.3s ease; margin-top: 10px; }
+        button:hover { background-color: #007bb5; }
+    </style>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+<body>
+    <div class="form-container">
+        <h2 id="payment-header">Complete Donation</h2> <!-- Set an id for the header -->
+        <div class="form-step active" id="step-1">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" required>
+            
+            <label for="amount">Amount GHS:</label>
+            <input type="number" id="amount" required >
+                        
+            <button onclick="submitPayment()">Donate Now</button>
+        </div>
+    </div>
+
+    <script>
+        function submitPayment() {
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+            const amount = document.getElementById("amount").value;
+            const amountInPesewas = amount * 100
+
+            if (isNaN(amount) || amount <= 0) {
+                alert("Invalid payment amount.");
+                return;
+            }
+
+            const handler = PaystackPop.setup({
+                key: 'pk_test_f5b5f05ffa20e04d5a54bedf16e0605ddab5281c',
+                email: email,
+                amount: amountInPesewas,
+                currency: 'GHS',
+                ref: 'DONATION_' + Math.floor((Math.random() * 1000000000) + 1),
+                callback: function(response) {
+                    // Payment was successful, use SweetAlert for success message
+                    Swal.fire({
+                            icon: 'success',
+                            title: 'Payment Successful!',
+                            text: 'Reference: ' + response.reference,
+                            confirmButtonText: 'OK'
+                    }).then(() => {
+                        window.location.href = "one-time_donation_succesful.php?reference=" + response.reference;
+                    });
+                },
+                onClose: function() {
+                    // Transaction was not completed, use SweetAlert for cancel message
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Transaction Cancelled',
+                        text: 'Transaction was not completed. Please try again.',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+            handler.openIframe();
+        }
+    </script>
+</body>
+</html>

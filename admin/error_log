@@ -1,0 +1,383 @@
+[11-Nov-2024 18:56:34 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home2/wellnes1/public_html/admin/db/connection.php on line 14
+[11-Nov-2024 19:13:00 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home2/wellnes1/public_html/admin/db/connection.php on line 14
+[11-Nov-2024 19:18:24 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home2/wellnes1/public_html/admin/db/connection.php on line 14
+[11-Nov-2024 19:18:27 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home2/wellnes1/public_html/admin/db/connection.php on line 14
+[11-Nov-2024 19:18:49 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home2/wellnes1/public_html/admin/db/connection.php on line 14
+[11-Nov-2024 19:19:36 UTC] PHP Warning:  require(../../conn/conn.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/admin/index.php on line 2
+[11-Nov-2024 19:19:36 UTC] PHP Warning:  require(../../conn/conn.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/admin/index.php on line 2
+[11-Nov-2024 19:19:36 UTC] PHP Fatal error:  require(): Failed opening required '../../conn/conn.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home2/wellnes1/public_html/admin/index.php on line 2
+[11-Nov-2024 19:19:39 UTC] PHP Warning:  require(../../conn/conn.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/admin/index.php on line 2
+[11-Nov-2024 19:19:39 UTC] PHP Warning:  require(../../conn/conn.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/admin/index.php on line 2
+[11-Nov-2024 19:19:39 UTC] PHP Fatal error:  require(): Failed opening required '../../conn/conn.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home2/wellnes1/public_html/admin/index.php on line 2
+[11-Nov-2024 19:20:02 UTC] PHP Warning:  require(../../conn/conn.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/admin/index.php on line 2
+[11-Nov-2024 19:20:02 UTC] PHP Warning:  require(../../conn/conn.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/admin/index.php on line 2
+[11-Nov-2024 19:20:02 UTC] PHP Fatal error:  require(): Failed opening required '../../conn/conn.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home2/wellnes1/public_html/admin/index.php on line 2
+[11-Nov-2024 19:20:08 UTC] PHP Warning:  require(../../conn/conn.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/admin/index.php on line 2
+[11-Nov-2024 19:20:08 UTC] PHP Warning:  require(../../conn/conn.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/admin/index.php on line 2
+[11-Nov-2024 19:20:08 UTC] PHP Fatal error:  require(): Failed opening required '../../conn/conn.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home2/wellnes1/public_html/admin/index.php on line 2
+[11-Nov-2024 19:20:10 UTC] PHP Warning:  require(../../conn/conn.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/admin/index.php on line 2
+[11-Nov-2024 19:20:10 UTC] PHP Warning:  require(../../conn/conn.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/admin/index.php on line 2
+[11-Nov-2024 19:20:10 UTC] PHP Fatal error:  require(): Failed opening required '../../conn/conn.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home2/wellnes1/public_html/admin/index.php on line 2
+[11-Nov-2024 19:22:24 UTC] PHP Notice:  Undefined variable: result in /home2/wellnes1/public_html/admin/index.php on line 45
+[11-Nov-2024 19:22:24 UTC] PHP Fatal error:  Uncaught Error: Call to a member function fetch_assoc() on null in /home2/wellnes1/public_html/admin/index.php:45
+Stack trace:
+#0 {main}
+  thrown in /home2/wellnes1/public_html/admin/index.php on line 45
+[11-Nov-2024 19:22:59 UTC] PHP Warning:  require(../../conn/conn.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/admin/index.php on line 11
+[11-Nov-2024 19:22:59 UTC] PHP Warning:  require(../../conn/conn.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/admin/index.php on line 11
+[11-Nov-2024 19:22:59 UTC] PHP Fatal error:  require(): Failed opening required '../../conn/conn.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home2/wellnes1/public_html/admin/index.php on line 11
+[11-Nov-2024 19:23:01 UTC] PHP Warning:  require(../../conn/conn.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/admin/index.php on line 11
+[11-Nov-2024 19:23:01 UTC] PHP Warning:  require(../../conn/conn.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/admin/index.php on line 11
+[11-Nov-2024 19:23:01 UTC] PHP Fatal error:  require(): Failed opening required '../../conn/conn.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home2/wellnes1/public_html/admin/index.php on line 11
+[11-Nov-2024 19:23:26 UTC] PHP Parse error:  syntax error, unexpected '--' (T_DEC) in /home2/wellnes1/public_html/admin/index.php on line 1
+[11-Nov-2024 19:24:21 UTC] PHP Notice:  Undefined variable: result in /home2/wellnes1/public_html/admin/index.php on line 45
+[11-Nov-2024 19:24:21 UTC] PHP Fatal error:  Uncaught Error: Call to a member function fetch_assoc() on null in /home2/wellnes1/public_html/admin/index.php:45
+Stack trace:
+#0 {main}
+  thrown in /home2/wellnes1/public_html/admin/index.php on line 45
+[11-Nov-2024 19:26:03 UTC] PHP Warning:  require(../../conn/conn.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/admin/index.php on line 3
+[11-Nov-2024 19:26:03 UTC] PHP Warning:  require(../../conn/conn.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/admin/index.php on line 3
+[11-Nov-2024 19:26:03 UTC] PHP Fatal error:  require(): Failed opening required '../../conn/conn.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home2/wellnes1/public_html/admin/index.php on line 3
+[11-Nov-2024 19:26:31 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 39
+[11-Nov-2024 19:33:57 UTC] PHP Notice:  Undefined variable: result in /home2/wellnes1/public_html/admin/index.php on line 39
+[11-Nov-2024 19:33:57 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 39
+[11-Nov-2024 19:37:36 UTC] PHP Notice:  Undefined variable: result in /home2/wellnes1/public_html/admin/index.php on line 39
+[11-Nov-2024 19:37:36 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 39
+[11-Nov-2024 19:37:38 UTC] PHP Notice:  Undefined variable: result in /home2/wellnes1/public_html/admin/index.php on line 39
+[11-Nov-2024 19:37:38 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 39
+[11-Nov-2024 19:37:38 UTC] PHP Notice:  Undefined variable: result in /home2/wellnes1/public_html/admin/index.php on line 39
+[11-Nov-2024 19:37:38 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 39
+[11-Nov-2024 19:38:46 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 39
+[11-Nov-2024 19:38:47 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 39
+[11-Nov-2024 19:40:15 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 40
+[11-Nov-2024 19:40:31 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 39
+[11-Nov-2024 19:40:36 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 39
+[11-Nov-2024 19:40:39 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 39
+[11-Nov-2024 19:41:41 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 40
+[11-Nov-2024 19:42:26 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 40
+[11-Nov-2024 19:45:57 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 62
+[11-Nov-2024 19:46:00 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 62
+[11-Nov-2024 19:46:00 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 62
+[11-Nov-2024 19:46:00 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 62
+[11-Nov-2024 19:47:50 UTC] PHP Notice:  Undefined variable: sold_books_result in /home2/wellnes1/public_html/admin/index.php on line 48
+[25-Nov-2024 08:24:58 UTC] PHP Warning:  require(../db/connection.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/admin/index.php on line 3
+[25-Nov-2024 08:24:58 UTC] PHP Warning:  require(../db/connection.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/admin/index.php on line 3
+[25-Nov-2024 08:24:58 UTC] PHP Fatal error:  require(): Failed opening required '../db/connection.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home2/wellnes1/public_html/admin/index.php on line 3
+[25-Nov-2024 08:38:05 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home2/wellnes1/public_html/admin/db/login_conn.php on line 3
+[25-Nov-2024 09:40:23 UTC] PHP Fatal error:  Uncaught Error: Object of class mysqli_result could not be converted to string in /home2/wellnes1/public_html/admin/index.php:27
+Stack trace:
+#0 {main}
+  thrown in /home2/wellnes1/public_html/admin/index.php on line 27
+[25-Nov-2024 09:40:28 UTC] PHP Fatal error:  Uncaught Error: Object of class mysqli_result could not be converted to string in /home2/wellnes1/public_html/admin/index.php:27
+Stack trace:
+#0 {main}
+  thrown in /home2/wellnes1/public_html/admin/index.php on line 27
+[25-Nov-2024 09:57:35 UTC] PHP Notice:  Undefined index: program_title in /home2/wellnes1/public_html/admin/index.php on line 157
+[25-Nov-2024 09:57:35 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 09:57:35 UTC] PHP Notice:  Undefined index: program_title in /home2/wellnes1/public_html/admin/index.php on line 157
+[25-Nov-2024 09:57:35 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 09:57:35 UTC] PHP Notice:  Undefined index: course_title in /home2/wellnes1/public_html/admin/index.php on line 189
+[25-Nov-2024 09:57:35 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 192
+[25-Nov-2024 09:57:50 UTC] PHP Notice:  Undefined index: program_title in /home2/wellnes1/public_html/admin/index.php on line 157
+[25-Nov-2024 09:57:50 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 09:57:50 UTC] PHP Notice:  Undefined index: program_title in /home2/wellnes1/public_html/admin/index.php on line 157
+[25-Nov-2024 09:57:50 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 09:57:50 UTC] PHP Notice:  Undefined index: course_title in /home2/wellnes1/public_html/admin/index.php on line 189
+[25-Nov-2024 09:57:50 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 192
+[25-Nov-2024 10:00:01 UTC] PHP Notice:  Undefined index: program_title in /home2/wellnes1/public_html/admin/index.php on line 157
+[25-Nov-2024 10:00:01 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 10:00:01 UTC] PHP Notice:  Undefined index: program_title in /home2/wellnes1/public_html/admin/index.php on line 157
+[25-Nov-2024 10:00:01 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 10:00:01 UTC] PHP Notice:  Undefined index: course_title in /home2/wellnes1/public_html/admin/index.php on line 189
+[25-Nov-2024 10:00:01 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 192
+[25-Nov-2024 10:03:06 UTC] PHP Notice:  Undefined index: course_title in /home2/wellnes1/public_html/admin/index.php on line 184
+[25-Nov-2024 10:03:06 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 187
+[25-Nov-2024 10:04:12 UTC] PHP Notice:  Undefined index: course_title in /home2/wellnes1/public_html/admin/index.php on line 184
+[25-Nov-2024 10:04:12 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 187
+[25-Nov-2024 10:20:49 UTC] PHP Fatal error:  Uncaught Error: Object of class DateTime could not be converted to string in /home2/wellnes1/public_html/admin/index.php:126
+Stack trace:
+#0 {main}
+  thrown in /home2/wellnes1/public_html/admin/index.php on line 126
+[25-Nov-2024 10:23:35 UTC] PHP Parse error:  syntax error, unexpected '' (T_ENCAPSED_AND_WHITESPACE), expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home2/wellnes1/public_html/admin/index.php on line 126
+[25-Nov-2024 10:26:30 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 10:26:30 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 10:26:30 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 196
+[25-Nov-2024 10:26:30 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 10:26:30 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 10:26:30 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 10:26:30 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 10:26:30 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 10:26:30 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 10:26:32 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 10:26:32 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 10:26:32 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 196
+[25-Nov-2024 10:26:32 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 10:26:32 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 10:26:32 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 10:26:32 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 10:26:32 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 10:26:32 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 10:27:49 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 10:27:49 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 10:27:49 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 196
+[25-Nov-2024 10:27:49 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 10:27:49 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 10:27:49 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 10:27:49 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 10:27:49 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 10:27:49 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 18:47:39 UTC] PHP Warning:  require_once(conn.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/admin/register.php on line 4
+[25-Nov-2024 18:47:39 UTC] PHP Fatal error:  require_once(): Failed opening required 'conn.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home2/wellnes1/public_html/admin/register.php on line 4
+[25-Nov-2024 18:48:34 UTC] PHP Warning:  require_once(../db/login_conn.php): failed to open stream: No such file or directory in /home2/wellnes1/public_html/admin/register.php on line 4
+[25-Nov-2024 18:48:34 UTC] PHP Fatal error:  require_once(): Failed opening required '../db/login_conn.php' (include_path='.:/opt/alt/php74/usr/share/pear') in /home2/wellnes1/public_html/admin/register.php on line 4
+[25-Nov-2024 18:49:48 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home2/wellnes1/public_html/admin/register.php:21
+Stack trace:
+#0 {main}
+  thrown in /home2/wellnes1/public_html/admin/register.php on line 21
+[25-Nov-2024 18:50:12 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home2/wellnes1/public_html/admin/register.php:21
+Stack trace:
+#0 {main}
+  thrown in /home2/wellnes1/public_html/admin/register.php on line 21
+[25-Nov-2024 18:50:51 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home2/wellnes1/public_html/admin/register.php:21
+Stack trace:
+#0 {main}
+  thrown in /home2/wellnes1/public_html/admin/register.php on line 21
+[25-Nov-2024 18:51:55 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 18:51:55 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 18:51:55 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 196
+[25-Nov-2024 18:51:55 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 18:51:55 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 18:51:55 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 18:51:55 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 18:51:55 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 18:51:55 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 18:54:01 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home2/wellnes1/public_html/admin/register.php:21
+Stack trace:
+#0 {main}
+  thrown in /home2/wellnes1/public_html/admin/register.php on line 21
+[25-Nov-2024 18:54:06 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home2/wellnes1/public_html/admin/register.php:21
+Stack trace:
+#0 {main}
+  thrown in /home2/wellnes1/public_html/admin/register.php on line 21
+[25-Nov-2024 19:00:04 UTC] PHP Parse error:  syntax error, unexpected end of file in /home2/wellnes1/public_html/admin/register.php on line 118
+[25-Nov-2024 19:01:35 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home2/wellnes1/public_html/admin/register.php:22
+Stack trace:
+#0 {main}
+  thrown in /home2/wellnes1/public_html/admin/register.php on line 22
+[25-Nov-2024 19:02:29 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home2/wellnes1/public_html/admin/register.php:22
+Stack trace:
+#0 {main}
+  thrown in /home2/wellnes1/public_html/admin/register.php on line 22
+[25-Nov-2024 19:03:08 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home2/wellnes1/public_html/admin/register.php:22
+Stack trace:
+#0 {main}
+  thrown in /home2/wellnes1/public_html/admin/register.php on line 22
+[25-Nov-2024 19:04:07 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home2/wellnes1/public_html/admin/register.php:22
+Stack trace:
+#0 {main}
+  thrown in /home2/wellnes1/public_html/admin/register.php on line 22
+[25-Nov-2024 19:04:30 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home2/wellnes1/public_html/admin/register.php:22
+Stack trace:
+#0 {main}
+  thrown in /home2/wellnes1/public_html/admin/register.php on line 22
+[25-Nov-2024 19:05:27 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home2/wellnes1/public_html/admin/register.php:22
+Stack trace:
+#0 {main}
+  thrown in /home2/wellnes1/public_html/admin/register.php on line 22
+[25-Nov-2024 19:06:15 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home2/wellnes1/public_html/admin/register.php:22
+Stack trace:
+#0 {main}
+  thrown in /home2/wellnes1/public_html/admin/register.php on line 22
+[25-Nov-2024 19:07:27 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home2/wellnes1/public_html/admin/register.php:22
+Stack trace:
+#0 {main}
+  thrown in /home2/wellnes1/public_html/admin/register.php on line 22
+[25-Nov-2024 19:14:00 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 19:14:00 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 19:14:00 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 196
+[25-Nov-2024 19:14:00 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:14:00 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:14:00 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:14:00 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:14:00 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:14:00 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:14:14 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 19:14:14 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 19:14:14 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 196
+[25-Nov-2024 19:14:14 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:14:14 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:14:14 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:14:14 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:14:14 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:14:14 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:14:21 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 19:14:21 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 19:14:21 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 196
+[25-Nov-2024 19:14:21 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:14:21 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:14:21 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:14:21 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:14:21 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:14:21 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:15:54 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 19:15:54 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 19:15:54 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 196
+[25-Nov-2024 19:15:54 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:15:54 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:15:54 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:15:54 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:15:54 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:15:54 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:55:05 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 19:55:05 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 160
+[25-Nov-2024 19:55:05 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 196
+[25-Nov-2024 19:55:05 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:55:05 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:55:05 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:55:05 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:55:05 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[25-Nov-2024 19:55:05 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 234
+[26-Nov-2024 10:32:59 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 163
+[26-Nov-2024 10:32:59 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 163
+[26-Nov-2024 10:32:59 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 199
+[26-Nov-2024 10:32:59 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 237
+[26-Nov-2024 10:32:59 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 237
+[26-Nov-2024 10:32:59 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 237
+[26-Nov-2024 10:32:59 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 237
+[26-Nov-2024 10:32:59 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 237
+[26-Nov-2024 10:32:59 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 237
+[26-Nov-2024 10:32:59 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 264
+[26-Nov-2024 10:35:22 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 163
+[26-Nov-2024 10:35:22 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 163
+[26-Nov-2024 10:35:22 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 199
+[26-Nov-2024 10:35:22 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 237
+[26-Nov-2024 10:35:22 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 237
+[26-Nov-2024 10:35:22 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 237
+[26-Nov-2024 10:35:22 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 237
+[26-Nov-2024 10:35:22 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 237
+[26-Nov-2024 10:35:22 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 237
+[26-Nov-2024 10:35:22 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 264
+[26-Nov-2024 10:36:01 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 163
+[26-Nov-2024 10:36:01 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 163
+[26-Nov-2024 10:36:01 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 199
+[26-Nov-2024 10:36:01 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 237
+[26-Nov-2024 10:36:01 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 237
+[26-Nov-2024 10:36:01 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 237
+[26-Nov-2024 10:36:01 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 237
+[26-Nov-2024 10:36:01 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 237
+[26-Nov-2024 10:36:01 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 237
+[26-Nov-2024 10:36:01 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 264
+[26-Nov-2024 10:36:33 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 170
+[26-Nov-2024 10:36:33 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 170
+[26-Nov-2024 10:36:33 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 206
+[26-Nov-2024 10:36:33 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 244
+[26-Nov-2024 10:36:33 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 244
+[26-Nov-2024 10:36:33 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 244
+[26-Nov-2024 10:36:33 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 244
+[26-Nov-2024 10:36:33 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 244
+[26-Nov-2024 10:36:33 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 244
+[26-Nov-2024 10:36:33 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 271
+[26-Nov-2024 10:37:38 UTC] PHP Warning:  Use of undefined constant sql_donation - assumed 'sql_donation' (this will throw an Error in a future version of PHP) in /home2/wellnes1/public_html/admin/index.php on line 34
+[26-Nov-2024 10:37:38 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 172
+[26-Nov-2024 10:37:38 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 172
+[26-Nov-2024 10:37:38 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 208
+[26-Nov-2024 10:37:38 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 246
+[26-Nov-2024 10:37:38 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 246
+[26-Nov-2024 10:37:38 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 246
+[26-Nov-2024 10:37:38 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 246
+[26-Nov-2024 10:37:38 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 246
+[26-Nov-2024 10:37:38 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 246
+[26-Nov-2024 10:37:38 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 273
+[26-Nov-2024 10:39:15 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 172
+[26-Nov-2024 10:39:15 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 172
+[26-Nov-2024 10:39:15 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 208
+[26-Nov-2024 10:39:15 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 246
+[26-Nov-2024 10:39:15 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 246
+[26-Nov-2024 10:39:15 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 246
+[26-Nov-2024 10:39:15 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 246
+[26-Nov-2024 10:39:15 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 246
+[26-Nov-2024 10:39:15 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 246
+[26-Nov-2024 10:39:15 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 273
+[26-Nov-2024 10:40:14 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 173
+[26-Nov-2024 10:40:14 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 173
+[26-Nov-2024 10:40:14 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 209
+[26-Nov-2024 10:40:14 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:40:14 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:40:14 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:40:14 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:40:14 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:40:14 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:40:14 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 274
+[26-Nov-2024 10:41:04 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 173
+[26-Nov-2024 10:41:04 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 173
+[26-Nov-2024 10:41:04 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 209
+[26-Nov-2024 10:41:04 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:41:04 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:41:04 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:41:04 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:41:04 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:41:04 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:41:04 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home2/wellnes1/public_html/admin/index.php on line 274
+[26-Nov-2024 10:41:37 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 173
+[26-Nov-2024 10:41:37 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 173
+[26-Nov-2024 10:41:37 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 209
+[26-Nov-2024 10:41:37 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:41:37 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:41:37 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:41:37 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:41:37 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:41:37 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:41:48 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 173
+[26-Nov-2024 10:41:48 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 173
+[26-Nov-2024 10:41:48 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 209
+[26-Nov-2024 10:41:48 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:41:48 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:41:48 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:41:48 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:41:48 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:41:48 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:42:04 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 173
+[26-Nov-2024 10:42:04 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 173
+[26-Nov-2024 10:42:04 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 209
+[26-Nov-2024 10:42:04 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:42:04 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:42:04 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:42:04 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:42:04 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:42:04 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:43:11 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 173
+[26-Nov-2024 10:43:11 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 173
+[26-Nov-2024 10:43:11 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 209
+[26-Nov-2024 10:43:11 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:43:11 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:43:11 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:43:11 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:43:11 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:43:11 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:43:35 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 173
+[26-Nov-2024 10:43:35 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 173
+[26-Nov-2024 10:43:35 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 209
+[26-Nov-2024 10:43:35 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:43:35 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:43:35 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:43:35 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:43:35 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:43:35 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:47:04 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 173
+[26-Nov-2024 10:47:04 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 173
+[26-Nov-2024 10:47:04 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 209
+[26-Nov-2024 10:47:04 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:47:04 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:47:04 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:47:04 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:47:04 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:47:04 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 247
+[26-Nov-2024 10:49:35 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 218
+[26-Nov-2024 10:49:35 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 218
+[26-Nov-2024 10:49:35 UTC] PHP Notice:  Undefined index: created_at in /home2/wellnes1/public_html/admin/index.php on line 254
+[26-Nov-2024 10:49:35 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 292
+[26-Nov-2024 10:49:35 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 292
+[26-Nov-2024 10:49:35 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 292
+[26-Nov-2024 10:49:35 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 292
+[26-Nov-2024 10:49:35 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 292
+[26-Nov-2024 10:49:35 UTC] PHP Notice:  Trying to access array offset on value of type null in /home2/wellnes1/public_html/admin/index.php on line 292

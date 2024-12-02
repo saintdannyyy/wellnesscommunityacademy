@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Page</title>
+    <style>
+        /* Basic styling */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f4f4f9; font-family: Arial, sans-serif; }
+        .checkout-container { width: 100%; max-width: 500px; background-color: #ffffff; padding: 2rem; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); text-align: center; }
+        h2 { color: #333333; margin-bottom: 1rem; font-size: 1.8rem; }
+        
+        /* Tab styling */
+        .tab-buttons { display: flex; margin-bottom: 1rem; }
+        .tab-buttons button { flex: 1; padding: 0.5rem; border: none; background-color: #e0e0e0; color: #333; cursor: pointer; transition: background-color 0.3s; font-weight: bold; }
+        .tab-buttons button.active { background-color: #008cdd; color: #ffffff; }
+        
+        /* Tab content */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        /* Button styles */
+        button.pay-btn { width: 100%; padding: 0.75rem; background-color: #008cdd; color: #ffffff; border: none; border-radius: 5px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: background-color 0.3s; }
+        button.pay-btn:hover { background-color: #007bb5; }
+    </style>
+</head>
+<body>
+    <div class="checkout-container">
+        <h2>Choose Payment Method</h2>
+        
+        <!-- Tab Navigation -->
+        <div class="tab-buttons">
+            <button class="tab-button active" onclick="openTab('card-payment')">Card Payment</button>
+            <button class="tab-button" onclick="openTab('mobile-money')">Mobile Money</button>
+        </div>
+        
+        <!-- Tab Content -->
+        <div id="card-payment" class="tab-content active">
+            <h3>Pay with Card</h3>
+            <p>Redirecting you to Katra’s secure payment gateway.</p>
+            <button class="pay-btn" onclick="redirectToKatra()">Pay with Card</button>
+        </div>
+        
+        <div id="mobile-money" class="tab-content">
+            <h3>Pay with Mobile Money</h3>
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" placeholder="Enter amount" required>
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" placeholder="Enter your full name" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" placeholder="Enter your phone number" required>
+            
+            <button class="pay-btn" onclick="submitMobileMoneyPayment()">Pay with Mobile Money</button>
+        </div>
+    </div>
+    
+    <script>
+        // Function to handle tab switching
+        function openTab(tabId) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-button');
+            
+            // Hide all tab contents and remove active class from buttons
+            tabs.forEach(tab => tab.classList.remove('active'));
+            buttons.forEach(button => button.classList.remove('active'));
+            
+            // Show the selected tab and make button active
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`button[onclick="openTab('${tabId}')"]`).classList.add('active');
+        }
+
+        // Function to redirect to Katra's payment page
+        function redirectToKatra() {
+            window.location.href = 'https://katra.com/checkout'; // Replace with Katra's actual payment URL
+        }
+
+        // Function to handle Paystack mobile money payment
+        function submitMobileMoneyPayment() {
+            const amount = parseFloat(document.getElementById("amount").value) * 100; // Convert to kobo
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+
+            if (isNaN(amount) || amount <= 0) {
+                alert("Please enter a valid amount.");
+                return;
+            }
+
+            const handler = PaystackPop.setup({
+                key: 'pk_test_f5b5f05ffa20e04d5a54bedf16e0605ddab5281c', // Replace with your Paystack public key
+                email: email,
+                amount: amount,
+                currency: 'GHS',
+                callback: function(response) {
+                    alert('Payment successful! Transaction reference: ' + response.reference);
+                },
+                onClose: function() {
+                    alert('Payment window closed.');
+                }
+            });
+            handler.openIframe();
+        }
+    </script>
+</body>
+</html>
