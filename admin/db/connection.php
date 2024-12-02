@@ -9,9 +9,12 @@
         exit();
     }
 
-    // Connect to the database
-    $mysqli = new mysqli("localhost", "wellnes1_wellnes1", "@1ph@5t0rmerh05t", "wellnes1_ebooks");
+    // Connect to prod database
+    // $mysqli = new mysqli("localhost", "wellnes1_wellnes1", "@1ph@5t0rmerh05t", "wellnes1_ebooks");
 
+    // Connect to the dev database
+    $mysqli = new mysqli("localhost", "root", "", "wellness");
+    
     // Check for database connection error
     if ($mysqli->connect_error) {
         // Log the error and show a generic error message
