@@ -1,8 +1,22 @@
 <?php
 // Enable error reporting for debugging (only for development)
+// Include the script to load environment variables
+require_once __DIR__ . '../../../config/loadENV.php';
+
+if ($_ENV['APP_ENV'] === 'dev') { 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+} else {
+    ini_set('display_errors', 0);
+}
+
+// Check if the affiliate is logged in
+if (isset($_SESSION['affiliate_id'])) {
+    header('Location: login.php');
+    exit();
+}
+
 
 // Include database connection
 include('../../conn/conn.php');
@@ -12,7 +26,17 @@ session_start();
 echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
 
 // Extract referral code from the URL if available
-$referralCodeFromUrl = isset($_GET['referral']) ? htmlspecialchars(trim($_GET['referral'])) : '';
+$referralCodeFromUrl = isset($_GET['rf']) ? htmlspecialchars(trim($_GET['rf'])) : '';
+
+// Decode the referral code if it is encoded
+function decodeReferralId($referralCodeFromUrl) {
+    $key = $_ENV['AFFILIATE_ID_ENCRYPTION_KEY'];
+    return openssl_decrypt(base64_decode($referralCodeFromUrl), 'aes-256-cbc', $key, 0, substr($key, 0, 16));
+}
+
+if (!empty($referralCodeFromUrl)) {
+    $referralCodeFromUrl = decodeReferralId($referralCodeFromUrl);
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Sanitize user input
