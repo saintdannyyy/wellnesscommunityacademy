@@ -1640,12 +1640,12 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                     
                                             <!-- Tab Navigation -->
                                             <div style="display: flex; justify-content: space-around; margin-top: 20px;">
-                                                <button onclick="showTab('creditTab')" style="padding: 10px; font-weight: bold; cursor: pointer; border: none; background-color: #ddd; width: 50%;">Pay with Credit/PayPal</button>
-                                                <button onclick="showTab('mobileMoneyTab')" style="padding: 10px; font-weight: bold; cursor: pointer; border: none; background-color: #ddd; width: 50%;">Pay with Mobile Money</button>
+                                                <button onclick="showTab('mobileMoneyTab')" style="padding: 10px; font-weight: bold; cursor: pointer; border: none; background-color: green; width: 50%;">Pay with Mobile Money</button>
+                                                <button onclick="showTab('creditTab')" style="padding: 10px; font-weight: bold; cursor: pointer; border: none; background-color: orange; width: 50%;">Pay with Credit/PayPal</button>
                                             </div>
                                     
                                             <!-- Credit Card Tab Content -->
-                                            <div id="creditTab" class="tab-content" style="display: block; padding: 20px;">
+                                            <div id="creditTab" class="tab-content" style="display: none; padding: 20px;">
                                                 <p>Complete your payment with Credit Card or PayPal:</p>
                                                 <a href="javascript:void(0);"
                                                     class="kartra_button1 kartra_button1--default kartra_button1--roboto-condensed-font js_kartra_trackable_object kartra_button1--solid kartra_button1--large kartra_button1--squared pull-center toggle_product dg_popup"
@@ -1659,7 +1659,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                             </div>
                                             
                                             <!-- Mobile Money Tab Content -->
-                                            <div id="mobileMoneyTab" class="tab-content" style="display: none; padding: 20px;">
+                                            <div id="mobileMoneyTab" class="tab-content" style="display: block; padding: 20px;">
                                                 <p>Complete your payment with Mobile Money:</p>
                                                 <button onclick="openPaymentPopup('1')"
                                                     style="width: 100%; padding: 10px; background-color: #008cdd; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Pay with Mobile Money</button>
@@ -2228,12 +2228,12 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                     
                                             <!-- Tab Navigation -->
                                             <div style="display: flex; justify-content: space-around; margin-top: 20px;">
-                                                <button onclick="showTab('creditTab')" style="padding: 10px; font-weight: bold; cursor: pointer; border: none; background-color: #ddd; width: 50%;">Pay with Credit/PayPal</button>
-                                                <button onclick="showTab('mobileMoneyTab')" style="padding: 10px; font-weight: bold; cursor: pointer; border: none; background-color: #ddd; width: 50%;">Pay with Mobile Money</button>
+                                                <button onclick="showTab('mobileMoneyTab')" style="padding: 10px; font-weight: bold; cursor: pointer; border: none; background-color: green; width: 50%;">Pay with Mobile Money</button>
+                                                <button onclick="showTab('creditTab')" style="padding: 10px; font-weight: bold; cursor: pointer; border: none; background-color: orange; width: 50%;">Pay with Credit/PayPal</button>
                                             </div>
                                     
                                             <!-- Credit Card Tab Content -->
-                                            <div id="creditTab" class="tab-content" style="display: block; padding: 20px;">
+                                            <div id="creditTab" class="tab-content" style="display: none; padding: 20px;">
                                                 <p>Complete your payment with Credit Card or PayPal:</p>
                                                 <a href="javascript:void(0);"
                                                     class="kartra_button1 kartra_button1--default kartra_button1--roboto-condensed-font js_kartra_trackable_object kartra_button1--solid kartra_button1--large kartra_button1--squared pull-center toggle_product dg_popup"
@@ -2246,7 +2246,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                             </div>
                                             
                                             <!-- Mobile Money Tab Content -->
-                                            <div id="mobileMoneyTab" class="tab-content" style="display: none; padding: 20px;">
+                                            <div id="mobileMoneyTab" class="tab-content" style="display: block; padding: 20px;">
                                                 <p>Complete your payment with Mobile Money:</p>
                                                 <button onclick="openPaymentPopup('1')"
                                                     style="width: 100%; padding: 10px; background-color: #008cdd; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Pay with Mobile Money</button>
