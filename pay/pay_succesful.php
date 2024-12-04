@@ -22,8 +22,9 @@
 // }
 
 require('../conn/conn.php');
+require('../config/loadENV.php');
 
-$secretKey = "sk_live_ae0ee59d6ecbb430b531ffa2c4806cb99e0fd529";
+$secretKey = $_ENV['PAYSTACK_SECRET_KEY'];
 
 // Get reference from query string
 $reference = $_GET['reference'];
