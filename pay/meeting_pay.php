@@ -10,15 +10,22 @@
 </html>
 
 <?php
+require('../config/loadENV.php');
+
+$secretKey = ($_ENV['APP_ENV'] === 'prod')
+    ? $_ENV['PAYSTACK_SECRET_KEY_LIVE']
+    : $_ENV['PAYSTACK_SECRET_KEY_TEST'];
+
+// Example usage
+// echo "Using Paystack secret Key: " . $secretKey;
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 require '../PHPMailer-master/src/Exception.php';
 require '../PHPMailer-master/src/PHPMailer.php';
 require '../PHPMailer-master/src/SMTP.php';
-require('../conn/conn.php');
 
-$secretKey = "sk_test_99a10e136ed567bbd74fb6569bfe8b4b5f35d5f3";
 $reference = $_GET['reference'];
 
 // Initialize cURL for Paystack API verification
@@ -47,8 +54,8 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'danieltesla746@gmail.com';
-        $mail->Password = 'brotflirznvijgnl';
+        $mail->Username = $_ENV['SMTP_USER'];
+        $mail->Password = $_ENV['SMTP_PWD'];
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
@@ -78,7 +85,6 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
                         <p><b>Duration:</b> $duration minutes</p>
                         <p><b>Contact:</b> $phone</p>
                     </div>
-                    <a href='https://wellnesscommunityacademy.com/admin' class='btn'>View Other Requests</a>
                 </div>
             </body>
             </html>";
