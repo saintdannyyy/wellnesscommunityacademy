@@ -1087,6 +1087,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                                     } else {
                                                         console.error("Server responded with an error:", data.message);
                                                         alert(`Error: ${data.message}`);
+                                                        window.location.href = "../acc/auth/login.php";
                                                     }
                                                 } catch (error) {
                                                     console.error("Failed to parse JSON. Raw response:", rawData, "Error:", error);
