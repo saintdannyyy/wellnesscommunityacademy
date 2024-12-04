@@ -16,7 +16,7 @@ if (!isset($_SESSION['affiliate_id'])) {
     exit();
 }
 
-$affiliateId = $_SESSION['affiliate_id'];
+$affiliateId = $_SESSION['affiliate_index'];
 
 // Generate affiliate link
 function encodeReferralId($affiliateId) {
@@ -26,37 +26,54 @@ function encodeReferralId($affiliateId) {
 $encodedReferral = encodeReferralId($affiliateId);
 $affiliateLink = "https://wellnesscommunityacademy.com/acc/auth/register.php?rf=" . urlencode($encodedReferral);
 
-// Fetch referred users
-$queryReferred = "SELECT name, email, affiliate, created_at FROM customers WHERE affiliate_referrer_id = ?";
-$stmtReferred = $mysqli->prepare($queryReferred);
-$stmtReferred->bind_param('i', $affiliateId);
-$stmtReferred->execute();
-$resultReferred = $stmtReferred->get_result();
+// Fetch referred affiliates (direct)
+$queryDirectAffiliates = "SELECT COUNT(*) AS direct_count FROM affiliates WHERE referrer_id = ?";
+$stmtDirectAffiliates = $mysqli->prepare($queryDirectAffiliates);
+$stmtDirectAffiliates->bind_param('i', $affiliateId);
+$stmtDirectAffiliates->execute();
+$resultDirectAffiliates = $stmtDirectAffiliates->get_result()->fetch_assoc();
+$directAffiliateCount = $resultDirectAffiliates['direct_count'];
+$stmtDirectAffiliates->close();
 
-$referredAffiliates = [];
-$referredCustomers = [];
+// Fetch referred affiliates (indirect)
+$queryIndirectAffiliates = "
+    SELECT COUNT(*) AS indirect_count 
+    FROM affiliates a1 
+    JOIN affiliates a2 ON a1.referrer_id = a2.id 
+    WHERE a2.referrer_id = ?";
+$stmtIndirectAffiliates = $mysqli->prepare($queryIndirectAffiliates);
+$stmtIndirectAffiliates->bind_param('i', $affiliateId);
+$stmtIndirectAffiliates->execute();
+$resultIndirectAffiliates = $stmtIndirectAffiliates->get_result()->fetch_assoc();
+$indirectAffiliateCount = $resultIndirectAffiliates['indirect_count'];
+$stmtIndirectAffiliates->close();
 
-while ($row = $resultReferred->fetch_assoc()) {
-    if ((int)$row['affiliate'] === 1) {
-        $referredAffiliates[] = $row;
-    } else {
-        $referredCustomers[] = $row;
-    }
+// Fetch detailed commissions breakdown
+$queryCommissionsDetail = "
+    SELECT 
+        ae.typeof_purchase AS level,
+        ae.amount,
+        ae.product,
+        ae.created_at,
+        c.name AS customer_name,
+        c.email AS customer_email,
+        a1.customer_id AS referring_affiliate_customer_id,
+        (SELECT name FROM customers WHERE id = a1.customer_id) AS referring_affiliate_name
+    FROM affiliate_earnings ae
+    LEFT JOIN affiliates a1 ON ae.affiliate_id = a1.id
+    LEFT JOIN customers c ON a1.customer_id = c.id
+    WHERE ae.id = ?";
+$stmtCommissionsDetail = $mysqli->prepare($queryCommissionsDetail);
+echo "checking affiliate id: $affiliateId";
+$stmtCommissionsDetail->bind_param('i', $affiliateId);
+$stmtCommissionsDetail->execute();
+$resultCommissionsDetail = $stmtCommissionsDetail->get_result();
+
+$commissionDetails = [];
+while ($row = $resultCommissionsDetail->fetch_assoc()) {
+    $commissionDetails[] = $row;
 }
-$stmtReferred->close();
-
-// Fetch commissions
-$queryCommissions = "SELECT 
-    SUM(CASE WHEN typeof_purchase = 'L1 Purchase' THEN amount ELSE 0 END) AS direct_commissions,
-    SUM(CASE WHEN typeof_purchase = 'L2 Purchase' THEN amount ELSE 0 END) AS indirect_commissions
-FROM affiliate_earnings WHERE affiliate_id = ?";
-$stmtCommissions = $mysqli->prepare($queryCommissions);
-$stmtCommissions->bind_param('i', $affiliateId);
-$stmtCommissions->execute();
-$resultCommissions = $stmtCommissions->get_result();
-$commissions = $resultCommissions->fetch_assoc();
-$totalCommissions = $commissions['direct_commissions'] + $commissions['indirect_commissions'];
-$stmtCommissions->close();
+$stmtCommissionsDetail->close();
 ?>
 
 <!DOCTYPE html>
@@ -76,34 +93,41 @@ $stmtCommissions->close();
         <input type="text" id="affiliateLink" value="<?php echo htmlspecialchars($affiliateLink); ?>" readonly>
         <button onclick="copyAffiliateLink()">Copy Link</button>
 
-        <h2>Affiliates Referred By You</h2>
-        <?php if (!empty($referredAffiliates)) : ?>
+        <h2>Affiliate Referrals</h2>
+        <p><strong>Directly Referred Affiliates:</strong> <?php echo $directAffiliateCount; ?></p>
+        <p><strong>Indirectly Referred Affiliates:</strong> <?php echo $indirectAffiliateCount; ?></p>
+
+        <h2>Your Commissions Breakdown</h2>
+        <?php if (!empty($commissionDetails)) : ?>
             <table>
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Registration Date</th>
+                        <th>Type</th>
+                        <th>Product</th>
+                        <th>Amount</th>
+                        <th>Customer Name</th>
+                        <th>Customer Email</th>
+                        <th>Referring Affiliate</th>
+                        <th>Date</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($referredAffiliates as $referral) : ?>
+                    <?php foreach ($commissionDetails as $commission) : ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($referral['name']); ?></td>
-                            <td><?php echo htmlspecialchars($referral['email']); ?></td>
-                            <td><?php echo htmlspecialchars($referral['created_at']); ?></td>
+                            <td><?php echo htmlspecialchars($commission['level']); ?></td>
+                            <td><?php echo htmlspecialchars($commission['product']); ?></td>
+                            <td>$<?php echo number_format($commission['amount'], 2); ?></td>
+                            <td><?php echo htmlspecialchars($commission['customer_name']); ?></td>
+                            <td><?php echo htmlspecialchars($commission['customer_email']); ?></td>
+                            <td><?php echo htmlspecialchars($commission['referring_affiliate_name']); ?></td>
+                            <td><?php echo htmlspecialchars($commission['created_at']); ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
         <?php else : ?>
-            <p>No referred affiliates yet.</p>
+            <p>No commissions yet.</p>
         <?php endif; ?>
-
-        <h2>Your Commissions</h2>
-        <p><strong>Direct Commissions:</strong> $<?php echo number_format($commissions['direct_commissions'], 2); ?></p>
-        <p><strong>Indirect Commissions:</strong> $<?php echo number_format($commissions['indirect_commissions'], 2); ?></p>
-        <p><strong>Total Commissions:</strong> $<?php echo number_format($totalCommissions, 2); ?></p>
     </div>
 
     <script>
