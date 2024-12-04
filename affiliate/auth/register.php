@@ -121,7 +121,7 @@ function displayAlert($icon, $title, $text, $keepReferral = false)
             Swal.fire({
                 icon: '$icon',
                 title: '$title',
-                text: '$text'
+                text: '$text',
                 timer: 2000, // 2-second timeout
                 timerProgressBar: true, // Show a progress bar for the timer
             }).then((result) => {
