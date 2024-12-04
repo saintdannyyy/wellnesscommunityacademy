@@ -1,4 +1,19 @@
 <?php
+require('../config/loadENV.php');
+if ($_ENV['APP_ENV'] === 'dev') {
+    ini_set('display_errors', 1);  // Show errors in development environment
+    error_reporting(E_ALL);       // Report all errors
+} else {
+    ini_set('display_errors', 0);  // Hide errors in production environment
+}
+
+// Start session and check login
+session_start();
+if (!isset($_SESSION['customer_id'])) {
+    echo json_encode(['success' => false, 'message' => 'You are not logged in. Please log in.']);
+    exit;
+}
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pID = $_POST['instanceNumber'] ?? null;
 
@@ -35,7 +50,7 @@
     // Check if title and price were fetched
     if ($prog && $price) {
         // Open Exchange Rates API setup
-        $open_exchange_api_key = '0d6f5687149b407fb1c561d00ecdb908';
+        $open_exchange_api_key = $_ENV['open_exchange_api_key'] ?? null;
         $open_exchange_url = "https://openexchangerates.org/api/latest.json?app_id={$open_exchange_api_key}&symbols=GHS&base=USD";
     
         // Fetch the exchange rate data
