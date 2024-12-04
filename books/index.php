@@ -1057,6 +1057,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                 <script>
                                     let priceInUSD;
                                     let priceInNGN;
+                                    let bookName;
 
                                     function openPaymentPopup(bookId) {
                                         console.log("Fetching payment details for book ID:", bookId);
@@ -1078,9 +1079,13 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                                     if (data.success) {
                                                         // Process and display data
                                                         document.getElementById('price').innerText = data.data.price_ghs;
-                                                        document.getElementById('book_name').innerText = data.data.title;
+                                                        bookName = data.data.title;
+                                                        // console.log("Name of book passed into bookName", bookName);
+                                                        document.getElementById('book_name').innerText = bookName;                                                        
                                                         document.getElementById('modal_price').value = data.data.price_ghs;
                                                         document.getElementById('usd_price').innerText = data.data.price_usd;
+                                                        document.getElementById('book_id').value = bookId;
+                                                        document.getElementById('modal_price').value = data.data.price_ghs;
                                                     
                                                         // Show the modal
                                                         document.getElementById('paymentModal').style.display = 'flex';
@@ -1183,6 +1188,8 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                             e.preventDefault();
                                             const email = document.getElementById("mail").value;
                                             const phone = document.getElementById("phone").value;
+                                            bookName = bookName;
+                                            // console.log("Book name:", bookName);  
                                             const bookId = document.getElementById("book_id").value;
                                             const priceInGHS = document.getElementById("modal_price").value;
                                             const currency = document.getElementById("currency").value;
@@ -1210,6 +1217,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                                 email: email,
                                                 amount: amount,
                                                 currency: currency,
+                                                phone: phone,
                                                 ref: "BOOK" + Math.floor((Math.random() * 1000000000) + 1),
                                                 metadata: {
                                                     custom_fields: [{
@@ -1219,8 +1227,13 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                                         },
                                                         {
                                                             display_name: "Book ID",
-                                                            variable_name: "book_id",
+                                                            variable_name: "bookId",
                                                             value: bookId
+                                                        },
+                                                        {
+                                                            display_name: "Book Name",
+                                                            variable_name: "bookName",
+                                                            value: bookName
                                                         }
                                                     ]
                                                 },
