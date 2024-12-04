@@ -5,29 +5,29 @@
     <meta charset="UTF-8">
     <title>Payment Status</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head
+</head>
 <body>
 
 </body>
 </html>
 
 <?php
-// Display all errors
-ini_set('display_errors', 1);
-error_reporting(E_ALL);  // Report all errors (including notices and warnings)
-
-// // Check if reference is provided
-// if (!isset($_GET['reference'])) {
-//     echo "<script>
-//         alert('No reference supplied');
-//         window.location.href = 'https://wellnesscommunityacademy.com/books';
-//     </script>";
-//     exit;
-// }
-
 require('../conn/conn.php');
+require('../config/loadENV.php');
 
-$secretKey = "sk_test_99a10e136ed567bbd74fb6569bfe8b4b5f35d5f3";
+$secretKey = ($_ENV['APP_ENV'] === 'prod')
+    ? $_ENV['PAYSTACK_SECRET_KEY_LIVE']
+    : $_ENV['PAYSTACK_SECRET_KEY_TEST'];
+
+// Example usage
+// echo "Using Paystack secret Key: " . $secretKey;
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../PHPMailer-master/src/Exception.php';
+require '../PHPMailer-master/src/PHPMailer.php';
+require '../PHPMailer-master/src/SMTP.php';
 
 // Get reference from query string
 $reference = $_GET['reference'];
@@ -60,28 +60,79 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
 //     echo $prog;
 // }
 
-    // Save transaction details to your database (optional)
-    require_once('../conn/conn.php');
-    
-    if ($mysqli) {
-        $stmt = $mysqli->prepare("INSERT INTO sold_programs (program, email, amount, reference) VALUES (?, ?, ?, ?)");
-        $status = 'success';
-        $stmt->bind_param("ssis", $prog, $email, $amount, $reference);
-        $stmt->execute();
-        $stmt->close();
-        $mysqli->close();
-    }
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = $_ENV['SMTP_USER'];
+        $mail->Password = $_ENV['SMTP_PWD'];
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
 
-    echo "<script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Course Purchase Successful!',
-            html: '<p>Thank you for your purchase.<br>Reference: $reference<br>Amount Paid: GHS " . number_format($amount, 2) . "</p>',
-            confirmButtonText: 'OK'
-        }).then(() => {
-            window.location.href = 'https://wellnesscommunityacademy.com/programs';
-        });
-    </script>";
+        $mail->setFrom('noreply@wellnesscommunityacademy.com', 'Wellness Community Academy');
+        $mail->addAddress('seshun65@gmail.com');
+        $mail->addBCC('saintdannyyy@gmail.com');
+
+        $mail->isHTML(true);
+        $mail->Subject = 'NEW PROGRAM PURCHASE';
+        $mail->Body = "
+            <!DOCTYPE html>
+            <html lang='en'>
+            <head>
+                <meta charset='UTF-8'>
+                <style>/* Your CSS styling here */</style>
+            </head>
+            <body>
+                <div class='container'>
+                    <h1>PROGRAM PURCHASE</h1>
+                    <p>Hello <b>Wellness Community Academy</b>,</p>
+                    <p>$email just made payment for a program. Here are the details:</p>
+                    <div class='content'>
+                        <p><b>Email:</b> $email</p>
+                        <p><b>Program Purchased:</b> $prog</p>
+                        <p><b>Amount Paid:</b>GHC $amount</p>
+                    </div>
+                </div>
+            </body>
+            </html>";
+
+        if ($mail->send()) {
+            $stmt = $mysqli->prepare("INSERT INTO sold_programs (program, email, amount, reference) VALUES (?, ?, ?, ?)");
+            $status = 'success';
+            $stmt->bind_param("ssis", $prog, $email, $amount, $reference);
+            $stmt->execute();
+            $stmt->close();
+            $mysqli->close();
+    
+            echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Program Purchase Successful!',
+                    html: '<p>Thank you for your purchase.<br>You will receive an email soon.<br>Reference: $reference<br>Amount Paid: GHS " . number_format($amount, 2) . "</p>',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.location.href = 'https://wellnesscommunityacademy.com/programs';
+                });
+            </script>";
+    
+        } else {
+            // Display failure alert with SweetAlert and redirect
+            echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+            echo "<script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed to send email!',
+                    text: 'Please contact support if you were charged.',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.location.href = 'https://wellnesscommunityacademy.com/books';
+                });
+            </script>";
+        }
+    } catch (Exception $e) {
+        echo json_encode(["status" => "error", "message" => "Failed to send email. Error: " . $e->getMessage()]);
+    }    
 } else {
     // Display failure alert with SweetAlert and redirect
     echo "<script>
