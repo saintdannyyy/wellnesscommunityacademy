@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Log referral relationship if applicable
             if ($referredAffiliateId !== null) {
-                $stmtReferral = $mysqli->prepare("INSERT INTO affiliate_referrals (affiliate_id, referred_by) VALUES (?, ?)");
+                $stmtReferral = $mysqli->prepare("INSERT INTO affiliate_referrals (affiliate_id, referrer_id) VALUES (?, ?)");
                 $stmtReferral->bind_param('ii', $affiliateDbId, $referredAffiliateId);
                 $stmtReferral->execute();
             }
