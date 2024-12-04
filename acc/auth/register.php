@@ -1,12 +1,8 @@
 <?php
-// Start the session
-session_start();
-
-// Enable error reporting for debugging (only for development)
-// Include the script to load environment variables
+// Enable error reporting for debugging in development environment
 require_once __DIR__ . '../../../config/loadENV.php';
 
-if ($_ENV['APP_ENV'] === 'dev') { 
+if ($_ENV['APP_ENV'] === 'dev') {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
@@ -14,9 +10,10 @@ if ($_ENV['APP_ENV'] === 'dev') {
     ini_set('display_errors', 0);
 }
 
-// Check if the customer is logged in
+// Start the session and check if the customer is logged in
+session_start();
 if (isset($_SESSION['customer_id'])) {
-    // header('Location: ../dashboard.php'); // Redirect to dashboard or another appropriate page
+    header('Location: ../../');
     exit();
 }
 
@@ -26,36 +23,55 @@ include('../../conn/conn.php');
 // Include SweetAlert library globally
 echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
 
-// Extract referral code from the URL if available
-$referralCodeFromUrl = isset($_GET['rf']) ? htmlspecialchars(trim($_GET['rf'])) : '';
-
-// Decode the referral code if it is encoded
-function decodeReferralId($referralCodeFromUrl) {
+// Decode referral code if it is encoded
+function decodeReferralId($referralCode)
+{
     $key = $_ENV['AFFILIATE_ID_ENCRYPTION_KEY'];
-    return openssl_decrypt(base64_decode($referralCodeFromUrl), 'aes-256-cbc', $key, 0, substr($key, 0, 16));
+    return openssl_decrypt(base64_decode($referralCode), 'aes-256-cbc', $key, 0, substr($key, 0, 16));
 }
 
+// Extract and decode referral code from the URL if available
+$referralCodeFromUrl = isset($_GET['rf']) ? htmlspecialchars(trim($_GET['rf'])) : '';
 if (!empty($referralCodeFromUrl)) {
     $referralCodeFromUrl = decodeReferralId($referralCodeFromUrl);
 }
 
+// Process registration
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Sanitize user input
     $name = htmlspecialchars(trim($_POST['name']));
     $email = htmlspecialchars(trim($_POST['email']));
     $phoneNumber = htmlspecialchars(trim($_POST['phone']));
     $password = htmlspecialchars($_POST['password']);
+    $isAffiliate = isset($_POST['is_affiliate']) && $_POST['is_affiliate'] === '1' ? 1 : 0;
     $referralCode = !empty($_POST['referral_code']) ? htmlspecialchars(trim($_POST['referral_code'])) : '';
 
     // Validate email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        displayAlert('error', 'Invalid Email', 'Please enter a valid email address.');
+        echo "<script>
+                        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Email',
+                text: 'Please enter a valid email address.'
+            });
+    });
+        </script>";
         exit();
     }
 
     // Validate phone number (10–15 digits, optional '+')
     if (!preg_match("/^\+?[0-9]{10,15}$/", $phoneNumber)) {
-        displayAlert('error', 'Invalid Phone Number', 'The phone number you entered is not valid.');
+        echo "<script>
+                        document.addEventListener('DOMContentLoaded', function () {
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Phone Number',
+                text: 'The phone number you entered is not valid.'
+            });
+    });
+        </script>";
         exit();
     }
 
@@ -72,56 +88,88 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $result = $stmt->get_result();
 
             if ($result->num_rows > 0) {
-                // Referral code is valid, get the affiliate ID of the person who referred
                 $referredAffiliateId = $result->fetch_assoc()['id'];
             } else {
-                // Referral code is invalid, alert the user and keep the referral code in the URL
-                displayAlert('error', 'Invalid Referral Code', 'The referral code you entered does not exist.', true);
+                echo "<script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Invalid Referral Code',
+                        text: 'The referral code you entered does not exist.'
+                    });
+                </script>";
                 exit();
             }
         }
 
-        // Insert affiliate into the database
-        $stmt = $mysqli->prepare("INSERT INTO customers (name, email, phone, password, affiliate_referrer_id) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param('ssiss', $name, $email, $phoneNumber, $hashedPassword, $referralCode);
+        // Insert customer into the database
+        $stmt = $mysqli->prepare("INSERT INTO customers (name, email, phone, password, affiliate, affiliate_referrer_id) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param('ssisii', $name, $email, $phoneNumber, $hashedPassword, $isAffiliate, $referredAffiliateId);
 
         if ($stmt->execute()) {
-            // Success alert
-            displayAlert('success', 'Registration Successful', 'You have successfully created an account.', 'login.php');
+            // If the user opted to be an affiliate, add to the `affiliates` table
+            if ($isAffiliate === 1) {
+                // Helper function: Generate unique affiliate ID
+                function generateUniqueAffiliateId()
+                {
+                    return 'AFF' . time() . strtoupper(substr(md5(uniqid()), 0, 6));
+                }
+                $affiliateId = generateUniqueAffiliateId();
+                
+
+                $customerId = $mysqli->insert_id; // Get the newly inserted customer ID
+                $stmtAffiliate = $mysqli->prepare("INSERT INTO affiliates (customer_id, affiliate_id, referrer_id, created_at) VALUES (?, ?, ?, NOW())");
+                $stmtAffiliate->bind_param('iss', $customerId, $affiliateId, $referralCode);
+
+                if (!$stmtAffiliate->execute()) {
+                    throw new Exception("Database error: " . $stmtAffiliate->error);
+                }
+
+                echo "<script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Registration Successful',
+                        text: 'You have successfully registered as an affiliate.',
+                        showConfirmButton: true
+                    }).then(() => {
+                        window.location.href = 'login.php';
+                    });
+            });
+                </script>";
+                exit();
+            }
+
+            // Registration success
+            echo "<script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Registration Successful',
+                        text: 'You have successfully created an account.',
+                        showConfirmButton: true
+                    }).then(() => {
+                        window.location.href = 'login.php';
+                    });
+                });
+            </script>";
         } else {
             throw new Exception("Database error: " . $stmt->error);
         }
     } catch (Exception $e) {
         error_log($e->getMessage());
-        displayAlert('error', 'Registration Error', 'An error occurred during registration. Please try again later.');
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Registration Error',
+                text: 'An error occurred during registration. Please try again later.'
+            });
+    });
+        </script>";
     } finally {
-        // Cleanup
         if (isset($stmt)) $stmt->close();
         if (isset($mysqli)) $mysqli->close();
     }
-}
-
-// Helper function: Display SweetAlert
-function displayAlert($icon, $title, $text, $keepReferral = false)
-{
-    $currentUrl = htmlspecialchars($_SERVER['REQUEST_URI']); // Get the current URL with query string
-    echo "<script>
-        document.addEventListener('DOMContentLoaded', function () {
-            Swal.fire({
-                icon: '$icon',
-                title: '$title',
-                text: '$text',
-                timer: 2000, // 2-second timeout
-                timerProgressBar: true, // Show a progress bar for the timer
-            }).then((result) => {
-                // Redirect after alert closes
-                if (result.dismiss === Swal.DismissReason.timer || result.isConfirmed) {
-                    " . ($keepReferral ? "window.location.href = '$currentUrl';" : "") . "
-                }
-
-            });
-        });
-    </script>";
 }
 ?>
 
@@ -150,13 +198,19 @@ function displayAlert($icon, $title, $text, $keepReferral = false)
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
 
-            <!-- <label for="referral_code">Referral Code (optional): </label> -->
+            <label for="referral_code">Referral Code (optional):</label>
             <input type="text" id="referral_code" name="referral_code" 
-                   value="<?php echo $referralCodeFromUrl; ?>" hidden>
+                value="<?php echo $referralCodeFromUrl; ?>">
+
+            <div>
+                <label for="is_affiliate">Do you want to be an affiliate?</label>
+                <input type="checkbox" id="is_affiliate" name="is_affiliate" value="1">
+            </div>
 
             <button type="submit">Register</button>
         </form>
         <p>Already have an account? <a href="login.php">Sign In Here</a></p>
+
     </div>
 </body>
 </html>
