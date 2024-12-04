@@ -1,4 +1,10 @@
 <?php
+// Check if user is logged in
+session_start();
+if (!isset($_SESSION['customer_id'])) {
+    echo json_encode(['success' => false, 'message' => 'You are not logged in.' . "\n" . 'Please log in']);
+    exit();
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $bookId = intval($_POST['book_id'] ?? 0);
 
