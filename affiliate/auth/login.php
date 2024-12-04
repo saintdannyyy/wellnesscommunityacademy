@@ -53,23 +53,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     try {
-        // Prepare and execute query to fetch user data
-        $query = "SELECT id, password FROM affiliates WHERE email = ?";
-        $stmt = $mysqli->prepare($query);
-        $stmt->bind_param('s', $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows > 0) {
-            // Fetch user data
-            $user = $result->fetch_assoc();
-
-            // Verify password
-            if (password_verify($password, $user['password'])) {
-                // Start session and set session variables
-                session_start();
-                $_SESSION['affiliate_id'] = $user['id'];
-
+            // Prepare and execute query to fetch user data along with affiliate details
+            $query = "SELECT c.id AS customer_id, c.name AS customer_name, c.email AS customer_email, c.password, 
+                             a.affiliate_id, a.id
+                      FROM customers c 
+                      JOIN affiliates a ON c.id = a.customer_id 
+                      WHERE c.email = ?";
+                      
+            $stmt = $mysqli->prepare($query);
+            $stmt->bind_param('s', $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
+        
+            if ($result->num_rows > 0) {
+                // Fetch user and affiliate data
+                $user = $result->fetch_assoc();
+        
+                // Verify password
+                if (password_verify($password, $user['password'])) {
+                    // Start session and set session variables
+                    session_start();
+                    $_SESSION['customer_id'] = $user['customer_id'];
+                    $_SESSION['customer_name'] = $user['customer_name'];
+                    $_SESSION['customer_email'] = $user['customer_email'];
+                    $_SESSION['affiliate_index'] = $user['id'];
+                    $_SESSION['affiliate_id'] = $user['affiliate_id'];
                 // Show success alert and redirect to dashboard
                 echo "<script>
                         document.addEventListener('DOMContentLoaded', function() {
@@ -101,13 +109,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </script>";
             }
         } else {
-            // User not found
+            // User not found or not an affiliate
             echo "<script>
                     document.addEventListener('DOMContentLoaded', function() {
                         Swal.fire({
                             icon: 'error',
                             title: 'Sign-In Failed',
-                            text: 'Invalid email or password.',
+                            text: 'You must be a registered customer and an affiliate to log in.',
                             timer: 2000, // 2-second timeout
                             timerProgressBar: true
                         });
