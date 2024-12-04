@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Payment Status</title>
+    <title>Program Payment</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
@@ -12,6 +12,7 @@
 </html>
 
 <?php
+session_start();
 require('../conn/conn.php');
 require('../config/loadENV.php');
 
@@ -71,7 +72,7 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
         $mail->Port = 587;
 
         $mail->setFrom('noreply@wellnesscommunityacademy.com', 'Wellness Community Academy');
-        $mail->addAddress('seshun65@gmail.com');
+        $mail->addAddress('seshun65@gmail.com','cooperdockeryhealth@gmail.com');
         $mail->addBCC('saintdannyyy@gmail.com');
 
         $mail->isHTML(true);
@@ -103,7 +104,60 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
             $stmt->bind_param("ssis", $prog, $email, $amount, $reference);
             $stmt->execute();
             $stmt->close();
-            $mysqli->close();
+            
+            function addAffiliateEarnings($mysqli, $affiliate_id, $commission, $product, $typeof_purchase) {
+                try {
+                    $stmt = $mysqli->prepare("INSERT INTO affiliate_earnings (affiliate_id, amount, product, typeof_purchase) VALUES (?, ?, ?, ?)");
+                    if (!$stmt) {
+                        throw new Exception("Prepare failed: " . $mysqli->error);
+                    }
+                    $stmt->bind_param("idss", $affiliate_id, $commission, $product, $typeof_purchase);
+                    $stmt->execute();
+                    $stmt->close();
+                } catch (Exception $e) {
+                    // Handle errors (log or display)
+                    error_log("Affiliate Earnings Error: " . $e->getMessage());
+                }
+            }
+            
+            $typeof_purchase = "L1 Purchase";
+            $sqlL1Affiliate = "SELECT affiliate_referrer_id FROM customers WHERE id = ?";
+            $stmtL1 = $mysqli->prepare($sqlL1Affiliate);
+            $stmtL1->bind_param("i", $_SESSION['customer_id']);
+            $stmtL1->execute();
+            $resultL1Affiliate = $stmtL1->get_result();
+            $stmtL1->close();
+            
+            if ($resultL1Affiliate->num_rows > 0) {
+                $rowL1Affiliate = $resultL1Affiliate->fetch_assoc();
+                $affiliate_referrer_id = $rowL1Affiliate['affiliate_referrer_id'];
+            
+                if ($affiliate_referrer_id != 0) {
+                    $affiliate_commission = $amount * 0.15;
+                    addAffiliateEarnings($mysqli, $affiliate_referrer_id, $affiliate_commission, $prog, $typeof_purchase);
+            
+                    // Check for higher affiliate (L2)
+                    $sqlL2Affiliate = "SELECT referrer_id FROM affiliates WHERE id = ?";
+                    $stmtL2 = $mysqli->prepare($sqlL2Affiliate);
+                    $stmtL2->bind_param("i", $affiliate_referrer_id);
+                    $stmtL2->execute();
+                    $resultL2Affiliate = $stmtL2->get_result();
+                    $stmtL2->close();
+            
+                    if ($resultL2Affiliate->num_rows > 0) {
+                        $rowL2Affiliate = $resultL2Affiliate->fetch_assoc();
+                        var_dump($rowL2Affiliate);
+                        $higher_affiliate_referrer_id = $rowL2Affiliate['referrer_id'];
+            
+                        if ($higher_affiliate_referrer_id != 0) {
+                            $typeof_purchase = "L2 Purchase";
+                            $higher_affiliate_commission = $amount * 0.02;
+                            addAffiliateEarnings($mysqli, $higher_affiliate_referrer_id, $higher_affiliate_commission, $prog, $typeof_purchase);
+                        }
+                    }
+                }
+            }
+            
     
             echo "<script>
                 Swal.fire({
@@ -146,4 +200,5 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
         });
     </script>";
 }
+mysqli_close($mysqli);
 ?>
