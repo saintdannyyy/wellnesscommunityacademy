@@ -8,5 +8,4 @@ require_once __DIR__ . '../../config/loadENV.php';
     if ($mysqli->connect_error) {
         die("Connection failed: " . $mysqli->connect_error);
     }
-    session_start();
 ?>
