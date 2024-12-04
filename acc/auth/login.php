@@ -39,20 +39,10 @@ include('../../conn/conn.php');
 // Include SweetAlert library
 echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
 
-if (isset($_GET['redirect'])) {
-    $redirectUrl = urldecode($_GET['redirect']);
-    echo "<script>console.log('Redirect URL: " . $redirectUrl . "');</script>";
-} else {
-    $redirectUrl = '../../';
-    echo "<script>console.log('Redirect URL not set, defaulting to ../../');</script>";
-}
-// $redirectUrl= 'wellness/books/books.php';
-
 // Collect form data
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = isset($_POST['email']) ? $_POST['email'] : '';
     $password = isset($_POST['password']) ? $_POST['password'] : '';
-    echo $redirectUrl;
 
     // Check if email and password are provided
     if (empty($email) || empty($password)) {
@@ -72,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     try {
         // Prepare and execute query to fetch customer data
-        $query = "SELECT id, password FROM customers WHERE email = ?";
+        $query = "SELECT id, name, email, phone, password FROM customers WHERE email = ?";
         $stmt = $mysqli->prepare($query);
         $stmt->bind_param('s', $email);
         $stmt->execute();
@@ -87,6 +77,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // Start session and set session variables
                 session_start();
                 $_SESSION['customer_id'] = $customer['id'];
+                $_SESSION['customer_name'] = $customer['name'];
+                $_SESSION['customer_email'] = $customer['email'];
+                $_SESSION['customer_phone'] = $customer['phone'];
 
                 // Show success alert and redirect to the intended page
                 echo "<script>
@@ -94,13 +87,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         Swal.fire({
                             icon: 'success',
                             title: 'Sign-In Successful',
-                            text: 'You have successfully signed in. Redirecting to " . $redirectUrl ."',
+                            text: 'You have successfully signed in.',
                             timer: 2000, // 2-second timeout
                             timerProgressBar: true
                         }).then((result) => {
                             if (result.dismiss === Swal.DismissReason.timer || result.isConfirmed) {
-                                console.log('Redirecting to: " . $redirectUrl . "');
-                                window.location.href = '{$redirectUrl}';
+                                window.location.href = '../../';
                             }
                         });
                     });
