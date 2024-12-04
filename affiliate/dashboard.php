@@ -21,29 +21,40 @@ include('../conn/conn.php');
 
 // Fetch affiliate information
 $affiliateId = $_SESSION['affiliate_id'];
-$query = "SELECT * FROM affiliates WHERE id = ?";
-$stmt = $mysqli->prepare($query);
-$stmt->bind_param('i', $affiliateId);
-$stmt->execute();
-$result = $stmt->get_result();
-$affiliate = $result->fetch_assoc();
 
 // Generate affiliate link
 function encodeReferralId($affiliateId) {
     $key = $_ENV['AFFILIATE_ID_ENCRYPTION_KEY'];
     return base64_encode(openssl_encrypt($affiliateId, 'aes-256-cbc', $key, 0, substr($key, 0, 16)));
 }
-$encodedReferral = encodeReferralId($affiliate['affiliate_id']);
-$affiliateLink = "https://wellnesscommunityacademy.com/affiliate/auth/register.php?rf=" . urlencode($encodedReferral);
+$encodedReferral = encodeReferralId($affiliateId);
+$affiliateLink = "https://wellnesscommunityacademy.com/acc/auth/register.php?rf=" . urlencode($encodedReferral);
 
-// Fetch referred affiliates
-$queryReferred = "SELECT name, email, created_at FROM affiliates 
-                  WHERE id IN (SELECT affiliate_id FROM affiliate_referrals WHERE referred_by = ?)";
+// Query to fetch referred users
+$queryReferred = "SELECT name, email, affiliate, created_at 
+                  FROM customers 
+                  WHERE affiliate_referrer_id = ?";
 $stmtReferred = $mysqli->prepare($queryReferred);
-$stmtReferred->bind_param('i', $affiliateId);
+$stmtReferred->bind_param('i', $_SESSION['affiliate_index']);
 $stmtReferred->execute();
 $resultReferred = $stmtReferred->get_result();
-$referredAffiliates = $resultReferred->fetch_all(MYSQLI_ASSOC);
+
+// Arrays to store referred affiliates and customers
+$referredAffiliates = [];
+$referredCustomers = [];
+
+// Classify the results
+while ($row = $resultReferred->fetch_assoc()) {
+    if ((int)$row['affiliate'] === 1) {
+        $referredAffiliates[] = $row; // Add to affiliates array
+    } else {
+        $referredCustomers[] = $row; // Add to customers array
+    }
+}
+
+// Close the prepared statement
+$stmtReferred->close();
+
 
 // Calculate commissions
 // $queryCommissions = "SELECT 
@@ -60,14 +71,14 @@ $referredAffiliates = $resultReferred->fetch_all(MYSQLI_ASSOC);
 // $totalCommissions = $commissions['direct_commissions'] + $commissions['indirect_commissions'];
 
 // Log the activity of viewing the dashboard
-log_activity($affiliateId, 'Viewed Dashboard', $mysqli);
+// log_activity($affiliateId, 'Viewed Dashboard', $mysqli);
 
-function log_activity($affiliateId, $action, $mysqli) {
-    $query = "INSERT INTO activity_log (affiliate_id, action, timestamp) VALUES (?, ?, NOW())";
-    $stmt = $mysqli->prepare($query);
-    $stmt->bind_param('is', $affiliateId, $action);
-    $stmt->execute();
-}
+// function log_activity($affiliateId, $action, $mysqli) {
+//     $query = "INSERT INTO activity_log (affiliate_id, action, timestamp) VALUES (?, ?, NOW())";
+//     $stmt = $mysqli->prepare($query);
+//     $stmt->bind_param('is', $affiliateId, $action);
+//     $stmt->execute();
+// }
 ?>
 
 <!DOCTYPE html>
@@ -81,13 +92,13 @@ function log_activity($affiliateId, $action, $mysqli) {
 </head>
 <body>
     <div class="dashboard">
-        <h1>Welcome, <?php echo $affiliate['name']; ?></h1>
-        <p><strong>Email:</strong> <?php echo $affiliate['email']; ?></p>
+        <h1>Welcome, <?php echo $_SESSION['customer_name']; ?></h1>
+        <p><strong>Email:</strong> <?php echo $_SESSION['customer_email']; ?></p>
         <p><strong>Your Affiliate Link:</strong></p>
         <input type="text" id="affiliateLink" value="<?php echo $affiliateLink; ?>" readonly>
         <button onclick="copyAffiliateLink()">Copy Link</button>
 
-        <h2>Your Referrals</h2>
+        <h2>Affiliates Referred By You</h2>
         <?php if (!empty($referredAffiliates)) : ?>
             <table>
                 <thead>
@@ -98,7 +109,8 @@ function log_activity($affiliateId, $action, $mysqli) {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($referredAffiliates as $referral) : ?>
+                    <?php
+                         foreach ($referredAffiliates as $referral) : ?>
                         <tr>
                             <td><?php echo htmlspecialchars($referral['name']); ?></td>
                             <td><?php echo htmlspecialchars($referral['email']); ?></td>
@@ -108,8 +120,35 @@ function log_activity($affiliateId, $action, $mysqli) {
                 </tbody>
             </table>
         <?php else : ?>
-            <p>You have no referrals yet.</p>
+            <p>You have not referred any affiliate yet.</p>
         <?php endif; ?>
+
+        <!-- referred customers -->
+        <h2>Customers Referred By You</h2>
+        <?php if (!empty($referredCustomers)) : ?>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Registration Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                         foreach ($referredCustomers as $referral) : ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($referral['name']); ?></td>
+                            <td><?php echo htmlspecialchars($referral['email']); ?></td>
+                            <td><?php echo htmlspecialchars($referral['created_at']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else : ?>
+            <p>You have not referred any customer yet.</p>
+        <?php endif; ?>
+
 
         <h2>Your Commissions</h2>
         <p><strong>Direct Commissions:</strong> $<?php echo number_format($commissions['direct_commissions'], 2); ?></p>
