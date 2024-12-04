@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,7 +60,74 @@
 
     <script>
         /*! loadCSS rel=preload polyfill. [c]2017 Filament Group, Inc. MIT License */
-        (function (w) { "use strict"; if (!w.loadCSS) { w.loadCSS = function () { } } var rp = loadCSS.relpreload = {}; rp.support = function () { var ret; try { ret = w.document.createElement("link").relList.supports("preload") } catch (e) { ret = false } return function () { return ret } }(); rp.bindMediaToggle = function (link) { var finalMedia = link.media || "all"; function enableStylesheet() { link.media = finalMedia } if (link.addEventListener) { link.addEventListener("load", enableStylesheet) } else if (link.attachEvent) { link.attachEvent("onload", enableStylesheet) } setTimeout(function () { link.rel = "stylesheet"; link.media = "only x" }); setTimeout(enableStylesheet, 3e3) }; rp.poly = function () { if (rp.support()) { return } var links = w.document.getElementsByTagName("link"); for (var i = 0; i < links.length; i++) { var link = links[i]; if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) { link.setAttribute("data-loadcss", true); rp.bindMediaToggle(link) } } }; if (!rp.support()) { rp.poly(); var run = w.setInterval(rp.poly, 500); if (w.addEventListener) { w.addEventListener("load", function () { rp.poly(); w.clearInterval(run) }) } else if (w.attachEvent) { w.attachEvent("onload", function () { rp.poly(); w.clearInterval(run) }) } } if (typeof exports !== "undefined") { exports.loadCSS = loadCSS } else { w.loadCSS = loadCSS } })(typeof global !== "undefined" ? global : this);
+        (function(w) {
+            "use strict";
+            if (!w.loadCSS) {
+                w.loadCSS = function() {}
+            }
+            var rp = loadCSS.relpreload = {};
+            rp.support = function() {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload")
+                } catch (e) {
+                    ret = false
+                }
+                return function() {
+                    return ret
+                }
+            }();
+            rp.bindMediaToggle = function(link) {
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia
+                }
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet)
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet)
+                }
+                setTimeout(function() {
+                    link.rel = "stylesheet";
+                    link.media = "only x"
+                });
+                setTimeout(enableStylesheet, 3e3)
+            };
+            rp.poly = function() {
+                if (rp.support()) {
+                    return
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        link.setAttribute("data-loadcss", true);
+                        rp.bindMediaToggle(link)
+                    }
+                }
+            };
+            if (!rp.support()) {
+                rp.poly();
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function() {
+                        rp.poly();
+                        w.clearInterval(run)
+                    })
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function() {
+                        rp.poly();
+                        w.clearInterval(run)
+                    })
+                }
+            }
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS
+            } else {
+                w.loadCSS = loadCSS
+            }
+        })(typeof global !== "undefined" ? global : this);
 
         window.global_id = 'eARVKzNMhyZa';
         window.secure_base_url = '//app.kartra.com/';
@@ -100,53 +170,74 @@
         }
     </style>
     <script>
-        var google_analytics = null;
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-175519445-2"></script>
+        var google_analytics = null; <
+        !--Global site tag(gtag.js) - Google Analytics-- >
+            <
+            script async src = "https://www.googletagmanager.com/gtag/js?id=UA-175519445-2" >
+    </script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
 
-    gtag('config', 'UA-175519445-2');
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-175519445-2');
     </script>
 
     <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
-    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "aqpjjtqipr");
+        (function(c, l, a, r, i, t, y) {
+            c[a] = c[a] || function() {
+                (c[a].q = c[a].q || []).push(arguments)
+            };
+            t = l.createElement(r);
+            t.async = 1;
+            t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0];
+            y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "aqpjjtqipr");
     </script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-217187331-1"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
 
-    gtag('config', 'UA-217187331-1');
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-217187331-1');
     </script>
 
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-217187331-1"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
 
-    gtag('config', 'UA-217187331-1');
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-217187331-1');
     </script>
 
 
     <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
-    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "aqpjjtqipr");
+        (function(c, l, a, r, i, t, y) {
+            c[a] = c[a] || function() {
+                (c[a].q = c[a].q || []).push(arguments)
+            };
+            t = l.createElement(r);
+            t.async = 1;
+            t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0];
+            y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "aqpjjtqipr");
     </script>
     <link rel=“canonical” href=“https://www.cooperwellnesscenter.com/” />
 
@@ -357,23 +448,41 @@
                                         </a>
                                     </div>
                                     <div class="dropdown">
-                                        <?php if(isset($_SESSION['customer_id'])): ?>
-                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-user-circle" style="font-size: 20px; color: green;"></i>
+                                        <?php if (isset($_SESSION['customer_id'])): ?>
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                                style="background-color: #28a745; border: none; color: white; padding: 5px 5px; border-radius: 5px;">
+                                                <span style="font-size: 20px; color: white; border-radius: 50%; background-color: #28a745; padding: 10px;"><?php echo strtoupper(substr($_SESSION['customer_name'], 0, 3)); ?></span>
                                             </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                                style="min-width: 150px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 5px;">
+                                                <a class="dropdown-item" href="#" style="padding: 10px 20px; color: #333; text-decoration: none; font-size: 14px;" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                    Logout
+                                                </a>
+                                                <form id="logout-form" action="../acc/auth/logout.php" method="POST" style="display: none;">
+                                                    <input type="hidden" name="logout" value="true">
+                                                </form>
+                                            </div>
                                         <?php else: ?>
-                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-user-circle" style="font-size: 20px; color: red;"></i>
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                                style="background-color: #dc3545; border: none; color: white; padding: 10px 20px; border-radius: 5px;">
+                                                <i class="fas fa-user-circle" style="font-size: 20px; color: white;"></i>
                                             </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                                style="min-width: 150px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 5px;">
+                                                <a class="dropdown-item" href="../acc/auth/login.php" style="padding: 10px 20px; color: #333; text-decoration: none; font-size: 14px;">
+                                                    Login
+                                                </a>
+                                                <div class="dropdown-divider" style="margin: 5px 0; border-top: 1px solid #e9ecef;"></div>
+                                                <a class="dropdown-item" href="../acc/auth/register.php"
+                                                    style="padding: 10px 20px; color: #dc3545; text-decoration: none; font-size: 14px;">
+                                                    Register
+                                                </a>
+                                            </div>
                                         <?php endif; ?>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <!-- User options can be added here -->
-                                            <a class="dropdown-item" href="#">Profile</a>
-                                            <a class="dropdown-item" href="#">Settings</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="logout.php">Logout</a>
-                                        </div>
                                     </div>
+
 
                                     <div data-component="button" style="width: auto;">
                                         <!--<a class="kartra_button1 kartra_button1--royal-blue kartra_button1--icon-right kartra_button1--md-sm-margin-top-extra-small kartra_button1--solid kartra_button1--small kartra_button1--rounded pull-center toggle_pagelink"-->
@@ -592,147 +701,166 @@
                                 </div>
 
                                 <script>
-                // Open modal
-                function openDoctorMeetingModal(event) {
-                    event.preventDefault();
-                document.getElementById("meetModal").style.display = "flex";
-                                        }
+                                    // Open modal
+                                    function openDoctorMeetingModal(event) {
+                                        event.preventDefault();
+                                        document.getElementById("meetModal").style.display = "flex";
+                                    }
 
-                // Close modal
-                function closeDoctorMeetingModal() {
-                    document.getElementById("meetModal").style.display = "none";
-                                        }
+                                    // Close modal
+                                    function closeDoctorMeetingModal() {
+                                        document.getElementById("meetModal").style.display = "none";
+                                    }
 
-                // Close modal on outside click
-                window.onclick = function(event) {
-                                            var modal = document.getElementById("meetModal");
-                if (event.target == modal) {
-                    modal.style.display = "none";
+                                    // Close modal on outside click
+                                    window.onclick = function(event) {
+                                        var modal = document.getElementById("meetModal");
+                                        if (event.target == modal) {
+                                            modal.style.display = "none";
+                                        }
+                                    }
+
+                                    // Set minimum datetime to prevent past selection
+                                    const visitDateTime = document.getElementById("visitDateTime");
+                                    const now = new Date();
+                                    visitDateTime.min = now.toISOString().slice(0, 16);
+
+                                    // Declare cost as a global variable
+                                    let cost = 0;
+
+                                    // Update duration to cost
+                                    function updateDuration(change) {
+                                        const durationInput = document.getElementById("duration");
+                                        const totalCostElement = document.getElementById("totalCost");
+                                        let duration = parseInt(durationInput.value) + change;
+
+                                        // Minimum duration is 30 minutes
+                                        if (duration >= 30) {
+                                            durationInput.value = duration;
+                                            cost = 75 * (duration / 30); // Update the global cost variable
+                                            totalCostElement.innerText = `$${cost}`;
+                                        }
+                                    }
+
+                                    // Conversion to cedis API with Open Exchange Rates
+                                    const openExchangeAppID = '0d6f5687149b407fb1c561d00ecdb908';
+                                    const openExchangeUrl = `https://openexchangerates.org/api/latest.json?app_id=${openExchangeAppID}&symbols=GHS&base=USD`;
+
+
+                                    // Conversion to cedis
+                                    async function fetchOpenExchangeData(cost) {
+                                        try {
+                                            const response = await fetch(openExchangeUrl);
+                                            const exchangeData = await response.json();
+                                            // console.log("Exchange Data:", exchangeData);
+                                            // console.log("exchange rate object:", exchangeData.rates);
+
+                                            // Verify if API returned expected data
+                                            if (exchangeData && exchangeData.rates && exchangeData.timestamp) {
+                                                console.log("exchange rate from api:", exchangeData.rates.GHS);
+                                                console.log("Cost object:", cost);
+                                                const usdToGhsRate = exchangeData.rates.GHS;
+                                                const priceInGhs = (cost * usdToGhsRate).toFixed(2);
+                                                return priceInGhs;
+                                            } else {
+                                                throw new Error("Failed to retrieve exchange rate data");
                                             }
+                                        } catch (error) {
+                                            console.error("Error fetching currency data:", error);
+                                            return null;
                                         }
+                                    }
 
-                // Set minimum datetime to prevent past selection
-                const visitDateTime = document.getElementById("visitDateTime");
-                const now = new Date();
-                visitDateTime.min = now.toISOString().slice(0, 16);
+                                    // Payment script
+                                    async function payWithPaystack(e) {
+                                        e.preventDefault();
+                                        const email = document.getElementById("email").value;
+                                        const phone = document.getElementById("number").value;
+                                        const name = document.getElementById("name").value;
+                                        const datetime = document.getElementById("visitDateTime").value;
+                                        const reason = document.getElementById("reason").value;
+                                        const duration = parseInt(document.getElementById("duration").value);
 
-                // Declare cost as a global variable
-                let cost = 0;
+                                        // Calculate cost in USD
+                                        const cost = (75 * (duration / 30)).toFixed(2);
 
-                // Update duration to cost
-                function updateDuration(change) {
-                                            const durationInput = document.getElementById("duration");
-                const totalCostElement = document.getElementById("totalCost");
-                let duration = parseInt(durationInput.value) + change;
+                                        // Convert USD cost to GHS
+                                        const priceInGhs = await fetchOpenExchangeData(cost);
 
-                                            // Minimum duration is 30 minutes
-                                            if (duration >= 30) {
-                    durationInput.value = duration;
-                cost = 75 * (duration / 30); // Update the global cost variable
-                totalCostElement.innerText = `$${cost}`;
-                                            }
-                                        }
-
-                // Conversion to cedis API with Open Exchange Rates
-                const openExchangeAppID = '0d6f5687149b407fb1c561d00ecdb908';
-                const openExchangeUrl = `https://openexchangerates.org/api/latest.json?app_id=${openExchangeAppID}&symbols=GHS&base=USD`;
-
-
-                // Conversion to cedis
-                async function fetchOpenExchangeData(cost) {
-                                            try {
-                                                const response = await fetch(openExchangeUrl);
-                const exchangeData = await response.json();
-                // console.log("Exchange Data:", exchangeData);
-                // console.log("exchange rate object:", exchangeData.rates);
-
-                // Verify if API returned expected data
-                if (exchangeData && exchangeData.rates && exchangeData.timestamp) {
-                    console.log("exchange rate from api:", exchangeData.rates.GHS);
-                console.log("Cost object:", cost);
-                const usdToGhsRate = exchangeData.rates.GHS;
-                const priceInGhs = (cost * usdToGhsRate).toFixed(2);
-                return priceInGhs;
-                                                } else {
-                                                    throw new Error("Failed to retrieve exchange rate data");
-                                                }
-                                            } catch (error) {
-                    console.error("Error fetching currency data:", error);
-                return null;
-                                            }
-                                        }
-
-                // Payment script
-                async function payWithPaystack(e) {
-                    e.preventDefault();
-                const email = document.getElementById("email").value;
-                const phone = document.getElementById("number").value;
-                const name = document.getElementById("name").value;
-                const datetime = document.getElementById("visitDateTime").value;
-                const reason = document.getElementById("reason").value;
-                const duration = parseInt(document.getElementById("duration").value);
-
-                // Calculate cost in USD
-                const cost = (75 * (duration / 30)).toFixed(2);
-
-                // Convert USD cost to GHS
-                const priceInGhs = await fetchOpenExchangeData(cost);
-
-                // Check if the price conversion succeeded
-                if (!priceInGhs) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Conversion Error',
-                        text: 'Unable to retrieve conversion rate. Please try again later.'
-                    });
-                return;
-                                            }
-
-                // Calculate amount in pesewas for Paystack (GHS to pesewas)
-                const amountInPesewas = Math.round(priceInGhs * 100);
-
-                const paystackPublicKey = "pk_test_f5b5f05ffa20e04d5a54bedf16e0605ddab5281c";
-
-                // Initialize Paystack payment
-                const handler = PaystackPop.setup({
-                    key: paystackPublicKey,
-                email: email,
-                amount: amountInPesewas,
-                currency: "GHS",
-                ref: "VMeet" + Math.floor((Math.random() * 1000000000) + 1),
-                metadata: {
-                    custom_fields: [
-                {display_name: "Phone", variable_name: "phone", value: phone },
-                {display_name: "Duration", variable_name: "duration", value: duration },
-                {display_name: "Datetime", variable_name: "datetime", value: datetime },
-                {display_name: "Name", variable_name: "name", value: name },
-                {display_name: "Reason", variable_name: "reason", value: reason },
-                ]
-                                                },
-                callback: function(response) {
-                    // Payment successful
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Payment Successful!',
-                        text: 'Reference: ' + response.reference,
-                        confirmButtonText: 'OK'
-                    }).then(() => {
-                        window.location.href = "pay/meeting_pay.php?reference=" + response.reference;
-                    });
-                                                },
-                onClose: function() {
-                    // Payment was canceled
-                    Swal.fire({
-                        icon: 'info',
-                        title: 'Transaction Cancelled',
-                        text: 'Transaction was not completed. Please try again.',
-                        confirmButtonText: 'OK'
-                    });
-                                                }
+                                        // Check if the price conversion succeeded
+                                        if (!priceInGhs) {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Conversion Error',
+                                                text: 'Unable to retrieve conversion rate. Please try again later.'
                                             });
-
-                handler.openIframe(); // Open Paystack inline modal
+                                            return;
                                         }
+
+                                        // Calculate amount in pesewas for Paystack (GHS to pesewas)
+                                        const amountInPesewas = Math.round(priceInGhs * 100);
+
+                                        const paystackPublicKey = "pk_test_f5b5f05ffa20e04d5a54bedf16e0605ddab5281c";
+
+                                        // Initialize Paystack payment
+                                        const handler = PaystackPop.setup({
+                                            key: paystackPublicKey,
+                                            email: email,
+                                            amount: amountInPesewas,
+                                            currency: "GHS",
+                                            ref: "VMeet" + Math.floor((Math.random() * 1000000000) + 1),
+                                            metadata: {
+                                                custom_fields: [{
+                                                        display_name: "Phone",
+                                                        variable_name: "phone",
+                                                        value: phone
+                                                    },
+                                                    {
+                                                        display_name: "Duration",
+                                                        variable_name: "duration",
+                                                        value: duration
+                                                    },
+                                                    {
+                                                        display_name: "Datetime",
+                                                        variable_name: "datetime",
+                                                        value: datetime
+                                                    },
+                                                    {
+                                                        display_name: "Name",
+                                                        variable_name: "name",
+                                                        value: name
+                                                    },
+                                                    {
+                                                        display_name: "Reason",
+                                                        variable_name: "reason",
+                                                        value: reason
+                                                    },
+                                                ]
+                                            },
+                                            callback: function(response) {
+                                                // Payment successful
+                                                Swal.fire({
+                                                    icon: 'success',
+                                                    title: 'Payment Successful!',
+                                                    text: 'Reference: ' + response.reference,
+                                                    confirmButtonText: 'OK'
+                                                }).then(() => {
+                                                    window.location.href = "pay/meeting_pay.php?reference=" + response.reference;
+                                                });
+                                            },
+                                            onClose: function() {
+                                                // Payment was canceled
+                                                Swal.fire({
+                                                    icon: 'info',
+                                                    title: 'Transaction Cancelled',
+                                                    text: 'Transaction was not completed. Please try again.',
+                                                    confirmButtonText: 'OK'
+                                                });
+                                            }
+                                        });
+
+                                        handler.openIframe(); // Open Paystack inline modal
+                                    }
                                 </script>
                             </div>
                         </div>
@@ -902,74 +1030,75 @@
                                 </div>
                                 <div id="iEWaRVp6DQ" data-component="button">
                                     <a
-                                            class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-left toggle_pagelink"
-                                            style="background-color: rgb(243, 113, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 700; padding: 8px 12px; font-family: Lato;"
-                                            href="javascript:void(0);" 
-                                            onclick="openPaymentPopup('1')"
-                                            data-frame-id="_jdqqkwtyf">
-                                            <span
-                                                class="kartra_icon__icon fa fa-book"
-                                                style="color: rgb(255, 255, 255); border-color: rgb(255, 255, 255); font-weight: 700;"></span>
-                                            GET YOUR COPY
-                                        </a>
-                                    </div>
+                                        class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-left toggle_pagelink"
+                                        style="background-color: rgb(243, 113, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 700; padding: 8px 12px; font-family: Lato;"
+                                        href="javascript:void(0);"
+                                        onclick="openPaymentPopup('1')"
+                                        data-frame-id="_jdqqkwtyf">
+                                        <span
+                                            class="kartra_icon__icon fa fa-book"
+                                            style="color: rgb(255, 255, 255); border-color: rgb(255, 255, 255); font-weight: 700;"></span>
+                                        GET YOUR COPY
+                                    </a>
+                                </div>
                                 <script>
                                     let priceInUSD;
                                     let priceInNGN;
+
                                     function openPaymentPopup(bookId) {
                                         console.log("Fetching payment details for book ID:", bookId);
                                         const formData = new FormData();
                                         formData.append('book_id', bookId);
-                                    
+
                                         fetch('books.php', {
-                                            method: 'POST',
-                                            body: formData
-                                        })
-                                        .then(response => {
-                                            console.log("Response status:", response.status);
-                                            return response.json(); // Parse JSON
-                                        })
-                                        .then(data => {
-                                            console.log("Data received from server:", data);
-                                            if (data.success) {
-                                                document.getElementById('price').innerText = data.data.price_ghs;
-                                                // document.getElementById('amount').innerText = data.data.price_ghs;
-                                                document.getElementById('book_name').innerText = data.data.title;
-                                                document.getElementById('modal_price').value = data.data.price_ghs;
-                                                // document.getElementById('usdghs_rate').innerText = data.data.rate_usd_to_ghs;
-                                                document.getElementById('usd_price').innerText = data.data.price_usd;
-                                                priceInUSD = data.data.price_usd;
-                                                priceInNGN = data.data.price_ngn;
-                                                console.log("Book title:", data.data.title);
-                                                console.log("Price in USD:", data.data.price_usd);
-                                                console.log("Price in GHS:", data.data.price_ghs);
-                                                console.log("Price in NGN:", data.data.price_ngn);
-                                                console.log("USDGHS rate:", data.data.rate_usd_to_ghs);
-                                                console.log("USDNGN rate:", data.data.rate_usd_to_ngn);
-                                                document.getElementById('book_id').value = bookId;
-                                                document.getElementById('paymentModal').style.display = 'flex';
-                                            } else {
-                                                console.error("Error: Failed to fetch price details. Server responded with:", data);
-                                                alert(`Failed to fetch the price. ${data.message}`);
-                                            }
-                                        })
-                                        .catch(err => {
-                                            // Log the error for debugging
-                                            console.error('Error fetching price:', err);
-                                            alert('An unexpected error occurred. Please try again later.');
-                                        });
+                                                method: 'POST',
+                                                body: formData
+                                            })
+                                            .then(response => {
+                                                console.log("Response status:", response.status);
+                                                return response.json(); // Parse JSON
+                                            })
+                                            .then(data => {
+                                                console.log("Data received from server:", data);
+                                                if (data.success) {
+                                                    document.getElementById('price').innerText = data.data.price_ghs;
+                                                    // document.getElementById('amount').innerText = data.data.price_ghs;
+                                                    document.getElementById('book_name').innerText = data.data.title;
+                                                    document.getElementById('modal_price').value = data.data.price_ghs;
+                                                    // document.getElementById('usdghs_rate').innerText = data.data.rate_usd_to_ghs;
+                                                    document.getElementById('usd_price').innerText = data.data.price_usd;
+                                                    priceInUSD = data.data.price_usd;
+                                                    priceInNGN = data.data.price_ngn;
+                                                    console.log("Book title:", data.data.title);
+                                                    console.log("Price in USD:", data.data.price_usd);
+                                                    console.log("Price in GHS:", data.data.price_ghs);
+                                                    console.log("Price in NGN:", data.data.price_ngn);
+                                                    console.log("USDGHS rate:", data.data.rate_usd_to_ghs);
+                                                    console.log("USDNGN rate:", data.data.rate_usd_to_ngn);
+                                                    document.getElementById('book_id').value = bookId;
+                                                    document.getElementById('paymentModal').style.display = 'flex';
+                                                } else {
+                                                    console.error("Error: Failed to fetch price details. Server responded with:", data);
+                                                    alert(`Failed to fetch the price. ${data.message}`);
+                                                }
+                                            })
+                                            .catch(err => {
+                                                // Log the error for debugging
+                                                console.error('Error fetching price:', err);
+                                                alert('An unexpected error occurred. Please try again later.');
+                                            });
                                     }
                                     // Close the modal when clicking outside of it
-								window.onclick = function(event) {
-									var modal = document.getElementById("paymentModal");
-									if (event.target == modal) {
-										modal.style.display = "none";
-									}
-								}
+                                    window.onclick = function(event) {
+                                        var modal = document.getElementById("paymentModal");
+                                        if (event.target == modal) {
+                                            modal.style.display = "none";
+                                        }
+                                    }
                                 </script>
                                 <script src="https://js.paystack.co/v1/inline.js"></script>
-                                
-                               <!-- Modal -->
+
+                                <!-- Modal -->
                                 <div id="paymentModal" class="modal" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1000; display: none; justify-content: center; align-items: center;">
                                     <div class="modal-content" style="background-color: #fff; width: 90%; max-width: 400px; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); text-align: center; position: relative;">
                                         <h4 style="font-size: 24px; font-weight: bold; color: #333; margin-bottom: 20px;">Confirm Your Payment for <span id="book_name"></span></h4>
@@ -977,21 +1106,21 @@
                                         <!--<p>Conversion rate: <span id="rate" style="font-weight: bold;"></span></p>-->
                                         <!--<p style="font-size: 15px; color: #555; margin-bottom: 20px;">Amount Payable: GHS <span id="amount" style="font-weight: bold;"></span></p>-->
 
-                                        
+
                                         <form id="paymentForm" onsubmit="payWithPaystack(event)" style="display: flex; flex-direction: column; align-items: center;">
                                             <input type="hidden" name="book_id" id="book_id">
                                             <input type="hidden" name="price" id="modal_price">
-                                
+
                                             <label for="email" style="align-self: flex-start; font-size: 14px; margin-bottom: 5px; color: #333;">Email:</label>
-                                            <input type="mail" id="mail" name="email" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
-                                
+                                            <input type="mail" id="mail" name="email" value="<?php echo htmlspecialchars($_SESSION['customer_email'], ENT_QUOTES, 'UTF-8'); ?>" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+
                                             <label for="phone" style="align-self: flex-start; font-size: 14px; margin-bottom: 5px; color: #333;">Phone:</label>
-                                            <input type="text" id="phone" name="phone" required style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
-                                
+                                            <input type="text" id="phone" name="phone" value="<?php echo htmlspecialchars($_SESSION['customer_phone'], ENT_QUOTES, 'UTF-8'); ?>" required style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+
                                             <label for="currency" style="align-self: flex-start; font-size: 14px; margin-bottom: 5px; color: #333;">Currency:</label>
                                             <select id="currency" name="currency" required style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
-                                                <option value="USD">USD Dollars</option>
                                                 <option value="GHS">GHS Cedis</option>
+                                                <option value="USD">USD Dollars</option>
                                                 <option value="NGN">NGN Naira</option>
                                             </select>
                                             <button type="submit" style="padding: 10px 20px; background-color: #f37121; color: #fff; border: none; border-radius: 4px; font-size: 18px; cursor: pointer; font-weight: bold;">Proceed to Payment</button>
@@ -1006,7 +1135,7 @@
                                             const bookId = document.getElementById("book_id").value;
                                             const priceInGHS = document.getElementById("modal_price").value;
                                             const currency = document.getElementById("currency").value;
-                                             let amount = 0;
+                                            let amount = 0;
                                             // Handle different currencies
                                             if (currency === "GHS") {
                                                 // Convert GHS to Pesewas (1 GHS = 100 Pesewas)
@@ -1025,7 +1154,7 @@
 
 
                                             const paystackPublicKey = "pk_live_d914593ee8aca0448615ad9029b629a762bfefef";
-                                    
+
                                             // Initialize Paystack payment
                                             const handler = PaystackPop.setup({
                                                 key: paystackPublicKey,
@@ -1034,8 +1163,7 @@
                                                 currency: currency,
                                                 ref: "BOOK" + Math.floor((Math.random() * 1000000000) + 1),
                                                 metadata: {
-                                                    custom_fields: [
-                                                        {
+                                                    custom_fields: [{
                                                             display_name: "Phone",
                                                             variable_name: "phone",
                                                             value: phone
@@ -1068,7 +1196,7 @@
                                                     });
                                                 }
                                             });
-                                    
+
                                             handler.openIframe(); // Open the inline modal
                                         }
                                     </script>
@@ -1166,7 +1294,7 @@
                                     </div>
                                 </div>
                                 <div id="ZGYUfrttFC" data-component="button">
-                                <a
+                                    <a
                                         class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-left toggle_pagelink"
                                         style="background-color: rgb(243, 113, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 700; padding: 8px 12px; font-family: Lato;"
                                         href="javascript:void(0);" onclick="openPaymentPopup('7');"
@@ -1273,15 +1401,16 @@
                                                     data-frame-id="_jdqqkwtyf"><span>clic</span></a><span><a
                                                         href="http://amzn.to/2pqEs5d" target="_blank"
                                                         data-frame-id="_jdqqkwtyf"><span>k
-                                                            here</span></a>).</span></span></p>
+                                                            here</span></a>).</span></span>
+                                        </p>
                                     </div>
                                 </div>
                                 <div id="JxPLqBNdrT" data-component="button">
-                                <a
+                                    <a
                                         class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-left toggle_pagelink"
                                         style="background-color: rgb(243, 113, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 700; padding: 8px 12px; font-family: Lato;"
-                                        href="javascript:void(0);";"
-                                        data-frame-id="_jdqqkwtyf"onclick="openPaymentPopup('8')">
+                                        href="javascript:void(0);" ;"
+                                        data-frame-id="_jdqqkwtyf" onclick="openPaymentPopup('8')">
                                         <span
                                             class="kartra_icon__icon fa fa-book"
                                             style="color: rgb(255, 255, 255); border-color: rgb(255, 255, 255); font-weight: 700;"></span>
@@ -1395,7 +1524,7 @@
                                     <a
                                         class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-left toggle_pagelink"
                                         style="background-color: rgb(243, 113, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 700; padding: 8px 12px; font-family: Lato;"
-                                        href="javascript:void(0);"onclick="openPaymentPopup('2')"
+                                        href="javascript:void(0);" onclick="openPaymentPopup('2')"
                                         data-frame-id="_jdqqkwtyf">
                                         <span
                                             class="kartra_icon__icon fa fa-book"
@@ -1517,7 +1646,7 @@
                                         GET YOUR COPY
                                     </a>
                                 </div>
-                                
+
                                 <!--<div data-component="button" id="ndvetVwAQe"><a-->
                                 <!--        href="https://app.kartra.com/redirect_to/?asset=checkout&amp;id=fee28ea9820b6f1daf03f5c4960d6776"-->
                                 <!--        class="kartra_button1 kartra_button1--default kartra_button1--solid kartra_button1--medium kartra_button1--squared pull-left toggle_product default_checkout"-->
@@ -1534,10 +1663,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row" id="accordion-hNUQVoeruR"
+                    <!-- <div class="row" id="accordion-hNUQVoeruR"
                         style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-width: 0px; border-style: none; margin-top: 0px; margin-bottom: 80px; background-image: none;"
-                        data-component="grid">
-                        <div class="col-md-4">
+                        data-component="grid"> -->
+                        <!-- <div class="col-md-4">
                             <div class="js_kartra_component_holder">
                                 <div href="javascript: void(0);" data-component="image" id="esS6uTmRrP">
                                     <picture>
@@ -1555,14 +1684,14 @@
                                     </picture>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="js_kartra_component_holder">
-                                <div class="kartra_headline_block__index js_kartra_component_holder">
+                        </div> -->
+                        <!-- <div class="col-md-8">
+                            <div class="js_kartra_component_holder"> -->
+                                <!-- <div class="kartra_headline_block__index js_kartra_component_holder">
                                     <div class="row row--equal" id="zcwnT"
                                         style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-width: 0px; border-style: none; margin-top: 0px; margin-bottom: 20px; background-image: none;"
-                                        data-component="grid">
-                                        <div class="col-xs-2 col-md-1 column--vertical-center">
+                                        data-component="grid"> -->
+                                        <!-- <div class="col-xs-2 col-md-1 column--vertical-center">
                                             <div class="js_kartra_component_holder">
                                                 <div id="dJ6xv" data-component="headline">
                                                     <div class="kartra_headline kartra_headline--h3 kartra_headline--white kartra_headline--lato-font kartra_headline--font-weight-bold kartra_headline--vertical-center kartra_headline--size-extra-small kartra_headline--xs-size-tiny kartra_headline--margin-bottom-none"
@@ -1575,8 +1704,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-xs-7 col-md-8 column--vertical-center"
+                                        </div> -->
+                                        <!-- <div class="col-xs-7 col-md-8 column--vertical-center"
                                             style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-width: 0px; border-style: none; padding: 0px 15px 0px 25px; background-image: none;">
                                             <div class="js_kartra_component_holder">
                                                 <div id="accordion-1IF2TRY3F3" data-component="headline">
@@ -1588,10 +1717,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-xs-3 col-md-3 column--vertical-center"
+                                        </div> -->
+                                        <!-- <div class="col-xs-3 col-md-3 column--vertical-center"
                                             style="background-color: rgba(0, 0, 0, 0);border-radius: 0px;border-width: 0px;border-style: none;padding: 0px 15px 0px 25px;background-image: none;">
-                                            <div class="js_kartra_component_holder">
+                                            <div class="js_kartra_component_holder"> -->
                                                 <!--<div id="50LPAYMYF6" data-component="button"><a-->
                                                 <!--        class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-right toggle_product default_checkout"-->
                                                 <!--        style="background-color: rgb(49, 85, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 400; padding: 8px 12px; font-family: Lato;"-->
@@ -1602,15 +1731,15 @@
                                                 <!--        data-funnel-id="228785" data-product-id="228785"-->
                                                 <!--        data-price-point="b596454b8c65d11b46e3b64532b20e58"-->
                                                 <!--        data-asset-id="3" target="_parent">LEARN MORE </a></div>-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="accordion-N1LJq53bEO" data-component="divider">
+                                            <!-- </div>
+                                        </div> -->
+                                    <!-- </div>
+                                </div> -->
+                                <!-- <div id="accordion-N1LJq53bEO" data-component="divider">
                                     <hr class="kartra_divider kartra_divider--border-tiny kartra_divider--border-full-light-grey kartra_divider--full"
                                         style="margin: 0px auto; width: 100%; border-top: 1px solid rgb(204, 204, 204); border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-right-color: rgb(204, 204, 204); border-bottom-color: rgb(204, 204, 204); border-left-color: rgb(204, 204, 204);">
-                                </div>
-                                <div data-component="text">
+                                </div> -->
+                                <!-- <div data-component="text">
                                     <div class="kartra_text kartra_text--text-left kartra_text--sm-text-center kartra_text--light-grey"
                                         style="position: relative;">
                                         <h1>This is a set of eight physical bible study guides which emphasize God’s
@@ -1628,9 +1757,9 @@
                                         </ol>
                                         <p> </p>
                                     </div>
-                                </div>
-                                <div id="80wDsbD9Af" data-component="button">
-                                <a
+                                </div> -->
+                                <!-- <div id="80wDsbD9Af" data-component="button">
+                                    <a
                                         class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-left toggle_pagelink"
                                         style="background-color: rgb(243, 113, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 700; padding: 8px 12px; font-family: Lato;"
                                         href="javascript:void(0);" onclick="openPaymentPopup('4');"
@@ -1640,14 +1769,14 @@
                                             style="color: rgb(255, 255, 255); border-color: rgb(255, 255, 255); font-weight: 700;"></span>
                                         GET YOUR COPY
                                     </a>
-                                </div>
-                                <div id="Vi75H0mwXX" data-component="divider">
+                                </div> -->
+                                <!-- <div id="Vi75H0mwXX" data-component="divider">
                                     <hr class="kartra_divider kartra_divider--border-tiny kartra_divider--border-full-light-grey kartra_divider--full"
                                         style="margin: 0px auto;width: 100%;border-top: 1px solid rgb(204, 204, 204);border-right-style: solid;border-bottom-style: solid;border-left-style: solid;border-right-color: rgb(204, 204, 204);border-bottom-color: rgb(204, 204, 204);border-left-color: rgb(204, 204, 204);padding-bottom: 10px;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                </div> -->
+                            <!-- </div>
+                        </div> -->
+                    <!-- </div> -->
                     <div class="row" id="accordion-hNUQVoeruR"
                         style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-width: 0px; border-style: none; margin-top: 0px; margin-bottom: 80px; background-image: none;"
                         data-component="grid">
@@ -1736,7 +1865,7 @@
                                     </div>
                                 </div>
                                 <div id="6g1QXx15VO" data-component="button">
-                                <a
+                                    <a
                                         class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-left toggle_pagelink"
                                         style="background-color: rgb(243, 113, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 700; padding: 8px 12px; font-family: Lato;"
                                         href="javascript:void(0);" onclick="openPaymentPopup('5');"
@@ -1852,7 +1981,7 @@
                                     </div>
                                 </div>
                                 <div id="iEWaRVp6DQ" data-component="button">
-                                <a
+                                    <a
                                         class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-left toggle_pagelink"
                                         style="background-color: rgb(243, 113, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 700; padding: 8px 12px; font-family: Lato;"
                                         href="javascript:void(0);" onclick="openPaymentPopup('9');"
@@ -2072,7 +2201,7 @@
                                     </div>
                                 </div>
                                 <div id="JxPLqBNdrT" data-component="button">
-                                <a
+                                    <a
                                         class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-left toggle_pagelink"
                                         style="background-color: rgb(243, 113, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 700; padding: 8px 12px; font-family: Lato;"
                                         href="javascript:void(0);" onclick="openPaymentPopup('6');"
@@ -2180,7 +2309,7 @@
                                     </div>
                                 </div>
                                 <div id="xVqPUWaGED" data-component="button">
-                                <a
+                                    <a
                                         class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-left toggle_pagelink"
                                         style="background-color: rgb(243, 113, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 700; padding: 8px 12px; font-family: Lato;"
                                         href="javascript:void(0);" onclick="openPaymentPopup('11');"
@@ -2288,7 +2417,7 @@
                                     </div>
                                 </div>
                                 <div id="bo0WUAOkGt" data-component="button">
-                                <a
+                                    <a
                                         class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-left toggle_pagelink"
                                         style="background-color: rgb(243, 113, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 700; padding: 8px 12px; font-family: Lato;"
                                         href="javascript:void(0);" onclick="openPaymentPopup('12');"
@@ -2404,7 +2533,7 @@
                                     </div>
                                 </div>
                                 <div id="SyiOPIV3DN" data-component="button">
-                                <a
+                                    <a
                                         class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-left toggle_pagelink"
                                         style="background-color: rgb(243, 113, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 700; padding: 8px 12px; font-family: Lato;"
                                         href="javascript:void(0);" onclick="openPaymentPopup('13');"
@@ -2505,11 +2634,12 @@
                                             sentiment when he wrote, <em><span><span>“The doctor of the future will give
                                                         no medicine, but will interest her or his patients in the care
                                                         of the human frame, in a proper diet, and in the cause and
-                                                        prevention of disease.”</span></span></em></p>
+                                                        prevention of disease.”</span></span></em>
+                                        </p>
                                     </div>
                                 </div>
                                 <div id="BpDSstJHng" data-component="button">
-                                <a
+                                    <a
                                         class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-left toggle_pagelink"
                                         style="background-color: rgb(243, 113, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 700; padding: 8px 12px; font-family: Lato;"
                                         href="javascript:void(0);" onclick="openPaymentPopup('14');"
@@ -2635,7 +2765,7 @@
                                         style="margin: 0px auto;width: 100%;border-top: 1px solid rgb(204, 204, 204);border-right-style: solid;border-bottom-style: solid;border-left-style: solid;border-right-color: rgb(204, 204, 204);border-bottom-color: rgb(204, 204, 204);border-left-color: rgb(204, 204, 204);padding-bottom: 10px;">
                                 </div>
                                 <div id="kdOwVUW4Xs" data-component="button">
-                                <a
+                                    <a
                                         class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-left toggle_pagelink"
                                         style="background-color: rgb(243, 113, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 700; padding: 8px 12px; font-family: Lato;"
                                         href="javascript:void(0);" onclick="openPaymentPopup('15');"
@@ -2722,17 +2852,17 @@
                                         </div>
                                     </div>
                                     <div id="FDgEndCVNZ" data-component="button">
-                                    <a
-                                        class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-left toggle_pagelink"
-                                        style="background-color: rgb(243, 113, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 700; padding: 8px 12px; font-family: Lato;"
-                                        href="javascript:void(0);" onclick="openPaymentPopup('16');"
-                                        data-frame-id="_jdqqkwtyf">
-                                        <span
-                                            class="kartra_icon__icon fa fa-book"
-                                            style="color: rgb(255, 255, 255); border-color: rgb(255, 255, 255); font-weight: 700;"></span>
-                                        GET YOUR COPY
-                                    </a>
-                                </div>
+                                        <a
+                                            class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-left toggle_pagelink"
+                                            style="background-color: rgb(243, 113, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 700; padding: 8px 12px; font-family: Lato;"
+                                            href="javascript:void(0);" onclick="openPaymentPopup('16');"
+                                            data-frame-id="_jdqqkwtyf">
+                                            <span
+                                                class="kartra_icon__icon fa fa-book"
+                                                style="color: rgb(255, 255, 255); border-color: rgb(255, 255, 255); font-weight: 700;"></span>
+                                            GET YOUR COPY
+                                        </a>
+                                    </div>
                                     <div class="row row--equal" id="zcwnT"
                                         style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-width: 0px; border-style: none; margin-top: 0px; margin-bottom: 20px; background-image: none;"
                                         data-component="grid">
@@ -2927,275 +3057,296 @@
                     </div>
                 </div>
             </div>
-                <div class="content content--padding-medium content--padding-bottom-none content--padding-top-none"
-        style="background-color: rgb(49, 85, 40); padding: 0px;" id="_6723f824ea44e">
-        <div class="background_changer background_changer--blur0" style="background-image: none; opacity: 1;"></div>
-        <div class="background_changer_overlay" style="background-image: none;"></div>
-        <div>
-            <div>
-                <div class="row row--margin-left-right-none" data-component="grid">
-                    <div class="col-md-12 column--padding-none">
-                        <div class="js_kartra_component_holder">
-                            <div data-component="divider" id="AmalMPkQaq">
-                                <hr class="kartra_divider kartra_divider--border-small kartra_divider--border-dark-orange kartra_divider--margin-bottom-small pull-center kartra_divider--full"
-                                    style="border-color: rgb(243, 113, 33); border-top-style: solid; border-top-width: 50px; margin: 0px auto 25px;">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="container">
-                    <div class="row row--equal" data-component="grid">
-                        <div class="col-md-3">
-                            <div class="js_kartra_component_holder">
-                                <div data-component="headline">
-                                    <div class="kartra_headline kartra_headline--white kartra_headline--open-sans-font kartra_headline--h6 kartra_headline--font-weight-bold kartra_headline--sm-text-center kartra_headline--margin-bottom-tiny"
-                                        style="position: relative;">
-                                        <p>INSIDE WCA</p>
-                                    </div>
-                                </div>
-                                <div class="kartra_link_wrapper kartra_link_wrapper--flex kartra_link_wrapper--flex-direction-column kartra_link_wrapper--align-left kartra_link_wrapper--sm-align-center kartra_link_wrapper--md-margin-bottom-extra-small"
-                                    data-component="bundle">
-                                    <a class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant toggle_pagelink"
-                                        href="../about"
-                                        data-frame-id="_6723f824ea44e"
-                                        style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "open sans";'
-                                        data-project-id="3" data-page-id="107" target="_parent">About Us</a>
-
-
-                                    <!--<a class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant toggle_pagelink"-->
-                                    <!--    href="https://cooperwellness.kartra.com/affiliates/154973"-->
-                                    <!--    data-frame-id="_6723f824ea44e"-->
-                                    <!--    style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "Open Sans";'-->
-                                    <!--    target="_blank">Affiliates</a>-->
-                                        <a
-                                        class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant toggle_pagelink"
-                                        href="../othersites"
-                                        data-frame-id="_6723f824ea44e"
-                                        style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "open sans";'
-                                        data-project-id="3" data-page-id="192" target="_parent">Our Other Sites</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="js_kartra_component_holder">
-                                <div data-component="headline">
-                                    <div class="kartra_headline kartra_headline--white kartra_headline--open-sans-font kartra_headline--h6 kartra_headline--font-weight-bold kartra_headline--sm-text-center kartra_headline--margin-bottom-tiny"
-                                        style="position: relative;">
-                                        <p>SHOP</p>
-                                    </div>
-                                </div>
-                                <div class="kartra_link_wrapper kartra_link_wrapper--flex kartra_link_wrapper--flex-direction-column kartra_link_wrapper--align-left kartra_link_wrapper--sm-align-center kartra_link_wrapper--md-margin-bottom-extra-small"
-                                    data-component="bundle">
-                                    <a class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant toggle_pagelink"
-                                        href="../books"
-                                        data-frame-id="_6723f824ea44e"
-                                        style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "open sans";'
-                                        data-project-id="3" data-page-id="181" target="_parent">Books</a>
-                                    <a class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant toggle_pagelink"
-                                        href="../courses"
-                                        data-frame-id="_6723f824ea44e"
-                                        style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "open sans";'
-                                        data-project-id="3" data-page-id="191" target="_parent">Courses</a>
-                                    <!--<a class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant toggle_pagelink"-->
-                                    <!--    href="https://app.kartra.com/redirect_to/?asset=page&amp;id=X7M6t4dB2vZa"-->
-                                    <!--    data-frame-id="_6723f824ea44e"-->
-                                    <!--    style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "open sans";'-->
-                                    <!--    data-project-id="3" data-page-id="25" target="_parent">Supplements</a>-->
-
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="js_kartra_component_holder">
-                                <div data-component="headline">
-                                    <div class="kartra_headline kartra_headline--white kartra_headline--open-sans-font kartra_headline--h6 kartra_headline--font-weight-bold kartra_headline--sm-text-center kartra_headline--margin-bottom-tiny"
-                                        style="position: relative;">
-                                        <p>JOIN THE COMMUNITY</p>
-                                    </div>
-                                </div>
-                                <div class="kartra_link_wrapper kartra_link_wrapper--flex kartra_link_wrapper--flex-direction-column kartra_link_wrapper--align-left kartra_link_wrapper--sm-align-center kartra_link_wrapper--md-margin-bottom-extra-small"
-                                    data-component="bundle" id="vY5bCnVEve">
-                                    <a class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant toggle_pagelink"
-                                        href="../programs/#accordion-kw63qIXFpj"
-                                        data-frame-id="_6723f824ea44e"
-                                        style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "open sans";'
-                                        data-project-id="3" data-page-id="261" target="_parent">8 Weeks to
-                                        Wellness</a>
-                                    <!--<a-->
-                                    <!--    class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant toggle_pagelink"-->
-                                    <!--    href="https://cooperwellness.kartra.com/page/weightloss"-->
-                                    <!--    data-frame-id="_6723f824ea44e"-->
-                                    <!--    style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "Open Sans";'-->
-                                    <!--    target="_blank">Weight Loss</a>-->
-                                    <a
-                                        class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant toggle_pagelink"
-                                        href="../programs"
-                                        data-frame-id="_6723f824ea44e"
-                                        style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "open sans";'
-                                        data-project-id="3" data-page-id="201" target="_parent">Programs</a>
-
-
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="js_kartra_component_holder">
-                                <div data-component="headline">
-                                    <div
-                                        class="kartra_headline kartra_headline--white kartra_headline--open-sans-font kartra_headline--h6 kartra_headline--font-weight-bold kartra_headline--sm-text-center kartra_headline--md-margin-left-big-tiny kartra_headline--margin-bottom-tiny">
-                                        <p>FOLLOW US</p>
-                                    </div>
-                                </div>
-                                <div class="social_icons_wrapper social_icons_wrapper--flex social_icons_wrapper--sm-align-center social_icons_wrapper--margin-bottom-extra-small social_icons_wrapper--negative-margin-left-right-extra-tiny"
-                                    data-component="bundle" id="gh5dIWFe6l_L1BbrTbCCI">
-                                    <div data-component="icon">
-                                        <a href="https://www.facebook.com/cooperwellness/" target="_blank"
-                                            class="toggle_pagelink " data-frame-id="_6723f824ea44e">
-                                            <div class="kartra_icon kartra_icon--margin-left-right-extra-tiny kartra_icon--hover-opacity-medium kartra_icon--dark-grey kartra_icon--medium"
-                                                style="background-color: rgba(0, 0, 0, 0); margin: 0px auto;">
-                                                <span class="kartra_icon__icon fa fa-facebook"
-                                                    style="color: rgb(158, 158, 158);"></span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div data-component="icon" href="javascript: void(0);">
-                                        <a href="https://www.instagram.com/cooperwellnesscenter/" target="_blank"
-                                            class="toggle_pagelink " data-frame-id="_6723f824ea44e">
-                                            <div class="kartra_icon kartra_icon--margin-left-right-extra-tiny kartra_icon--hover-opacity-medium kartra_icon--dark-grey kartra_icon--medium"
-                                                style="background-color: rgba(0, 0, 0, 0); margin: 0px auto;">
-                                                <span style="color: rgb(158, 158, 158);"
-                                                    class="kartra_icon__icon fa fa-instagram"></span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div data-component="icon" href="javascript: void(0);">
-                                        <a href="https://www.youtube.com/channel/UCihzseMaylCivEhN5lN9Peg/?sub_confirmation=1"
-                                            class="toggle_pagelink" data-frame-id="_6723f824ea44e" target="_blank">
-                                            <div class="kartra_icon kartra_icon--margin-left-right-extra-tiny kartra_icon--hover-opacity-medium kartra_icon--dark-grey kartra_icon--medium"
-                                                style="background-color: rgba(0, 0, 0, 0); margin: 0px auto;">
-                                                <span style="color: rgb(158, 158, 158);"
-                                                    class="kartra_icon__icon fa fa-youtube-square"></span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div data-component="icon" href="javascript: void(0);">
-                                        <a href="https://twitter.com/DrCooperDockery" target="_blank"
-                                            class="toggle_pagelink " data-frame-id="_6723f824ea44e">
-                                            <div class="kartra_icon kartra_icon--margin-left-right-extra-tiny kartra_icon--hover-opacity-medium kartra_icon--dark-grey kartra_icon--medium"
-                                                style="background-color: rgba(0, 0, 0, 0); margin: 0px auto;">
-                                                <span style="color: rgb(158, 158, 158);"
-                                                    class="kartra_icon__icon fa fa-twitter"></span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="kartra_link_wrapper kartra_link_wrapper--flex kartra_link_wrapper--flex-direction-column kartra_link_wrapper--align-left kartra_link_wrapper--sm-align-center kartra_link_wrapper--md-margin-bottom-extra-small"
-                                    data-component="bundle" id="sZb8qF367H_Hryymdc3bt">
-
-
-
-                                    <a class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant"
-                                        href="javascript: void(0);" data-frame-id="_6723f824ea44e"
-                                        style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "open sans";'
-                                        target="_parent">3604 N. McColl Rd. McAllen, TX</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="kartra_element_bg kartra_element_bg--padding-top-special-medium kartra_element_bg--padding-bottom-tiny"
-                data-component="bundle" style="margin-top: 0px; margin-bottom: 0px; padding: 30px 0px 10px;">
-                <div style="background-color: rgb(64, 100, 55); border-radius: 0px; border-color: rgb(51, 51, 51); border-style: none; border-width: 0px; background-image: none; opacity: 1;"
-                    class="background-item background_changer--blur0"></div>
-                <div class="container">
-                    <div class="row row--equal" data-component="grid">
-                        <div class="col-md-5 column--vertical-center">
-                            <div class="js_kartra_component_holder js_kartra_component_holder--height-auto">
-                                <div data-component="image" href="javascript: void(0);">
-                                    <a href="../"
-                                        data-project-id="3" data-page-id="111" class="toggle_pagelink "
-                                        data-frame-id="_6723f824ea44e" target="_parent">
-                                        <picture>
-                                            <source type="image/webp"
-                                                data-srcset="//d11n7da8rpqbjy.cloudfront.net/cooperwellness/9267270_1587359598894Logo-GetHealthywithdrCooper-final-1024x244.webp">
-                                            </source>
-                                            <source type="image/png"
-                                                data-srcset="//d11n7da8rpqbjy.cloudfront.net/cooperwellness/9267270_1587359598894Logo-GetHealthywithdrCooper-final-1024x244.png">
-                                            </source><img
-                                                class="kartra_image kartra_image--max-width-full sm-pull-center kartra_image--margin-bottom-small pull-left background_changer--blur0"
-                                                src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
-                                                style="border-color: rgb(51, 51, 51); border-style: none; border-width: 0px; margin: 0px 0px 25px; opacity: 1; width: 257px; max-width: 100%; height: auto;"
-                                                data-original="//d11n7da8rpqbjy.cloudfront.net/cooperwellness/9267270_1587359598894Logo-GetHealthywithdrCooper-final-1024x244.png">
-                                        </picture>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-7 column--vertical-center">
-                            <div class="js_kartra_component_holder js_kartra_component_holder--height-auto">
-                                <div class="kartra_link_wrapper kartra_link_wrapper--flex kartra_link_wrapper--align-right kartra_link_wrapper--sm-align-center kartra_link_wrapper--margin-bottom-big-tiny"
-                                    data-component="bundle">
-                                    <a class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-bold kartra_list__link--semi-pro-white kartra_list__link--padding-left-right-tiny kartra_list__link--hover-opacity-giant kartra_list__link--margin-bottom-extra-tiny toggle_pagelink"
-                                        href="../contact"
-                                        data-frame-id="_6723f824ea44e"
-                                        style='color: rgba(255, 255, 255, 0.8); font-weight: 700; font-family: "open sans";'
-                                        data-project-id="3" data-page-id="112" target="_parent">CONTACT US</a>
-                                    <a class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-bold kartra_list__link--semi-pro-white kartra_list__link--padding-left-right-tiny kartra_list__link--hover-opacity-giant kartra_list__link--margin-bottom-extra-tiny toggle_pagelink"
-                                        href="../terms"
-                                        data-frame-id="_6723f824ea44e"
-                                        style='color: rgba(255, 255, 255, 0.8); font-weight: 700; font-family: "open sans";'
-                                        data-project-id="3" data-page-id="5" target="_parent">DISCLAIMERS</a>
-                                    <a class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-bold kartra_list__link--semi-pro-white kartra_list__link--padding-left-right-tiny kartra_list__link--hover-opacity-giant kartra_list__link--margin-bottom-extra-tiny toggle_pagelink "
-                                        href="../privacypolicy"
-                                        data-frame-id="_6723f824ea44e"
-                                        style='color: rgba(255, 255, 255, 0.8); font-weight: 700; font-family: "Open Sans";'
-                                        data-project-id="3" data-page-id="4" target="_parent">PRIVACY POLICY</a>
-                                    <a class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-bold kartra_list__link--semi-pro-white kartra_list__link--padding-left-right-tiny kartra_list__link--hover-opacity-giant kartra_list__link--margin-bottom-extra-tiny toggle_pagelink"
-                                        href="../terms"
-                                        data-frame-id="_6723f824ea44e" data-project-id="3" data-page-id="5"
-                                        style='color: rgba(255, 255, 255, 0.8); font-weight: 700; font-family: "Open Sans";'
-                                        target="_parent">TERMS OF USE</a>
-                                </div>
-                                <div data-component="text">
-                                    <div class="kartra_text kartra_text--open-sans-font kartra_text--font-weight-regular kartra_text--semi-pro-white kartra_text--text-right kartra_text--sm-text-center"
-                                        style="position: relative;" aria-controls="cke_55" aria-activedescendant=""
-                                        aria-autocomplete="list" aria-expanded="false">
-                                        <p>Copyright © 2024 by Cooper Wellness Center. All Rights Reserved.</p>
+            <div class="content content--padding-medium content--padding-bottom-none content--padding-top-none"
+                style="background-color: rgb(49, 85, 40); padding: 0px;" id="_6723f824ea44e">
+                <div class="background_changer background_changer--blur0" style="background-image: none; opacity: 1;"></div>
+                <div class="background_changer_overlay" style="background-image: none;"></div>
+                <div>
+                    <div>
+                        <div class="row row--margin-left-right-none" data-component="grid">
+                            <div class="col-md-12 column--padding-none">
+                                <div class="js_kartra_component_holder">
+                                    <div data-component="divider" id="AmalMPkQaq">
+                                        <hr class="kartra_divider kartra_divider--border-small kartra_divider--border-dark-orange kartra_divider--margin-bottom-small pull-center kartra_divider--full"
+                                            style="border-color: rgb(243, 113, 33); border-top-style: solid; border-top-width: 50px; margin: 0px auto 25px;">
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div>
+                        <div class="container">
+                            <div class="row row--equal" data-component="grid">
+                                <div class="col-md-3">
+                                    <div class="js_kartra_component_holder">
+                                        <div data-component="headline">
+                                            <div class="kartra_headline kartra_headline--white kartra_headline--open-sans-font kartra_headline--h6 kartra_headline--font-weight-bold kartra_headline--sm-text-center kartra_headline--margin-bottom-tiny"
+                                                style="position: relative;">
+                                                <p>INSIDE WCA</p>
+                                            </div>
+                                        </div>
+                                        <div class="kartra_link_wrapper kartra_link_wrapper--flex kartra_link_wrapper--flex-direction-column kartra_link_wrapper--align-left kartra_link_wrapper--sm-align-center kartra_link_wrapper--md-margin-bottom-extra-small"
+                                            data-component="bundle">
+                                            <a class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant toggle_pagelink"
+                                                href="../about"
+                                                data-frame-id="_6723f824ea44e"
+                                                style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "open sans";'
+                                                data-project-id="3" data-page-id="107" target="_parent">About Us</a>
+
+
+                                            <!--<a class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant toggle_pagelink"-->
+                                            <!--    href="https://cooperwellness.kartra.com/affiliates/154973"-->
+                                            <!--    data-frame-id="_6723f824ea44e"-->
+                                            <!--    style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "Open Sans";'-->
+                                            <!--    target="_blank">Affiliates</a>-->
+                                            <a
+                                                class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant toggle_pagelink"
+                                                href="../othersites"
+                                                data-frame-id="_6723f824ea44e"
+                                                style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "open sans";'
+                                                data-project-id="3" data-page-id="192" target="_parent">Our Other Sites</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="js_kartra_component_holder">
+                                        <div data-component="headline">
+                                            <div class="kartra_headline kartra_headline--white kartra_headline--open-sans-font kartra_headline--h6 kartra_headline--font-weight-bold kartra_headline--sm-text-center kartra_headline--margin-bottom-tiny"
+                                                style="position: relative;">
+                                                <p>SHOP</p>
+                                            </div>
+                                        </div>
+                                        <div class="kartra_link_wrapper kartra_link_wrapper--flex kartra_link_wrapper--flex-direction-column kartra_link_wrapper--align-left kartra_link_wrapper--sm-align-center kartra_link_wrapper--md-margin-bottom-extra-small"
+                                            data-component="bundle">
+                                            <a class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant toggle_pagelink"
+                                                href="../books"
+                                                data-frame-id="_6723f824ea44e"
+                                                style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "open sans";'
+                                                data-project-id="3" data-page-id="181" target="_parent">Books</a>
+                                            <a class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant toggle_pagelink"
+                                                href="../courses"
+                                                data-frame-id="_6723f824ea44e"
+                                                style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "open sans";'
+                                                data-project-id="3" data-page-id="191" target="_parent">Courses</a>
+                                            <!--<a class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant toggle_pagelink"-->
+                                            <!--    href="https://app.kartra.com/redirect_to/?asset=page&amp;id=X7M6t4dB2vZa"-->
+                                            <!--    data-frame-id="_6723f824ea44e"-->
+                                            <!--    style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "open sans";'-->
+                                            <!--    data-project-id="3" data-page-id="25" target="_parent">Supplements</a>-->
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="js_kartra_component_holder">
+                                        <div data-component="headline">
+                                            <div class="kartra_headline kartra_headline--white kartra_headline--open-sans-font kartra_headline--h6 kartra_headline--font-weight-bold kartra_headline--sm-text-center kartra_headline--margin-bottom-tiny"
+                                                style="position: relative;">
+                                                <p>JOIN THE COMMUNITY</p>
+                                            </div>
+                                        </div>
+                                        <div class="kartra_link_wrapper kartra_link_wrapper--flex kartra_link_wrapper--flex-direction-column kartra_link_wrapper--align-left kartra_link_wrapper--sm-align-center kartra_link_wrapper--md-margin-bottom-extra-small"
+                                            data-component="bundle" id="vY5bCnVEve">
+                                            <a class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant toggle_pagelink"
+                                                href="../programs/#accordion-kw63qIXFpj"
+                                                data-frame-id="_6723f824ea44e"
+                                                style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "open sans";'
+                                                data-project-id="3" data-page-id="261" target="_parent">8 Weeks to
+                                                Wellness</a>
+                                            <!--<a-->
+                                            <!--    class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant toggle_pagelink"-->
+                                            <!--    href="https://cooperwellness.kartra.com/page/weightloss"-->
+                                            <!--    data-frame-id="_6723f824ea44e"-->
+                                            <!--    style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "Open Sans";'-->
+                                            <!--    target="_blank">Weight Loss</a>-->
+                                            <a
+                                                class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant toggle_pagelink"
+                                                href="../programs"
+                                                data-frame-id="_6723f824ea44e"
+                                                style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "open sans";'
+                                                data-project-id="3" data-page-id="201" target="_parent">Programs</a>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="js_kartra_component_holder">
+                                        <div data-component="headline">
+                                            <div
+                                                class="kartra_headline kartra_headline--white kartra_headline--open-sans-font kartra_headline--h6 kartra_headline--font-weight-bold kartra_headline--sm-text-center kartra_headline--md-margin-left-big-tiny kartra_headline--margin-bottom-tiny">
+                                                <p>FOLLOW US</p>
+                                            </div>
+                                        </div>
+                                        <div class="social_icons_wrapper social_icons_wrapper--flex social_icons_wrapper--sm-align-center social_icons_wrapper--margin-bottom-extra-small social_icons_wrapper--negative-margin-left-right-extra-tiny"
+                                            data-component="bundle" id="gh5dIWFe6l_L1BbrTbCCI">
+                                            <div data-component="icon">
+                                                <a href="https://www.facebook.com/cooperwellness/" target="_blank"
+                                                    class="toggle_pagelink " data-frame-id="_6723f824ea44e">
+                                                    <div class="kartra_icon kartra_icon--margin-left-right-extra-tiny kartra_icon--hover-opacity-medium kartra_icon--dark-grey kartra_icon--medium"
+                                                        style="background-color: rgba(0, 0, 0, 0); margin: 0px auto;">
+                                                        <span class="kartra_icon__icon fa fa-facebook"
+                                                            style="color: rgb(158, 158, 158);"></span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div data-component="icon" href="javascript: void(0);">
+                                                <a href="https://www.instagram.com/cooperwellnesscenter/" target="_blank"
+                                                    class="toggle_pagelink " data-frame-id="_6723f824ea44e">
+                                                    <div class="kartra_icon kartra_icon--margin-left-right-extra-tiny kartra_icon--hover-opacity-medium kartra_icon--dark-grey kartra_icon--medium"
+                                                        style="background-color: rgba(0, 0, 0, 0); margin: 0px auto;">
+                                                        <span style="color: rgb(158, 158, 158);"
+                                                            class="kartra_icon__icon fa fa-instagram"></span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div data-component="icon" href="javascript: void(0);">
+                                                <a href="https://www.youtube.com/channel/UCihzseMaylCivEhN5lN9Peg/?sub_confirmation=1"
+                                                    class="toggle_pagelink" data-frame-id="_6723f824ea44e" target="_blank">
+                                                    <div class="kartra_icon kartra_icon--margin-left-right-extra-tiny kartra_icon--hover-opacity-medium kartra_icon--dark-grey kartra_icon--medium"
+                                                        style="background-color: rgba(0, 0, 0, 0); margin: 0px auto;">
+                                                        <span style="color: rgb(158, 158, 158);"
+                                                            class="kartra_icon__icon fa fa-youtube-square"></span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div data-component="icon" href="javascript: void(0);">
+                                                <a href="https://twitter.com/DrCooperDockery" target="_blank"
+                                                    class="toggle_pagelink " data-frame-id="_6723f824ea44e">
+                                                    <div class="kartra_icon kartra_icon--margin-left-right-extra-tiny kartra_icon--hover-opacity-medium kartra_icon--dark-grey kartra_icon--medium"
+                                                        style="background-color: rgba(0, 0, 0, 0); margin: 0px auto;">
+                                                        <span style="color: rgb(158, 158, 158);"
+                                                            class="kartra_icon__icon fa fa-twitter"></span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="kartra_link_wrapper kartra_link_wrapper--flex kartra_link_wrapper--flex-direction-column kartra_link_wrapper--align-left kartra_link_wrapper--sm-align-center kartra_link_wrapper--md-margin-bottom-extra-small"
+                                            data-component="bundle" id="sZb8qF367H_Hryymdc3bt">
+
+
+
+                                            <a class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant"
+                                                href="javascript: void(0);" data-frame-id="_6723f824ea44e"
+                                                style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "open sans";'
+                                                target="_parent">3604 N. McColl Rd. McAllen, TX</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kartra_element_bg kartra_element_bg--padding-top-special-medium kartra_element_bg--padding-bottom-tiny"
+                        data-component="bundle" style="margin-top: 0px; margin-bottom: 0px; padding: 30px 0px 10px;">
+                        <div style="background-color: rgb(64, 100, 55); border-radius: 0px; border-color: rgb(51, 51, 51); border-style: none; border-width: 0px; background-image: none; opacity: 1;"
+                            class="background-item background_changer--blur0"></div>
+                        <div class="container">
+                            <div class="row row--equal" data-component="grid">
+                                <div class="col-md-5 column--vertical-center">
+                                    <div class="js_kartra_component_holder js_kartra_component_holder--height-auto">
+                                        <div data-component="image" href="javascript: void(0);">
+                                            <a href="../"
+                                                data-project-id="3" data-page-id="111" class="toggle_pagelink "
+                                                data-frame-id="_6723f824ea44e" target="_parent">
+                                                <picture>
+                                                    <source type="image/webp"
+                                                        data-srcset="//d11n7da8rpqbjy.cloudfront.net/cooperwellness/9267270_1587359598894Logo-GetHealthywithdrCooper-final-1024x244.webp">
+                                                    </source>
+                                                    <source type="image/png"
+                                                        data-srcset="//d11n7da8rpqbjy.cloudfront.net/cooperwellness/9267270_1587359598894Logo-GetHealthywithdrCooper-final-1024x244.png">
+                                                    </source><img
+                                                        class="kartra_image kartra_image--max-width-full sm-pull-center kartra_image--margin-bottom-small pull-left background_changer--blur0"
+                                                        src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+                                                        style="border-color: rgb(51, 51, 51); border-style: none; border-width: 0px; margin: 0px 0px 25px; opacity: 1; width: 257px; max-width: 100%; height: auto;"
+                                                        data-original="//d11n7da8rpqbjy.cloudfront.net/cooperwellness/9267270_1587359598894Logo-GetHealthywithdrCooper-final-1024x244.png">
+                                                </picture>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-7 column--vertical-center">
+                                    <div class="js_kartra_component_holder js_kartra_component_holder--height-auto">
+                                        <div class="kartra_link_wrapper kartra_link_wrapper--flex kartra_link_wrapper--align-right kartra_link_wrapper--sm-align-center kartra_link_wrapper--margin-bottom-big-tiny"
+                                            data-component="bundle">
+                                            <a class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-bold kartra_list__link--semi-pro-white kartra_list__link--padding-left-right-tiny kartra_list__link--hover-opacity-giant kartra_list__link--margin-bottom-extra-tiny toggle_pagelink"
+                                                href="../contact"
+                                                data-frame-id="_6723f824ea44e"
+                                                style='color: rgba(255, 255, 255, 0.8); font-weight: 700; font-family: "open sans";'
+                                                data-project-id="3" data-page-id="112" target="_parent">CONTACT US</a>
+                                            <a class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-bold kartra_list__link--semi-pro-white kartra_list__link--padding-left-right-tiny kartra_list__link--hover-opacity-giant kartra_list__link--margin-bottom-extra-tiny toggle_pagelink"
+                                                href="../terms"
+                                                data-frame-id="_6723f824ea44e"
+                                                style='color: rgba(255, 255, 255, 0.8); font-weight: 700; font-family: "open sans";'
+                                                data-project-id="3" data-page-id="5" target="_parent">DISCLAIMERS</a>
+                                            <a class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-bold kartra_list__link--semi-pro-white kartra_list__link--padding-left-right-tiny kartra_list__link--hover-opacity-giant kartra_list__link--margin-bottom-extra-tiny toggle_pagelink "
+                                                href="../privacypolicy"
+                                                data-frame-id="_6723f824ea44e"
+                                                style='color: rgba(255, 255, 255, 0.8); font-weight: 700; font-family: "Open Sans";'
+                                                data-project-id="3" data-page-id="4" target="_parent">PRIVACY POLICY</a>
+                                            <a class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-bold kartra_list__link--semi-pro-white kartra_list__link--padding-left-right-tiny kartra_list__link--hover-opacity-giant kartra_list__link--margin-bottom-extra-tiny toggle_pagelink"
+                                                href="../terms"
+                                                data-frame-id="_6723f824ea44e" data-project-id="3" data-page-id="5"
+                                                style='color: rgba(255, 255, 255, 0.8); font-weight: 700; font-family: "Open Sans";'
+                                                target="_parent">TERMS OF USE</a>
+                                        </div>
+                                        <div data-component="text">
+                                            <div class="kartra_text kartra_text--open-sans-font kartra_text--font-weight-regular kartra_text--semi-pro-white kartra_text--text-right kartra_text--sm-text-center"
+                                                style="position: relative;" aria-controls="cke_55" aria-activedescendant=""
+                                                aria-autocomplete="list" aria-expanded="false">
+                                                <p>Copyright © 2024 by Cooper Wellness Center. All Rights Reserved.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
         </div>
         <script async defer src="https://app.kartra.com/resources/js/popup"></script>
     </div>
     <!-- /#page -->
     <div style="height:0px;width:0px;opacity:0;position:fixed">
-        <script>!function(){function e() { var e = ((new Date).getTime(), document.createElement("script")); e.type = "text/javascript", e.async = !0, e.setAttribute("embed-id", "e2a8e9c8-04f9-42cb-ba60-ba91aa1f5eaf"), e.src = "https://embed.adabundle.com/embed-scripts/e2a8e9c8-04f9-42cb-ba60-ba91aa1f5eaf"; var t = document.getElementsByTagName("script")[0]; t.parentNode.insertBefore(e, t) }var t=window;t.attachEvent?t.attachEvent("onload",e):t.addEventListener("load",e,!1)}();</script>
+        <script>
+            ! function() {
+                function e() {
+                    var e = ((new Date).getTime(), document.createElement("script"));
+                    e.type = "text/javascript", e.async = !0, e.setAttribute("embed-id", "e2a8e9c8-04f9-42cb-ba60-ba91aa1f5eaf"), e.src = "https://embed.adabundle.com/embed-scripts/e2a8e9c8-04f9-42cb-ba60-ba91aa1f5eaf";
+                    var t = document.getElementsByTagName("script")[0];
+                    t.parentNode.insertBefore(e, t)
+                }
+                var t = window;
+                t.attachEvent ? t.attachEvent("onload", e) : t.addEventListener("load", e, !1)
+            }();
+        </script>
     </div>
     <div style="height:0px;width:0px;opacity:0;position:fixed">
         <!-- Meta Pixel Code -->
         <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod ?
-        n.callMethod.apply(n, arguments) : n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1445107009514995');
-    fbq('track', 'PageView');
+            ! function(f, b, e, v, n, t, s) {
+                if (f.fbq) return;
+                n = f.fbq = function() {
+                    n.callMethod ?
+                        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                };
+                if (!f._fbq) f._fbq = n;
+                n.push = n;
+                n.loaded = !0;
+                n.version = '2.0';
+                n.queue = [];
+                t = b.createElement(e);
+                t.async = !0;
+                t.src = v;
+                s = b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t, s)
+            }(window, document, 'script',
+                'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '1445107009514995');
+            fbq('track', 'PageView');
         </script>
         <noscript><img height="1" width="1" style="display:none"
                 src="https://www.facebook.com/tr?id=1445107009514995&ev=PageView&noscript=1" /></noscript>
@@ -3203,16 +3354,26 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 
         <!-- Facebook Pixel Code -->
         <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod ?
-        n.callMethod.apply(n, arguments) : n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '307347596535190');
-    fbq('track', 'PageView');
+            ! function(f, b, e, v, n, t, s) {
+                if (f.fbq) return;
+                n = f.fbq = function() {
+                    n.callMethod ?
+                        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                };
+                if (!f._fbq) f._fbq = n;
+                n.push = n;
+                n.loaded = !0;
+                n.version = '2.0';
+                n.queue = [];
+                t = b.createElement(e);
+                t.async = !0;
+                t.src = v;
+                s = b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t, s)
+            }(window, document, 'script',
+                'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '307347596535190');
+            fbq('track', 'PageView');
         </script>
         <noscript><img height="1" width="1" style="display:none"
                 src="https://www.facebook.com/tr?id=307347596535190&ev=PageView&noscript=1" /></noscript>
@@ -3220,16 +3381,26 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 
         <!-- Facebook Pixel Code -->
         <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod ?
-        n.callMethod.apply(n, arguments) : n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1163530910472602');
-    fbq('track', 'PageView');
+            ! function(f, b, e, v, n, t, s) {
+                if (f.fbq) return;
+                n = f.fbq = function() {
+                    n.callMethod ?
+                        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                };
+                if (!f._fbq) f._fbq = n;
+                n.push = n;
+                n.loaded = !0;
+                n.version = '2.0';
+                n.queue = [];
+                t = b.createElement(e);
+                t.async = !0;
+                t.src = v;
+                s = b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t, s)
+            }(window, document, 'script',
+                'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '1163530910472602');
+            fbq('track', 'PageView');
         </script>
         <noscript><img height="1" width="1" style="display:none"
                 src="https://www.facebook.com/tr?id=1163530910472602&ev=PageView&noscript=1" /></noscript>
@@ -3242,25 +3413,35 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
     <script src="//app.kartra.com/resources/js/analytics/DpwDQa6g" async defer></script>
     <script src="//app.kartra.com/resources/js/page_check?page_id=eARVKzNMhyZa" async defer></script>
     <script>
-    if ( typeof window['jQuery'] !== 'undefined') {
-        window.jsVars = { "page_title": "Buy Health and Wellness Books by Dr Cooper", "page_description": "Dr. Dona Cooper is one of the best Physicians and founder of Cooper Wellness Center has written many books on diet plan and healthy lifestyle.", "page_keywords": "Get Stronger and Energetic Life, health and wellness books by dr. cooper", "page_robots": "index, follow", "secure_base_url": "\/\/app.kartra.com\/", "global_id": "eARVKzNMhyZa" };
-    window.global_id = 'eARVKzNMhyZa';
-    window.secure_base_url = '//app.kartra.com/';
-    if( typeof Porthole !== 'undefined' ) {
-        windowProxy = new Porthole.WindowProxy('//app.kartra.com/front/deal/proxy');
+        if (typeof window['jQuery'] !== 'undefined') {
+            window.jsVars = {
+                "page_title": "Buy Health and Wellness Books by Dr Cooper",
+                "page_description": "Dr. Dona Cooper is one of the best Physicians and founder of Cooper Wellness Center has written many books on diet plan and healthy lifestyle.",
+                "page_keywords": "Get Stronger and Energetic Life, health and wellness books by dr. cooper",
+                "page_robots": "index, follow",
+                "secure_base_url": "\/\/app.kartra.com\/",
+                "global_id": "eARVKzNMhyZa"
+            };
+            window.global_id = 'eARVKzNMhyZa';
+            window.secure_base_url = '//app.kartra.com/';
+            if (typeof Porthole !== 'undefined') {
+                windowProxy = new Porthole.WindowProxy('//app.kartra.com/front/deal/proxy');
+            }
         }
-    }
     </script>
     <footer>
         <div style="height:0px;width:0px;opacity:0;position:fixed">
             <!-- Global site tag (gtag.js) - Google Analytics -->
             <script async src="https://www.googletagmanager.com/gtag/js?id=UA-217187331-1"></script>
             <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+                window.dataLayer = window.dataLayer || [];
 
-    gtag('config', 'UA-217187331-1');
+                function gtag() {
+                    dataLayer.push(arguments);
+                }
+                gtag('js', new Date());
+
+                gtag('config', 'UA-217187331-1');
             </script>
 
 
