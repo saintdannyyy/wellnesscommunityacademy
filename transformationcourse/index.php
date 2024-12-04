@@ -458,7 +458,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                             <input type="text" id="phone" value="<?php echo htmlspecialchars($_SESSION['customer_phone']); ?>"  required
                                                 style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
                                                 
-                                                <p style="color: red;">This course costs <span style="font-weight: bold;">USD $<span id="course_price"></span></span><br/>You'll be charged in your local currency.</p>    
+                                                <p>This course costs <span style="font-weight: bold; color:red;">USD $<span id="course_price" style="color: red;"></span></span><br/>You'll be charged in your local currency.</p>    
                                                 <button onclick="nextStep(2)"
                                                 style="width: 100%; padding: 10px; background-color: #008cdd; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Next</button>
                                         </div>
