@@ -1,4 +1,28 @@
 <?php
+require('../config/loadENV.php');
+if ($_ENV['APP_ENV'] === 'dev') {
+    ini_set('display_errors', 1);  // Show errors in development environment
+    error_reporting(E_ALL);       // Report all errors
+} else {
+    ini_set('display_errors', 0);  // Hide errors in production environment
+}
+
+$open_exchange_api_key = $_ENV['open_exchange_api_key'] ?? null;
+
+if (!$open_exchange_api_key) {
+    echo json_encode(['success' => false, 'message' => 'API key for Open Exchange Rates is missing.']);
+    exit;
+}
+
+header('Content-Type: application/json');
+
+// Start session and check login
+session_start();
+if (!isset($_SESSION['customer_id'])) {
+    echo json_encode(['success' => false, 'message' => 'You are not logged in. Please log in.']);
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $courseID = $_POST['courseID'] ?? null;
 
