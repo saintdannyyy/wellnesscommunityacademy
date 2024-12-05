@@ -16,125 +16,122 @@ if (!isset($_SESSION['affiliate_id'])) {
     exit();
 }
 
-$affiliateId = $_SESSION['affiliate_index'];
+$affiliateId = $_SESSION['affiliate_id'];
 
 // Generate affiliate link
-function encodeReferralId($affiliateId) {
+function encodeReferralId($affiliateId)
+{
     $key = $_ENV['AFFILIATE_ID_ENCRYPTION_KEY'];
     return base64_encode(openssl_encrypt($affiliateId, 'aes-256-cbc', $key, 0, substr($key, 0, 16)));
 }
 $encodedReferral = encodeReferralId($affiliateId);
 $affiliateLink = "https://wellnesscommunityacademy.com/acc/auth/register.php?rf=" . urlencode($encodedReferral);
 
-// Fetch referred affiliates (direct)
-$queryDirectAffiliates = "SELECT COUNT(*) AS direct_count FROM affiliates WHERE referrer_id = ?";
-$stmtDirectAffiliates = $mysqli->prepare($queryDirectAffiliates);
-$stmtDirectAffiliates->bind_param('i', $affiliateId);
-$stmtDirectAffiliates->execute();
-$resultDirectAffiliates = $stmtDirectAffiliates->get_result()->fetch_assoc();
-$directAffiliateCount = $resultDirectAffiliates['direct_count'];
-$stmtDirectAffiliates->close();
-
-// Fetch referred affiliates (indirect)
-$queryIndirectAffiliates = "
-    SELECT COUNT(*) AS indirect_count 
-    FROM affiliates a1 
-    JOIN affiliates a2 ON a1.referrer_id = a2.id 
-    WHERE a2.referrer_id = ?";
-$stmtIndirectAffiliates = $mysqli->prepare($queryIndirectAffiliates);
-$stmtIndirectAffiliates->bind_param('i', $affiliateId);
-$stmtIndirectAffiliates->execute();
-$resultIndirectAffiliates = $stmtIndirectAffiliates->get_result()->fetch_assoc();
-$indirectAffiliateCount = $resultIndirectAffiliates['indirect_count'];
-$stmtIndirectAffiliates->close();
-
-// Fetch detailed commissions breakdown
-$queryCommissionsDetail = "
-    SELECT 
-        ae.typeof_purchase AS level,
-        ae.amount,
-        ae.product,
-        ae.created_at,
-        c.name AS customer_name,
-        c.email AS customer_email,
-        a1.customer_id AS referring_affiliate_customer_id,
-        (SELECT name FROM customers WHERE id = a1.customer_id) AS referring_affiliate_name
-    FROM affiliate_earnings ae
-    LEFT JOIN affiliates a1 ON ae.affiliate_id = a1.id
-    LEFT JOIN customers c ON a1.customer_id = c.id
-    WHERE ae.id = ?";
-$stmtCommissionsDetail = $mysqli->prepare($queryCommissionsDetail);
-echo "checking affiliate id: $affiliateId";
-$stmtCommissionsDetail->bind_param('i', $affiliateId);
-$stmtCommissionsDetail->execute();
-$resultCommissionsDetail = $stmtCommissionsDetail->get_result();
-
-$commissionDetails = [];
-while ($row = $resultCommissionsDetail->fetch_assoc()) {
-    $commissionDetails[] = $row;
+// Fetching all books
+$books = [];
+$sqlFetchBooks = "SELECT id, title FROM books";
+$fetchBooksResult = $mysqli->query($sqlFetchBooks);
+if ($fetchBooksResult->num_rows > 0) {
+    while ($row = $fetchBooksResult->fetch_assoc()) {
+        $books[] = ['id' => $row['id'], 'title' => $row['title']];
+    }
 }
-$stmtCommissionsDetail->close();
+
+// Fetching all courses
+$courses = [];
+$sqlFetchCourses = "SELECT id, course FROM courses";
+$fetchCoursesResult = $mysqli->query($sqlFetchCourses);
+if ($fetchCoursesResult->num_rows > 0) {
+    while ($row = $fetchCoursesResult->fetch_assoc()) {
+        $courses[] = ['id' => $row['id'], 'course' => $row['course']];
+    }
+}
+
+// Fetching all programs
+$programs = [];
+$sqlFetchPrograms = "SELECT id, program FROM programs";
+$fetchProgramsResult = $mysqli->query($sqlFetchPrograms);
+if ($fetchProgramsResult->num_rows > 0) {
+    while ($row = $fetchProgramsResult->fetch_assoc()) {
+        $programs[] = ['id' => $row['id'], 'program' => $row['program']];
+    }
+}
+
+// Combine all products into one array
+$products = array_merge($books, $courses, $programs);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Affiliate Dashboard</title>
+    <title>Promotions</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <div class="dashboard">
-        <h1>Welcome, <?php echo htmlspecialchars($_SESSION['customer_name']); ?></h1>
-        <p><strong>Email:</strong> <?php echo htmlspecialchars($_SESSION['customer_email']); ?></p>
-        <p><strong>Your Affiliate Link:</strong></p>
-        <input type="text" id="affiliateLink" value="<?php echo htmlspecialchars($affiliateLink); ?>" readonly>
-        <button onclick="copyAffiliateLink()">Copy Link</button>
+    <div class="d-flex">
+        <!-- Include Sidebar -->
+        <div>
+            <?php include 'sidebar/sidebar.html'; ?>
+        </div>
 
-        <h2>Affiliate Referrals</h2>
-        <p><strong>Directly Referred Affiliates:</strong> <?php echo $directAffiliateCount; ?></p>
-        <p><strong>Indirectly Referred Affiliates:</strong> <?php echo $indirectAffiliateCount; ?></p>
+        <!-- Main Content -->
+        <div class="flex-grow-1">
+            <div class="p-4 border-bottom">
+                <h5 class="text-dark">Products You Promote</h5>
+            </div>
 
-        <h2>Your Commissions Breakdown</h2>
-        <?php if (!empty($commissionDetails)) : ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Type</th>
-                        <th>Product</th>
-                        <th>Amount</th>
-                        <th>Customer Name</th>
-                        <th>Customer Email</th>
-                        <th>Referring Affiliate</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($commissionDetails as $commission) : ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($commission['level']); ?></td>
-                            <td><?php echo htmlspecialchars($commission['product']); ?></td>
-                            <td>$<?php echo number_format($commission['amount'], 2); ?></td>
-                            <td><?php echo htmlspecialchars($commission['customer_name']); ?></td>
-                            <td><?php echo htmlspecialchars($commission['customer_email']); ?></td>
-                            <td><?php echo htmlspecialchars($commission['referring_affiliate_name']); ?></td>
-                            <td><?php echo htmlspecialchars($commission['created_at']); ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php else : ?>
-            <p>No commissions yet.</p>
-        <?php endif; ?>
+            <div class="d-flex align-items-center mb-3">
+                <div class="me-auto">
+                    <h6>All Products</h6>
+                    <select class="form-select mb-3 selectpicker" data-live-search="true" id="productSelect">
+                        <option value="">Select a product</option>
+                        <?php foreach ($products as $product): ?>
+                            <option value="<?php echo htmlspecialchars($product['id']); ?>">
+                                <?php echo htmlspecialchars($product['title'] ?? $product['course'] ?? $product['program']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <button class="btn btn-outline-primary" onclick="copyAffiliateLink()">My Link</button>
+            </div>
+
+
+            <div class="d-flex justify-content-between p-3 bg-light border rounded">
+                <div>
+                    <p class="mb-1">Sales + Rebill</p>
+                    <h6>0 + 0</h6>
+                </div>
+                <div>
+                    <p class="mb-1">Commissions</p>
+                    <h6>USD 0</h6>
+                </div>
+                <div>
+                    <p class="mb-1">Affiliate Commission</p>
+                    <h6>15%</h6>
+                </div>
+                <div>
+                    <p class="mb-1">JV Commission</p>
+                    <h6>2%</h6>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function copyAffiliateLink() {
-            const link = document.getElementById('affiliateLink');
-            link.select();
-            navigator.clipboard.writeText(link.value).then(() => {
+            const link = "<?php echo $affiliateLink; ?>";
+            navigator.clipboard.writeText(link).then(() => {
                 Swal.fire({
                     icon: 'success',
                     title: 'Link Copied',
@@ -143,5 +140,14 @@ $stmtCommissionsDetail->close();
             });
         }
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            $('#productSelect').selectpicker({
+                liveSearch: true,
+                noneSelectedText: 'Select a product',
+            });
+        });
+    </script>
 </body>
+
 </html>
