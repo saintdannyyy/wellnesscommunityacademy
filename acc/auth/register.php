@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Validate referral code if provided
         $referredAffiliateId = null;
         if (!empty($referralCode)) {
-            $stmt = $mysqli->prepare("SELECT id FROM affiliates WHERE affiliate_id = ?");
+            $stmt = $mysqli->prepare("SELECT id FROM affiliates WHERE id = ?");
             $stmt->bind_param('s', $referralCode);
             $stmt->execute();
             $result = $stmt->get_result();
@@ -91,11 +91,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $referredAffiliateId = $result->fetch_assoc()['id'];
             } else {
                 echo "<script>
+                    document.addEventListener('DOMContentLoaded', function () {
                     Swal.fire({
                         icon: 'error',
                         title: 'Invalid Referral Code',
                         text: 'The referral code you entered does not exist.'
                     });
+            });
                 </script>";
                 exit();
             }
