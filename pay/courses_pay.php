@@ -118,6 +118,61 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
             $stmt->execute();
             $stmt->close();
             $mysqli->close();
+
+            function addAffiliateEarnings($mysqli, $affiliate_id, $commission, $course, $typeof_purchase) {
+                try {
+                    $stmt = $mysqli->prepare("INSERT INTO affiliate_earnings (affiliate_id, amount, product, typeof_purchase) VALUES (?, ?, ?, ?)");
+                    if (!$stmt) {
+                        throw new Exception("Prepare failed: " . $mysqli->error);
+                    }
+                    $stmt->bind_param("idss", $affiliate_id, $commission, $course, $typeof_purchase);
+                    $stmt->execute();
+                    $stmt->close();
+                } catch (Exception $e) {
+                    // Handle errors (log or display)
+                    error_log("Affiliate Earnings Error: " . $e->getMessage());
+                }
+            }
+            
+            $typeof_purchase = "L1 Purchase";
+            $sqlL1Affiliate = "SELECT affiliate_referrer_id FROM customers WHERE id = ?";
+            echo "making purchase:", $_SESSION['customer_id'], $_SESSION['customer_name'];
+            $stmtL1 = $mysqli->prepare($sqlL1Affiliate);
+            $stmtL1->bind_param("i", $_SESSION['customer_id']);
+            $stmtL1->execute();
+            $resultL1Affiliate = $stmtL1->get_result();
+            $stmtL1->close();
+            
+            if ($resultL1Affiliate->num_rows > 0) {
+                $rowL1Affiliate = $resultL1Affiliate->fetch_assoc();
+                echo "L1 affiliate for 15%:", $rowL1Affiliate['affiliate_referrer_id'];
+                $affiliate_referrer_id = $rowL1Affiliate['affiliate_referrer_id'];
+            
+                if ($affiliate_referrer_id != 0) {
+                    $affiliate_commission = $amount * 0.15;
+                    addAffiliateEarnings($mysqli, $affiliate_referrer_id, $affiliate_commission, $course, $typeof_purchase);
+            
+                    // Check for higher affiliate (L2)
+                    $sqlL2Affiliate = "SELECT referrer_id FROM affiliates WHERE id = ?";
+                    $stmtL2 = $mysqli->prepare($sqlL2Affiliate);
+                    $stmtL2->bind_param("i", $affiliate_referrer_id);
+                    $stmtL2->execute();
+                    $resultL2Affiliate = $stmtL2->get_result();
+                    $stmtL2->close();
+            
+                    if ($resultL2Affiliate->num_rows > 0) {
+                        $rowL2Affiliate = $resultL2Affiliate->fetch_assoc();
+                        echo "L2 affiliate for 2%:", $rowL2Affiliate['referrer_id'];
+                        $higher_affiliate_referrer_id = $rowL2Affiliate['referrer_id'];
+            
+                        if ($higher_affiliate_referrer_id != 0) {
+                            $typeof_purchase = "L2 Purchase";
+                            $higher_affiliate_commission = $amount * 0.02;
+                            addAffiliateEarnings($mysqli, $higher_affiliate_referrer_id, $higher_affiliate_commission, $course, $typeof_purchase);
+                        }
+                    }
+                }
+            }
     
             echo "<script>
                 Swal.fire({
