@@ -36,15 +36,15 @@ Welcome to the Wellness Community Academy! This platform provides resources and 
     ```bash
     cd wellnesscommunityacademy
     ```
-3. Install dependencies using Composer:
+<!-- 3. Install dependencies using Composer:
     ```bash
     composer install
-    ```
-4. Set up the environment file:
+    ``` -->
+3. Set up the environment file:
     ```bash
     cp .env.example .env
     ```
-5. Configure the `.env` file with your database details:
+4. Configure the `.env` file with your database details:
     ```env
     DB_CONNECTION=mysql
     DB_HOST=127.0.0.1
@@ -53,15 +53,15 @@ Welcome to the Wellness Community Academy! This platform provides resources and 
     DB_USERNAME=your_username
     DB_PASSWORD=your_password
     ```
-6. Generate the application key:
+5. Generate the application key:
     ```bash
     php artisan key:generate
     ```
-7. Run the database migrations:
+6. Run the database migrations:
     ```bash
     php artisan migrate
     ```
-8. (Optional) Seed the database with test data:
+7. (Optional) Seed the database with test data:
     ```bash
     php artisan db:seed
     ```
@@ -87,7 +87,7 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 ---
 
 ## Contact
-For inquiries or support, please email us at [support@wellnesscommunityacademy.com](mailto:support@wellnesscommunityacademy.com).
+For inquiries or support, please email us at [support@wellnesscommunityacademy.com](mailto:danieltesl746@gmail.com).
 
 ---
 
