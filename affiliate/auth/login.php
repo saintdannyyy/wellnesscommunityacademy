@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 timerProgressBar: true
                             }).then((result) => {
                                 if (result.dismiss === Swal.DismissReason.timer || result.isConfirmed) {
-                                    window.location.href = '../dashboard.php';
+                                    window.location.href = '../index.php';
                                 }
                             });
                         });
