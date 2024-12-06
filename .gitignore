@@ -1,3 +1,4 @@
 .env
-/config/
+/config/loadENV.php
 /admin/db/
+wellness.sql
