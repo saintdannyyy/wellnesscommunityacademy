@@ -55,6 +55,7 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
     $email = $responseData['data']['customer']['email'];
     $phone = $responseData['data']['metadata']['custom_fields'][0]['value'];
     $prog = $responseData['data']['metadata']['custom_fields'][1]['value'];
+    $pID = $responseData['data']['metadata']['custom_fields'][2]['value'];
 //     if (empty($prog)) {
 //     echo 'Program information is not available.';
 // } else {
@@ -105,13 +106,13 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
             $stmt->execute();
             $stmt->close();
             
-            function addAffiliateEarnings($mysqli, $affiliate_id, $commission, $product, $typeof_purchase) {
+            function addAffiliateEarnings($mysqli, $affiliate_id, $commission, $pID, $prog, $typeof_purchase) {
                 try {
-                    $stmt = $mysqli->prepare("INSERT INTO affiliate_earnings (affiliate_id, amount, product, typeof_purchase) VALUES (?, ?, ?, ?)");
+                    $stmt = $mysqli->prepare("INSERT INTO affiliate_earnings (affiliate_id, amount, product_id, product_name, typeof_purchase) VALUES (?, ?, ?, ?, ?)");
                     if (!$stmt) {
                         throw new Exception("Prepare failed: " . $mysqli->error);
                     }
-                    $stmt->bind_param("idss", $affiliate_id, $commission, $product, $typeof_purchase);
+                    $stmt->bind_param("idiss", $affiliate_id, $commission, $pID, $prog, $typeof_purchase);
                     $stmt->execute();
                     $stmt->close();
                 } catch (Exception $e) {
@@ -136,7 +137,7 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
             
                 if ($affiliate_referrer_id != 0) {
                     $affiliate_commission = $amount * 0.15;
-                    addAffiliateEarnings($mysqli, $affiliate_referrer_id, $affiliate_commission, $prog, $typeof_purchase);
+                    addAffiliateEarnings($mysqli, $affiliate_referrer_id, $affiliate_commission, $pID, $prog, $typeof_purchase);
             
                     // Check for higher affiliate (L2)
                     $sqlL2Affiliate = "SELECT referrer_id FROM affiliates WHERE id = ?";
@@ -154,7 +155,7 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
                         if ($higher_affiliate_referrer_id != 0) {
                             $typeof_purchase = "L2 Purchase";
                             $higher_affiliate_commission = $amount * 0.02;
-                            addAffiliateEarnings($mysqli, $higher_affiliate_referrer_id, $higher_affiliate_commission, $prog, $typeof_purchase);
+                            addAffiliateEarnings($mysqli, $higher_affiliate_referrer_id, $higher_affiliate_commission, $pID, $prog, $typeof_purchase);
                         }
                     }
                 }

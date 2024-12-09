@@ -127,7 +127,7 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
             
             $typeof_purchase = "L1 Purchase";
             $sqlL1Affiliate = "SELECT affiliate_referrer_id FROM customers WHERE id = ?";
-            echo "making purchase:", $_SESSION['customer_id'], $_SESSION['customer_name'];
+            // echo "making purchase:", $_SESSION['customer_id'], $_SESSION['customer_name'];
             $stmtL1 = $mysqli->prepare($sqlL1Affiliate);
             $stmtL1->bind_param("i", $_SESSION['customer_id']);
             $stmtL1->execute();
@@ -136,7 +136,7 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
             
             if ($resultL1Affiliate->num_rows > 0) {
                 $rowL1Affiliate = $resultL1Affiliate->fetch_assoc();
-                echo "L1 affiliate for 15%:", $rowL1Affiliate['affiliate_referrer_id'];
+                // echo "L1 affiliate for 15%:", $rowL1Affiliate['affiliate_referrer_id'];
                 $affiliate_referrer_id = $rowL1Affiliate['affiliate_referrer_id'];
             
                 if ($affiliate_referrer_id != 0) {
@@ -153,7 +153,7 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
             
                     if ($resultL2Affiliate->num_rows > 0) {
                         $rowL2Affiliate = $resultL2Affiliate->fetch_assoc();
-                        echo "L2 affiliate for 2%:", $rowL2Affiliate['referrer_id'];
+                        // echo "L2 affiliate for 2%:", $rowL2Affiliate['referrer_id'];
                         $higher_affiliate_referrer_id = $rowL2Affiliate['referrer_id'];
             
                         if ($higher_affiliate_referrer_id != 0) {
@@ -205,4 +205,5 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
                 });
             </script>";
 }
+$mysqli->close();
 ?>
