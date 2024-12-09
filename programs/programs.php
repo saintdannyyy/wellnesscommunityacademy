@@ -77,6 +77,7 @@ if (!isset($_SESSION['customer_id'])) {
             echo json_encode([
                 'success' => true,
                 'prog' => $prog,
+                'id' => $pID,
                 'price_usd' => $price,
                 'price' => round($price_in_ghs, 2),
                 'rate' => $usd_to_ghs_rate
