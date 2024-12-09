@@ -118,7 +118,6 @@ $products = array_merge($books, $courses, $programs);
                         <tr>
                             <th>Product</th>
                             <th>Sales</th>
-                            <th>Rebill</th>
                             <th>Commission</th>
                             <th>Type</th>
                             <th>Date</th>
@@ -126,7 +125,7 @@ $products = array_merge($books, $courses, $programs);
                     </thead>
                     <tbody id="earningsTableBody">
                         <tr>
-                            <td colspan="6" class="text-center">Select a product to view earnings</td>
+                            <td colspan="5" class="text-center">Select a product to view earnings</td>
                         </tr>
                     </tbody>
                 </table>
@@ -146,10 +145,19 @@ $products = array_merge($books, $courses, $programs);
                 Swal.fire({
                     icon: 'success',
                     title: 'Link Copied',
-                    text: 'Your affiliate link has been copied to the clipboard!'
+                    html: `
+                        <p>Your affiliate link has been copied to the clipboard!</p>
+                        <div class="input-group">
+                            <input type="text" value="${link}" class="form-control" readonly style="background-color: #f0f0f0;">
+                            <button class="btn btn-primary" onclick="navigator.clipboard.writeText('${link}')">
+                                <i class="bi bi-clipboard"></i> Copy Again
+                            </button>
+                        </div>
+                    `,
                 });
             });
         }
+
 
         // Script for fetching affiliate earnings
         document.addEventListener('DOMContentLoaded', function () {
@@ -180,11 +188,10 @@ $products = array_merge($books, $courses, $programs);
                         tableBody.innerHTML = data.map(earning => `
                             <tr>
                                 <td>${earning.product_name || 'N/A'}</td>
-                                <td>${earning.sales || 0}</td>
-                                <td>${earning.rebill || 0}</td>
+                                <td>${earning.total || 0}</td>
                                 <td>GHS ${earning.amount || 0}</td>
                                 <td>${earning.typeof_purchase || 0}</td>
-                                <td>${earning.created_at || 'N/A'}</td>
+                                <td>${new Date(earning.created_at).toLocaleString('en-US', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }) || 'N/A'}</td>
                             </tr>
                         `).join('');
                     }
