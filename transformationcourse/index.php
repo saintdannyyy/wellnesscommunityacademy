@@ -44,7 +44,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <link rel="dns-prefetch" href="//d2uolguxr56s4e.cloudfront.net">
     <script src="https://js.paystack.co/v1/inline.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!--scripts for payments processing-->
     <script>
         // Function to open the modal
@@ -100,7 +100,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                     document.getElementById('course_price').innerText = data.price_usd;
                     courseNO = data.courseID;
                     ghs_price = data.price;
-                    course_name = courseName;
+                    course_name = data.course;
                     document.getElementById('paymentModal').style.display = 'flex';
                 } else {
                     console.error("Server responded with an error:", data);
@@ -154,6 +154,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                 ref: "COURSE" + Math.floor((Math.random() * 1000000000) + 1),
                 metadata: {
                     custom_fields: [
+                        {display_name: "Phone",variable_name: "phone",value: phone},
                         {display_name: "Course ID",variable_name: "courseID",value: course_no},
                         {display_name: "Course Name",variable_name: "course_purchased",value: course_purchased}
                     ]
@@ -166,7 +167,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                         text: 'Reference: ' + response.reference,
                         confirmButtonText: 'OK'
                     }).then(() => {
-                        window.location.href = "pay/courses_pay.php?reference=" + response.reference;
+                        window.location.href = "../pay/courses_pay.php?reference=" + response.reference;
                     });
                 },
                 onClose: function() {
