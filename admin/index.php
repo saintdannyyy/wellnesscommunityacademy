@@ -53,6 +53,7 @@ if (!$sold_books_result || !$sold_programs_result || !$sold_courses_result || !$
             padding: 20px;
             overflow-y: auto;
             height: 100vh;
+            width: 80%;
             max-height: 100vh; /* Makes the content area scrollable */
         }
 
@@ -82,7 +83,7 @@ if (!$sold_books_result || !$sold_programs_result || !$sold_courses_result || !$
         <!-- Main Content -->
         <div class="main-content">
             <div class="p-3">
-                <h3 class="mb-3">Dashboard</h3>
+                <h3 class="mb-3">Sales Dashboard</h3>
 
                 <!-- Tab Navigation -->
                 <ul class="nav nav-tabs">
