@@ -59,6 +59,13 @@ if ($fetchProgramsResult->num_rows > 0) {
 
 // Combine all products into one array
 $products = array_merge($books, $courses, $programs);
+// var_dump($products);
+
+// $sqlFetchAffiliateEarning = "SELECT * FROM affiliate_earnings where product_id = products['id']; ";
+// $fetchAffiliateEarningResult = $mysqli->query($sqlFetchAffiliateEarning);
+// if ($fetchAffiliateEarningResult -> num_rows >0){
+
+// }
 ?>
 
 <!DOCTYPE html>
@@ -88,7 +95,7 @@ $products = array_merge($books, $courses, $programs);
                 <h5 class="text-dark">Products You Promote</h5>
             </div>
 
-            <div class="d-flex align-items-center mb-3">
+            <div class=" p-2 d-flex align-items-center mb-3">
                 <div class="me-auto">
                     <h6>All Products</h6>
                     <select class="form-select mb-3 selectpicker" data-live-search="true" id="productSelect">
@@ -104,24 +111,27 @@ $products = array_merge($books, $courses, $programs);
             </div>
 
 
-            <div class="d-flex justify-content-between p-3 bg-light border rounded">
-                <div>
-                    <p class="mb-1">Sales + Rebill</p>
-                    <h6>0 + 0</h6>
-                </div>
-                <div>
-                    <p class="mb-1">Commissions</p>
-                    <h6>USD 0</h6>
-                </div>
-                <div>
-                    <p class="mb-1">Affiliate Commission</p>
-                    <h6>15%</h6>
-                </div>
-                <div>
-                    <p class="mb-1">JV Commission</p>
-                    <h6>2%</h6>
-                </div>
+            <div class="p-4 border-top">
+                <h5 class="text-dark">Affiliate Earnings</h5>
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Sales</th>
+                            <th>Rebill</th>
+                            <th>Commission</th>
+                            <th>Type</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="earningsTableBody">
+                        <tr>
+                            <td colspan="6" class="text-center">Select a product to view earnings</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+
         </div>
     </div>
     </div>
@@ -129,6 +139,7 @@ $products = array_merge($books, $courses, $programs);
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Script to copy affiliate link to clipboard
         function copyAffiliateLink() {
             const link = "<?php echo $affiliateLink; ?>";
             navigator.clipboard.writeText(link).then(() => {
@@ -139,12 +150,49 @@ $products = array_merge($books, $courses, $programs);
                 });
             });
         }
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            $('#productSelect').selectpicker({
-                liveSearch: true,
-                noneSelectedText: 'Select a product',
+
+        // Script for fetching affiliate earnings
+        document.addEventListener('DOMContentLoaded', function () {
+            const productSelect = document.getElementById('productSelect');
+            const tableBody = document.getElementById('earningsTableBody');
+
+            productSelect.addEventListener('change', function () {
+                const productId = this.value;
+                // Clear the table and show a loading message while data is being fetched
+                tableBody.innerHTML = '<tr><td colspan="5" class="text-center">Loading...</td></tr>';
+
+                console.log("Product id sent to api = ", productId);
+
+
+                if (!productId) {
+                    tableBody.innerHTML = '<tr><td colspan="5" class="text-center">Select a product to view earnings</td></tr>';
+                    return;
+                }
+
+                fetch(`aff_api/fetch_affiliate_earnings.php?product_id=${productId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        tableBody.innerHTML = `<tr><td colspan="5" class="text-center">${data.error}</td></tr>`;
+                    } else if (data.length === 0) {
+                        tableBody.innerHTML = '<tr><td colspan="5" class="text-center">No earnings found for this product</td></tr>';
+                    } else {
+                        tableBody.innerHTML = data.map(earning => `
+                            <tr>
+                                <td>${earning.product_name || 'N/A'}</td>
+                                <td>${earning.sales || 0}</td>
+                                <td>${earning.rebill || 0}</td>
+                                <td>GHS ${earning.amount || 0}</td>
+                                <td>${earning.typeof_purchase || 0}</td>
+                                <td>${earning.created_at || 'N/A'}</td>
+                            </tr>
+                        `).join('');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching affiliate earnings:', error);
+                    tableBody.innerHTML = '<tr><td colspan="5" class="text-center">An error occurred while fetching earnings</td></tr>';
+                });
             });
         });
     </script>
