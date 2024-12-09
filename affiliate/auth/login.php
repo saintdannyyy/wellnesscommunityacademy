@@ -76,8 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $_SESSION['customer_id'] = $user['customer_id'];
                     $_SESSION['customer_name'] = $user['customer_name'];
                     $_SESSION['customer_email'] = $user['customer_email'];
-                    $_SESSION['affiliate_index'] = $user['id'];
-                    $_SESSION['affiliate_id'] = $user['affiliate_id'];
+                    $_SESSION['affiliate_id'] = $user['id'];
+                    // $_SESSION[''] = $user['affiliate_id'];
                 // Show success alert and redirect to dashboard
                 echo "<script>
                         document.addEventListener('DOMContentLoaded', function() {
