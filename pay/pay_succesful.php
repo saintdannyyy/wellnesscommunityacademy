@@ -12,6 +12,7 @@
 </html>
 
 <?php
+session_start();
 // // Check if reference is provided
 // if (!isset($_GET['reference'])) {
 //     echo "<script>
@@ -108,15 +109,14 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
             $stmt->bind_param("ssids", $reference, $email, $bookId, $amount, $status);
             $stmt->execute();
             $stmt->close();
-            $mysqli->close();
 
-            function addAffiliateEarnings($mysqli, $affiliate_id, $commission, $bookName, $typeof_purchase) {
+            function addAffiliateEarnings($mysqli, $affiliate_id, $commission, $bookId, $bookName, $typeof_purchase) {
                 try {
-                    $stmt = $mysqli->prepare("INSERT INTO affiliate_earnings (affiliate_id, amount, product, typeof_purchase) VALUES (?, ?, ?, ?)");
+                    $stmt = $mysqli->prepare("INSERT INTO affiliate_earnings (affiliate_id, amount, product_id, product_name, typeof_purchase) VALUES (?, ?, ?, ?, ?)");
                     if (!$stmt) {
                         throw new Exception("Prepare failed: " . $mysqli->error);
                     }
-                    $stmt->bind_param("idss", $affiliate_id, $commission, $bookName, $typeof_purchase);
+                    $stmt->bind_param("idiss", $affiliate_id, $commission, $bookId, $bookName, $typeof_purchase);
                     $stmt->execute();
                     $stmt->close();
                 } catch (Exception $e) {
@@ -141,7 +141,7 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
             
                 if ($affiliate_referrer_id != 0) {
                     $affiliate_commission = $amount * 0.15;
-                    addAffiliateEarnings($mysqli, $affiliate_referrer_id, $affiliate_commission, $bookName, $typeof_purchase);
+                    addAffiliateEarnings($mysqli, $affiliate_referrer_id, $affiliate_commission, $bookId, $bookName, $typeof_purchase);
             
                     // Check for higher affiliate (L2)
                     $sqlL2Affiliate = "SELECT referrer_id FROM affiliates WHERE id = ?";
@@ -159,7 +159,7 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
                         if ($higher_affiliate_referrer_id != 0) {
                             $typeof_purchase = "L2 Purchase";
                             $higher_affiliate_commission = $amount * 0.02;
-                            addAffiliateEarnings($mysqli, $higher_affiliate_referrer_id, $higher_affiliate_commission, $bookName, $typeof_purchase);
+                            addAffiliateEarnings($mysqli, $higher_affiliate_referrer_id, $higher_affiliate_commission, $bookId, $bookName, $typeof_purchase);
                         }
                     }
                 }
