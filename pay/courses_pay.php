@@ -12,6 +12,7 @@
 </html>
 
 <?php
+session_start();
 // Display all errors
 // ini_set('display_errors', 1);
 // error_reporting(E_ALL);  // Report all errors (including notices and warnings)
@@ -67,7 +68,9 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
     $amount = $responseData['data']['amount'] / 100; // Convert from pesewas to GHS
     $email = $responseData['data']['customer']['email'];
     $phone = $responseData['data']['metadata']['custom_fields'][0]['value'];
+    $course_no = $responseData['data']['metadata']['custom_fields'][1]['value'];
     $course = $responseData['data']['metadata']['custom_fields'][2]['value'];
+    // echo "Course: ", $course , "Course No: ", $course_no;
 // if (empty($course)) {
 //     echo 'Course information is not available.';
 // } else {
@@ -117,15 +120,14 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
             $stmt->bind_param("ssis", $course, $email, $amount, $reference);
             $stmt->execute();
             $stmt->close();
-            $mysqli->close();
 
-            function addAffiliateEarnings($mysqli, $affiliate_id, $commission, $course, $typeof_purchase) {
+            function addAffiliateEarnings($mysqli, $affiliate_id, $commission, $course_no, $course, $typeof_purchase) {
                 try {
-                    $stmt = $mysqli->prepare("INSERT INTO affiliate_earnings (affiliate_id, amount, product, typeof_purchase) VALUES (?, ?, ?, ?)");
+                    $stmt = $mysqli->prepare("INSERT INTO affiliate_earnings (affiliate_id, amount, product_id, product_name, typeof_purchase) VALUES (?, ?, ?, ?, ?)");
                     if (!$stmt) {
                         throw new Exception("Prepare failed: " . $mysqli->error);
                     }
-                    $stmt->bind_param("idss", $affiliate_id, $commission, $course, $typeof_purchase);
+                    $stmt->bind_param("idiss", $affiliate_id, $commission, $course_no, $course, $typeof_purchase);
                     $stmt->execute();
                     $stmt->close();
                 } catch (Exception $e) {
@@ -136,7 +138,7 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
             
             $typeof_purchase = "L1 Purchase";
             $sqlL1Affiliate = "SELECT affiliate_referrer_id FROM customers WHERE id = ?";
-            echo "making purchase:", $_SESSION['customer_id'], $_SESSION['customer_name'];
+            // echo "making purchase:", $_SESSION['customer_id'], $_SESSION['customer_name'];
             $stmtL1 = $mysqli->prepare($sqlL1Affiliate);
             $stmtL1->bind_param("i", $_SESSION['customer_id']);
             $stmtL1->execute();
@@ -145,12 +147,12 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
             
             if ($resultL1Affiliate->num_rows > 0) {
                 $rowL1Affiliate = $resultL1Affiliate->fetch_assoc();
-                echo "L1 affiliate for 15%:", $rowL1Affiliate['affiliate_referrer_id'];
+                // echo "L1 affiliate for 15%:", $rowL1Affiliate['affiliate_referrer_id'];
                 $affiliate_referrer_id = $rowL1Affiliate['affiliate_referrer_id'];
             
                 if ($affiliate_referrer_id != 0) {
                     $affiliate_commission = $amount * 0.15;
-                    addAffiliateEarnings($mysqli, $affiliate_referrer_id, $affiliate_commission, $course, $typeof_purchase);
+                    addAffiliateEarnings($mysqli, $affiliate_referrer_id, $affiliate_commission, $course_no, $course, $typeof_purchase);
             
                     // Check for higher affiliate (L2)
                     $sqlL2Affiliate = "SELECT referrer_id FROM affiliates WHERE id = ?";
@@ -162,13 +164,13 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
             
                     if ($resultL2Affiliate->num_rows > 0) {
                         $rowL2Affiliate = $resultL2Affiliate->fetch_assoc();
-                        echo "L2 affiliate for 2%:", $rowL2Affiliate['referrer_id'];
+                        // echo "L2 affiliate for 2%:", $rowL2Affiliate['referrer_id'];
                         $higher_affiliate_referrer_id = $rowL2Affiliate['referrer_id'];
             
                         if ($higher_affiliate_referrer_id != 0) {
                             $typeof_purchase = "L2 Purchase";
                             $higher_affiliate_commission = $amount * 0.02;
-                            addAffiliateEarnings($mysqli, $higher_affiliate_referrer_id, $higher_affiliate_commission, $course, $typeof_purchase);
+                            addAffiliateEarnings($mysqli, $higher_affiliate_referrer_id, $higher_affiliate_commission, $course_no, $course, $typeof_purchase);
                         }
                     }
                 }
@@ -214,4 +216,5 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
                 });
             </script>";
 }
+$mysqli->close();
 ?>
