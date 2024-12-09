@@ -50,6 +50,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
     <script>
         let p_price;
         let program;
+        let pID;
         let instanceNumber;
         // Function to open the modal
         function openPaymentSelection(instanceNumber) {
@@ -125,14 +126,16 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                 return response.json(); // Parse JSON
             })
             .then(data => {
-                // console.log("Data received from server:", data);
+                console.log("Data received from server:", data);
                 if (data.success) {
                     document.getElementById('price').innerText = data.price;
                     // document.getElementById('amount').innerText = data.price;
                     document.getElementById('prog_name').innerText = data.prog;
                     program = data.prog;
+                    pID = data.id;
                     document.getElementById('prog_price').value = data.price;
                     p_price = data.price;
+
                     // console.log('checking type of price returned', p_price, typeof p_price);
                     // document.getElementById('rate').innerText = data.rate;
                     document.getElementById('usd_price').innerText = data.price_usd;
@@ -166,6 +169,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
             // console.log('Paystack email:', email1);
             const phone = document.getElementById("phone").value;
             const prog_name = program;
+            console.log("PID:", pID);
             const price = p_price;
             // console.log('Paystack price:', price, typeof price);
             // const amountInPesewas = Math.round(price * 100);
@@ -191,6 +195,11 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                             display_name: "Program",
                             variable_name: "prog_name",
                             value: prog_name
+                        },
+                        {
+                            display_name: "Program ID",
+                            variable_name: "pID",
+                            value: pID
                         }
                     ]
                 },

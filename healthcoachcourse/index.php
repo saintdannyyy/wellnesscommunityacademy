@@ -57,7 +57,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                     
         let courseNO;
         let ghs_price;
-        let courseName;
+        let course_name;
         function openPaymentPopup(courseID) {
             const formData = new FormData();
             formData.append('courseID', courseID);
@@ -80,10 +80,11 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                     console.log("Fetch successful:", data);
                     document.getElementById('price').innerText = data.price_usd;
                     document.getElementById('course_price').innerText = data.price_usd;
+                    course_name = data.course;
+                    console.log("COurse name received", course_name);
                     courseNO = data.courseID;
                     ghs_price = data.price;
                     console.log('type of price received:', data.price, typeof data.price);
-                    course_name = courseName;
                     document.getElementById('paymentModal').style.display = 'flex';
                 } else {
                     console.error("Server responded with an error:", data);
@@ -112,8 +113,10 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
             const phone = document.getElementById("phone").value;
             course_no = courseNO;
             price_ghs = ghs_price;
-            console.log('ghs_price:', price_ghs, typeof price_ghs);
+            // console.log('ghs_price:', price_ghs, typeof price_ghs);
             const course_purchased = course_name
+            // console.log("Course name sent to payment api", course_name);
+            // console.log("Course id sent to payment api", course_no);
             console.log("Transaction amount:", price_ghs);
             // Validate required fields
             if (!email || !phone || !course_no || !price_ghs) {
@@ -139,6 +142,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                 ref: "HCOACHCOURSE" + Math.floor((Math.random() * 1000000000) + 1),
                 metadata: {
                     custom_fields: [
+                        {display_name: "Phone",variable_name: "phone",value: phone},
                         {display_name: "Course ID",variable_name: "courseID",value: course_no},
                         {display_name: "Course Name",variable_name: "course_purchased",value: course_purchased}
                     ]
@@ -151,7 +155,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                         text: 'Reference: ' + response.reference,
                         confirmButtonText: 'OK'
                     }).then(() => {
-                        window.location.href = "pay/courses_pay.php?reference=" + response.reference;
+                        window.location.href = "../pay/courses_pay.php?reference=" + response.reference;
                     });
                 },
                 onClose: function() {
