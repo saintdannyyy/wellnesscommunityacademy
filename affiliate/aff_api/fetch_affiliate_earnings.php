@@ -25,9 +25,19 @@ $stmt->bind_param("ii", $productId, $affiliateId);
 $stmt->execute();
 $result = $stmt->get_result();
 
+// $sqlCount = "SELECT COUNT(*) as total FROM affiliate_earnings WHERE product_id = ? AND affiliate_id = ?";
+// $stmtCount = $mysqli->prepare($sqlCount);
+// $stmtCount->bind_param("ii", $productId, $affiliateId);
+// $stmtCount->execute();
+// $resultCount = $stmtCount->get_result();
+// $rowCount = $resultCount->fetch_assoc();
+// $total = $rowCount['total'];
+
+
 $earnings = [];
 while ($row = $result->fetch_assoc()) {
     $earnings[] = $row;
+    // $earnings['total'] = $total;
 }
 
 echo json_encode($earnings);
