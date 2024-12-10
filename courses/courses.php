@@ -61,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Fetch currency rate
-    $open_exchange_api_key = '0d6f5687149b407fb1c561d00ecdb908';
     $open_exchange_url = "https://openexchangerates.org/api/latest.json?app_id={$open_exchange_api_key}&symbols=GHS&base=USD";
     
     $currency_data = @file_get_contents($open_exchange_url);
