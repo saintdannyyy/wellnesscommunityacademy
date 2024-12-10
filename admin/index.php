@@ -2,8 +2,20 @@
 // Include database connection
 require('db/connection.php');
 
+require_once __DIR__ . '../../config/loadENV.php';
+
+// Environment settings
+if ($_ENV['APP_ENV'] === 'dev') {
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL);
+} else {
+    ini_set('display_errors', 0);
+}
+
+
+
 // Define queries for different purchase categories
-$sql_sold_books = "SELECT email, book_id, title AS book_title, amount, created_at, reference FROM Transactions JOIN Books b ON book_id = b.id ORDER BY created_at DESC";
+$sql_sold_books = "SELECT email, book_id, title AS book_title, amount, created_at, reference FROM transactions JOIN books b ON book_id = b.id ORDER BY created_at DESC";
 $sql_sold_programs = "SELECT email, program, amount, reference, date FROM sold_programs ORDER BY date DESC";
 $sql_sold_courses = "SELECT email, course, amount, reference, date FROM sold_courses ORDER BY date DESC";
 $sql_meetings = "SELECT name, email, number, message, duration, visit_date FROM booked_appointments ORDER BY visit_date DESC";
@@ -16,7 +28,13 @@ $sold_courses_result = $mysqli->query($sql_sold_courses);
 $meetings_result = $mysqli->query($sql_meetings);
 $donation_result = $mysqli->query($sql_donation);
 
-if (!$sold_books_result || !$sold_programs_result || !$sold_courses_result || !$meetings_result || !$donation_result) {
+// var_dump($sold_books_result);
+// var_dump($sold_programs_result);
+// var_dump($sold_courses_result);
+// var_dump($meetings_result);
+// var_dump($donation_result);
+// !$sold_books_result || !$sold_programs_result || !$sold_courses_result || !$meetings_result || !$donation_result
+if (!$sold_books_result || !$sold_programs_result || !$sold_courses_result || !$meetings_result || !$donation_result ) {
     die("Error in query: " . $mysqli->error);
 }
 ?>
@@ -63,6 +81,16 @@ if (!$sold_books_result || !$sold_programs_result || !$sold_courses_result || !$
             top: 0;
             z-index: 0;
             background-color: #fff; /* Make sure tabs have a background */
+        }
+
+        /* Tab link styles */
+        .nav-tabs .nav-link {
+            color: blue; /* Inactive tab link color */
+        }
+
+        .nav-tabs .nav-link.active {
+            color: black; /* Active tab link color */
+            background-color: #e9ecef; /* Optional: Add background color for active tab */
         }
 
         /* Optional: To prevent overlap of tabs with content */
@@ -270,7 +298,6 @@ if (!$sold_books_result || !$sold_programs_result || !$sold_courses_result || !$
                             </table>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
