@@ -28,6 +28,17 @@
             width: calc(100% - 250px);
             padding-top: 56px;
         }
+        .modal-backdrop {
+            z-index: 1040 !important; /* Ensure backdrop doesn't block modal */
+        }
+
+        .modal {
+            z-index: 1050 !important; /* Ensure modal is above the backdrop */
+        }
+
+        body.modal-open {
+            overflow: hidden; /* Prevent background scrolling when modal is open */
+        }
     </style>
 </head>
 
@@ -55,7 +66,7 @@
                         </thead>
                     </table>
                     <!-- Referral Tree Modal -->
-                    <div class="modal fade" id="referralModal" tabindex="-1" aria-labelledby="referralModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="referralModal" tabindex="-1" aria-labelledby="referralModalLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -63,7 +74,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <ul id="referralTree"></ul>
+                                    <div id="referralTree">Loading...</div>
                                 </div>
                             </div>
                         </div>
@@ -104,48 +115,119 @@
 
             $('#affiliateTable').on('click', '.activate-btn', function() {
                 const id = $(this).data('id');
-                $.post('api/update_status.php', {
-                    id,
-                    status: 'active'
-                }, function(response) {
-                    alert(response.message);
-                    table.ajax.reload();
-                });
+                
+                // Send the POST request to update the status
+                $.post('api/update_status.php', { id, status: 'active' })
+                    .done(function(response) {
+                        let data;
+                        
+                        // Attempt to parse the response
+                        try {
+                            data = typeof response === 'string' ? JSON.parse(response) : response;
+                        } catch (error) {
+                            // console.error('Failed to parse response:', error);
+                            alert('Unexpected server response. Please try again.');
+                            return;
+                        }
+
+                        // Handle the success or failure of the operation
+                        if (data.success) {
+                            alert('Status updated successfully!');
+                        } else {
+                            console.warn('Server response:', data);
+                            alert(data.message || 'Failed to update status. Please try again.');
+                        }
+
+                        // Reload the table to reflect changes
+                        table.ajax.reload();
+                    })
+                    .fail(function(jqXHR, textStatus, errorThrown) {
+                        // Handle request failure
+                        // console.error('AJAX Error:', textStatus, errorThrown);
+                        alert('An error occurred while updating the status. Please check your network and try again.');
+                    });
             });
+
 
             $('#affiliateTable').on('click', '.deactivate-btn', function() {
                 const id = $(this).data('id');
-                $.post('api/update_status.php', {
-                    id,
-                    status: 'inactive'
-                }, function(response) {
-                    alert(response.message);
-                    table.ajax.reload();
-                });
+
+                // Send the POST request to deactivate the affiliate
+                $.post('api/update_status.php', { id, status: 'inactive' })
+                    .done(function(response) {
+                        let data;
+
+                        // Attempt to parse the response
+                        try {
+                            data = typeof response === 'string' ? JSON.parse(response) : response;
+                        } catch (error) {
+                            console.error('Failed to parse response:', error);
+                            alert('Unexpected server response. Please try again.');
+                            return;
+                        }
+
+                        // Handle the success or failure of the operation
+                        if (data.success) {
+                            alert('Affiliate deactivated successfully!');
+                        } else {
+                            console.warn('Server response:', data);
+                            alert(data.message || 'Failed to deactivate the affiliate. Please try again.');
+                        }
+
+                        // Reload the table to reflect changes
+                        table.ajax.reload();
+                    })
+                    .fail(function(jqXHR, textStatus, errorThrown) {
+                        // Handle request failure
+                        console.error('AJAX Error:', textStatus, errorThrown);
+                        alert('An error occurred while deactivating the affiliate. Please check your network and try again.');
+                    });
             });
+
 
             $('#affiliateTable').on('click', '.view-referrals-btn', function() {
                 const id = $(this).data('id');
-                $.get('api/fetch_referrals.php', {
-                    affiliate_id: id
-                }, function(data) {
-                    const referrals = JSON.parse(data);
-                    $('#referralTree').html(renderTree(referrals));
-                    $('#referralModal').modal('show');
-                });
+
+                // Fetch referrals for the selected affiliate
+                $.get('api/fetch_referrals.php', { affiliate_id: id })
+                    .done(function(data) {
+                        let referrals;
+
+                        // Attempt to parse the response
+                        try {
+                            referrals = typeof data === 'string' ? JSON.parse(data) : data;
+                        } catch (error) {
+                            console.error('Failed to parse referral data:', error);
+                            alert('Unexpected server response. Please try again.');
+                            return;
+                        }
+
+                        // Render the referral tree and display the modal
+                        $('#referralTree').html(renderTree(referrals));
+                        $('#referralModal').modal('show');
+                    })
+                    .fail(function(jqXHR, textStatus, errorThrown) {
+                        console.error('AJAX Error:', textStatus, errorThrown);
+                        alert('An error occurred while fetching referrals. Please check your network and try again.');
+                    });
             });
 
+            // Recursive function to render the referral tree
             function renderTree(nodes) {
+                if (!Array.isArray(nodes) || nodes.length === 0) return '<p>No referrals found.</p>';
+
                 let html = '<ul>';
                 nodes.forEach(node => {
-                    html += `<li>${node.customer_name} (Affiliate ID: ${node.affiliate_id})</li>`;
-                    if (node.referrals) {
-                        html += renderTree(node.referrals);
-                    }
+                    html += `
+                        <li>
+                            <strong>${node.customer_name}</strong> (Affiliate ID: ${node.affiliate_id})
+                            ${node.referrals ? renderTree(node.referrals) : ''}
+                        </li>`;
                 });
                 html += '</ul>';
                 return html;
             }
+
         });
     </script>
 </body>
