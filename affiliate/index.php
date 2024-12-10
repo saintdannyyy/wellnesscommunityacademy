@@ -80,6 +80,12 @@ $products = array_merge($books, $courses, $programs);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
 </head>
 
 <body>
@@ -95,6 +101,7 @@ $products = array_merge($books, $courses, $programs);
                 <h5 class="text-dark">Products You Promote</h5>
             </div>
 
+            <!-- Product selection here -->
             <div class=" p-2 d-flex align-items-center mb-3">
                 <div class="me-auto">
                     <h6>All Products</h6>
@@ -110,10 +117,10 @@ $products = array_merge($books, $courses, $programs);
                 <button class="btn btn-outline-primary" onclick="copyAffiliateLink()">My Link</button>
             </div>
 
-
+            <!-- Affiliate Earning Table -->
             <div class="p-4 border-top">
                 <h5 class="text-dark">Affiliate Earnings</h5>
-                <table class="table table-bordered table-striped table-hover">
+                <table id="earningsTable" class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
                             <th>Product</th>
@@ -158,7 +165,6 @@ $products = array_merge($books, $courses, $programs);
             });
         }
 
-
         // Script for fetching affiliate earnings
         document.addEventListener('DOMContentLoaded', function () {
             const productSelect = document.getElementById('productSelect');
@@ -200,6 +206,66 @@ $products = array_merge($books, $courses, $programs);
                     console.error('Error fetching affiliate earnings:', error);
                     tableBody.innerHTML = '<tr><td colspan="5" class="text-center">An error occurred while fetching earnings</td></tr>';
                 });
+            });
+        });
+
+        //Script for datatables
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize DataTable with custom options
+            const table = $('#earningsTable').DataTable({
+                paging: true, // Enable pagination
+                searching: true, // Enable search
+                ordering: true, // Enable column sorting
+                responsive: true, // Make table responsive
+                language: {
+                    emptyTable: "No data available", // Message for empty table
+                    search: "Filter:", // Label for search input
+                    lengthMenu: "Show _MENU_ entries", // Label for entries dropdown
+                },
+            });
+
+            const productSelect = document.getElementById('productSelect');
+            const tableBody = document.getElementById('earningsTableBody');
+
+            productSelect.addEventListener('change', function () {
+                const productId = this.value;
+                table.clear().draw(); // Clear DataTable before loading new data
+
+                if (!productId) {
+                    tableBody.innerHTML = '<tr><td colspan="5" class="text-center">Select a product to view earnings</td></tr>';
+                    return;
+                }
+
+                fetch(`aff_api/fetch_affiliate_earnings.php?product_id=${productId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            tableBody.innerHTML = `<tr><td colspan="5" class="text-center">${data.error}</td></tr>`;
+                        } else if (data.length === 0) {
+                            tableBody.innerHTML = '<tr><td colspan="5" class="text-center">No earnings found for this product</td></tr>';
+                        } else {
+                            table.rows.add(
+                                data.map(earning => [
+                                    earning.product_name || 'N/A',
+                                    earning.total || 0,
+                                    `GHS ${earning.amount || 0}`,
+                                    earning.typeof_purchase || 'N/A',
+                                    new Date(earning.created_at).toLocaleString('en-US', { 
+                                        day: 'numeric', 
+                                        month: 'long', 
+                                        year: 'numeric', 
+                                        hour: 'numeric', 
+                                        minute: 'numeric', 
+                                        hour12: true 
+                                    }) || 'N/A'
+                                ])
+                            ).draw(); // Add new rows and redraw the table
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching affiliate earnings:', error);
+                        tableBody.innerHTML = '<tr><td colspan="5" class="text-center">An error occurred while fetching earnings</td></tr>';
+                    });
             });
         });
     </script>
