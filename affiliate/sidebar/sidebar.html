@@ -10,7 +10,7 @@
         }
 
         .sidebar {
-            width: 200px;
+            width: 250px;
             height: 100vh;
             border-right: 1px solid #919191;
             padding: 5px;
@@ -23,32 +23,20 @@
         .nav-link {
             font-size: 1rem;
             padding: 10px 10px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            color: #000;
         }
 
         .nav-link:hover {
-            background-color: #e9ecef;
+            background-color: #d0d0d0;
             border-radius: 5px;
+            color: #000;
         }
 
         .nav-link.active {
             background-color: #007bff;
             color: #fff;
             border-radius: 5px;
-        }
-
-        .sidebar {
-            width: 250px;
-            height: 100vh;
-        }
-
-        .sidebar .nav-item .nav-link {
-            color: #000;
-        }
-
-        .sidebar .nav-item .nav-link.active {
-            background-color: #007bff;
-            color: white;
         }
 
         .sidebar .nav-item .nav-link.text-muted {
@@ -63,15 +51,10 @@
         </div>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link active text-dark" href="index.php">
+                <a class="nav-link text-dark" href="index.php">
                     <i class="bi bi-megaphone"></i> Promotions
                 </a>
             </li>
-            <!-- <li class="nav-item">
-                <a class="nav-link text-dark" href="marketplace.html">
-                    <i class="bi bi-shop"></i> Marketplace
-                </a>
-            </li> -->
             <li class="nav-item">
                 <a class="nav-link text-dark" href="payments.php">
                     <i class="bi bi-credit-card"></i> Payments
@@ -84,9 +67,6 @@
             </li>
         </ul>
         <div class="mt-auto p-3">
-            <!-- <a class="nav-link text-muted" href="settings.html">
-                <i class="bi bi-gear"></i> Settings
-            </a> -->
             <a class="nav-link text-muted" href="help.php">
                 <i class="bi bi-question-circle"></i> Help
             </a>
@@ -94,6 +74,26 @@
                 <i class="bi bi-box-arrow-right"></i> Logout
             </a>
         </div>
-    </div>    
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    navLinks.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            const currentPage = window.location.pathname.split('/').pop();
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
