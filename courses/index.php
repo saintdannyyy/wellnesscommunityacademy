@@ -887,7 +887,88 @@ if (!$open_exchange_api_key) {
 				<div class="background_changer background_changer--blur0" style="background-image: none; opacity: 1;"></div>
 				<div class="background_changer_overlay" style="background-image: none;"></div>
 				<div class="container">
-					<div class="row background_changer--blur0" data-component="grid" id="DyL9ZcRTqw" style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-style: none; border-width: 0px; margin-top: 0px; margin-bottom: 20px; background-image: none; opacity: 1;">
+
+					<!-- Skinny Tummy Challenge -->
+				<div class="row background_changer--blur0" data-component="grid" id="pV7KKoMdTx" style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-style: none; border-width: 0px; margin-top: 0px; margin-bottom: 20px; background-image: none; opacity: 1;">
+						<div class="col-md-10 col-md-offset-1">
+							<div class="js_kartra_component_holder">
+
+								<!--New Course Block -->
+
+
+								<!-- Heading-->
+
+								<!--Text Block -->
+
+								<!--Divider -->
+
+								<!-- List-->
+
+								<!-- Buttons-->
+					<div data-component="headline" id="V2CTxHIuar">
+									<div class="kartra_headline kartra_headline--size-extra-large kartra_headline--roboto-slab-font kartra_headline--font-weight-regular kartra_headline--text-center kartra_headline--dim-black kartra_headline--margin-bottom-small" style="position: relative; margin-top: 0px; margin-bottom: 10px;">
+									<p style="font-size: 1rem; line-height: 1.2em;">
+										<strong><span style="font-size: 1rem; line-height: 1.2em;">
+											<span style="line-height: 1em; font-family: roboto; color: rgb(31, 47, 79); font-size: 2rem;">14-Days Skinny Tummy Challenge!</span></span></strong>
+									</p>
+									</div>
+								</div>
+								<div class="inline_elements_wrapper" style="justify-content: center;">
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row background_changer--blur0" data-component="grid" style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-style: none; border-width: 0px; margin-top: 0px; margin-bottom: 30px; background-image: none; opacity: 1;">
+						<div class="col-md-5">
+							<div class="js_kartra_component_holder">
+								<div data-component="image" href="javascript: void(0);"><a href="" target="_parent">
+										<picture>
+											<source type="image/webp" data-srcset="https://d11n7da8rpqbjy.cloudfront.net/cooperwellness/405646122949Banner_for_CWC_14-Day_Tummy_Challenge.jpg">
+											</source>
+											<source type="image/jpeg" data-srcset="https://d11n7da8rpqbjy.cloudfront.net/cooperwellness/405646122949Banner_for_CWC_14-Day_Tummy_Challenge.jpg">
+											</source><img class="kartra_image kartra_image--full pull-center background_changer--blur0" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" id="1544660852442_formbutton" style="border-color: rgb(49, 85, 40); border-style: solid; border-width: 0px; margin: 0px auto 20px; opacity: 1; width: 445px; max-width: 100%; height: auto;" data-original="//d11n7da8rpqbjy.cloudfront.net/cooperwellness/10000412_1589854052547CWC-staff-team2.jpg">
+										</picture>
+									</a></div>
+							</div>
+						</div>
+						<div class="col-md-7">
+							<div class="js_kartra_component_holder">
+								<div data-component="text" id="elNqg7Asmh">
+									<div class="kartra_text kartra_text--dim-grey kartra_text--text-center kartra_text--extra-small kartra_text--margin-bottom-extra-medium" style="position: relative;">
+										<h1><span><strong><span><span>Join the 14-Day Skinny Tummy Challenge!</span></span></strong> </span></h1>
+
+										<p style="text-align: justify;">Elevate your wellness with our exclusive 14-Day Skinny Tummy Challenge, designed to help you achieve a rejuvenated you in just two weeks. 
+											Embark on an incredible journey towards transformative health and well-being (and stun family and friends for the holidays 😉)!
+
+ <span>Are You Tired of Feling Bloated, Heavy, and Just Need a Reset? Do You Really Want to Shed Some Unwanted Fat in Time for the Holidays?</p>
+
+										<p style="text-align: justify;"> </p>
+
+										<p><strong><span><span>Then It's Time to Take the 14-Day Skinny Tummy Challenge and Transform your health and vitality!</span></span></strong></p>
+
+										<h2 style="text-align: justify;"><em><span><span> This is your gateway to lifelong well-being and the end-of-year body you deserve!</span></span></em></h2>
+									</div>
+								</div>
+								<div data-component="button" style="width: auto;" id="wQKLT4i974">
+									<a href="../14daystoskinnytummy" class="kartra_button1 kartra_button1--roboto-condensed-font kartra_button1--light-coral-two kartra_button1--box-shadow-inset-bottom-opacity07 kartra_button1--shadow-02 kartra_button1--solid kartra_button1--large kartra_button1--squared kartra_button1--shadow-small pull-center toggle_pagelink " 
+									style='font-weight: 400; background-color: rgb(243, 113, 33); color: rgb(255, 255, 255); margin: 0px auto 20px; font-family: "Roboto Condensed";' 
+									data-frame-id="_qsyk01xxr" data-project-id="3" data-page-id="36" target="_parent">GET COURSE NOW</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row" data-component="grid" id="SqL0XsHwNo">
+						<div class="col-md-12">
+							<div class="js_kartra_component_holder">
+								<div data-component="divider" id="lRDiktzwuK">
+									<hr class="kartra_divider kartra_divider--border-extra-tiny kartra_divider--border-dim-black-opaque-25 kartra_divider--full">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row background_changer--blur0" data-component="grid" id="apqN2AfzSy" style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-style: none; border-width: 0px; margin-top: 0px; margin-bottom: 20px; background-image: none; opacity: 1;">
 						<div class="col-md-10 col-md-offset-1">
 							<div class="js_kartra_component_holder">
 
@@ -903,13 +984,6 @@ if (!$open_exchange_api_key) {
 								<!-- List-->
 
 								<!-- Buttons-->
-								<div data-component="headline" id="ihzIWROIek">
-									<div class="kartra_headline kartra_headline--size-extra-large kartra_headline--roboto-slab-font kartra_headline--font-weight-regular kartra_headline--text-center kartra_headline--dim-black kartra_headline--margin-bottom-small" style="position: relative; margin-top: 0px; margin-bottom: 7px;">
-										<p style="font-size: 1.8rem; line-height: 1.2em;">
-											<font color="#1f2f4f" face="roboto"><b>GET HEALTHY FOR LIFE!</b></font>
-										</p>
-									</div>
-								</div>
 								<div class="inline_elements_wrapper" style="justify-content: center;">
 
 
@@ -917,61 +991,9 @@ if (!$open_exchange_api_key) {
 							</div>
 						</div>
 					</div>
-					<div class="row background_changer--blur0 row--equal" data-component="grid" style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-style: none; border-width: 0px; margin-top: 0px; margin-bottom: 30px; background-image: none; opacity: 1;">
-						<div class="col-md-5">
-							<div class="js_kartra_component_holder">
-								<div data-component="image" href="javascript: void(0);">
-									<picture>
-										<source type="image/webp" data-srcset="//d11n7da8rpqbjy.cloudfront.net/cooperwellness/unsplash_1587364336.webp">
-										</source>
-										<source type="image/jpeg" data-srcset="//d11n7da8rpqbjy.cloudfront.net/cooperwellness/unsplash_1587364336.jpg">
-										</source><img class="kartra_image kartra_image--full pull-center background_changer--blur0" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" style="border-color: rgb(51, 51, 51); border-style: none; border-width: 0px; margin: 0px auto 10px; opacity: 1; width: 339px; max-width: 100%; height: auto;" id="1546804492842_formbutton" data-original="//d11n7da8rpqbjy.cloudfront.net/cooperwellness/unsplash_1587364336.jpg">
-									</picture>
-								</div>
-								<div data-component="image" href="javascript: void(0);" id="LUbsbwUElg">
-									<picture>
-										<source type="image/webp" data-srcset="//d11n7da8rpqbjy.cloudfront.net/cooperwellness/9708468_1588794836866coming-soon-3.webp">
-										</source>
-										<source type="image/png" data-srcset="//d11n7da8rpqbjy.cloudfront.net/cooperwellness/9708468_1588794836866coming-soon-3.png">
-										</source><img class="kartra_image kartra_image--full pull-center background_changer--blur0" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" onerror="this.onerror=null;this.src='https://d2uolguxr56s4e.cloudfront.net/img/kartrapages/placeholder.jpg';" style="border-color: rgb(51, 51, 51); border-style: none; border-width: 0px; margin: 0px auto 10px; opacity: 1; width: 231px; max-width: 100%; height: auto;" data-original="//d11n7da8rpqbjy.cloudfront.net/cooperwellness/9708468_1588794836866coming-soon-3.png">
-									</picture>
-								</div>
-							</div>
-						</div>
-						<div class="column--vertical-center background_changer--blur0 col-md-7" style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-style: none; border-width: 0px; padding: 0px 15px; background-image: none; opacity: 1;">
-							<div class="js_kartra_component_holder">
-								<div data-component="text" id="elNqg7Asmh">
-									<div class="kartra_text kartra_text--dim-grey kartra_text--text-center kartra_text--extra-small kartra_text--margin-bottom-extra-medium" style="position: relative; margin-top: 0px; margin-bottom: 30px;">
-										<p style="font-size: 0.8rem;"><b><span style="font-size: 0.8rem;">Live Longer, Stronger, and More Energetic...</span></b></p>
 
-										<p style="font-size: 0.8rem; text-align: justify;"> </p>
 
-										<p style="font-size: 0.8rem; text-align: justify;">When you unlock and master the 9 secret pillars of vibrant health and longevity. You'll also discover the foundational principles of true health and healing so you can enjoy a disease-free live.</p>
-
-										<p style="font-size: 0.8rem; text-align: justify;"> </p>
-
-										<p style="font-size: 0.8rem; text-align: justify;">Only practical solutions are taught in this course so you will not only get well but stay well also. Learn about nature's balm for depression, high blood pressure, and how to safely manage stress.</p>
-
-										<p style="font-size: 0.8rem; text-align: justify;"> </p>
-
-										<p style="text-align: justify;"><span style="font-size:0.80rem;">Get the recipe for happiness in your overall health when you im<font color="#696969" face="roboto"><span style="font-size: 0.8rem;">plement these key habits so you can thrive in your social relationships and live in peace. Click below to get all the details and start right now.</span></font></span></p>
-									</div>
-								</div>
-								<div data-component="button" style="width: auto;" id="wQKLT4i974">
-									<a href="javascript: void(0);" class="kartra_button1 kartra_button1--roboto-condensed-font kartra_button1--light-coral-two kartra_button1--box-shadow-inset-bottom-opacity07 kartra_button1--shadow-02 kartra_button1--solid kartra_button1--large kartra_button1--squared kartra_button1--shadow-small pull-center toggle_optin" style='font-weight: 400; background-color: rgb(243, 113, 33); color: rgb(255, 255, 255); margin: 0px auto 20px; font-family: "Roboto Condensed";' data-frame-id="_qsyk01xxr" id="1588794160919_formbutton" data-popup-src="https://app.kartra.com/elements/popup_optin_form_single_col_2.html" target="_parent"><span class="kartra_icon__icon fa fa-hand-pointer-o" style="color: rgb(255, 255, 255); border-color: rgb(255, 255, 255); font-weight: 400;"></span>SIGN UP FOR RELEASE NOTIFICATION</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row" data-component="grid">
-						<div class="col-md-12">
-							<div class="js_kartra_component_holder">
-								<div data-component="divider">
-									<hr class="kartra_divider kartra_divider--border-extra-tiny kartra_divider--border-dim-black-opaque-25 kartra_divider--full">
-								</div>
-							</div>
-						</div>
-					</div>
+					<!-- Fourteen Days to Amazing  -->
 					<div class="row background_changer--blur0" data-component="grid" id="ji9fY24g8B" style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-style: none; border-width: 0px; margin-top: 0px; margin-bottom: 20px; background-image: none; opacity: 1;">
 						<div class="col-md-10 col-md-offset-1">
 							<div class="js_kartra_component_holder">
@@ -1005,9 +1027,9 @@ if (!$open_exchange_api_key) {
 							<div class="js_kartra_component_holder">
 								<div data-component="image" href="javascript: void(0);">
 									<picture>
-										<source type="image/webp" data-srcset="//d11n7da8rpqbjy.cloudfront.net/strategicsecrets/3797007_155374820656314DTAH-combine-1024x726.webp">
+										<source type="image/webp" data-srcset="https://d11n7da8rpqbjy.cloudfront.net/cooperwellness/30996546_642619c6df5b4_14D2AH-Course-Banner-640x640.png">
 										</source>
-										<source type="image/png" data-srcset="//d11n7da8rpqbjy.cloudfront.net/strategicsecrets/3797007_155374820656314DTAH-combine-1024x726.png">
+										<source type="image/png" data-srcset="https://d11n7da8rpqbjy.cloudfront.net/cooperwellness/30996546_642619c6df5b4_14D2AH-Course-Banner-640x640.png">
 										</source><img class="kartra_image kartra_image--full pull-center background_changer--blur0" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" style="border-color: rgb(49, 85, 40); border-style: none; border-width: 0px; margin: 0px auto 20px; opacity: 1; width: 445px; max-width: 100%; height: auto;" id="1544928147202_formbutton" data-original="//d11n7da8rpqbjy.cloudfront.net/strategicsecrets/3797007_155374820656314DTAH-combine-1024x726.png">
 									</picture>
 								</div>
@@ -1044,6 +1066,8 @@ if (!$open_exchange_api_key) {
 							</div>
 						</div>
 					</div>
+
+					<!-- Transformation To a Healthier You -->
 					<div class="row background_changer--blur0" data-component="grid" id="49SaAPVFDI" style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-style: none; border-width: 0px; margin-top: 0px; margin-bottom: 20px; background-image: none; opacity: 1;">
 						<div class="col-md-10 col-md-offset-1">
 							<div class="js_kartra_component_holder">
@@ -1066,8 +1090,6 @@ if (!$open_exchange_api_key) {
 									</div>
 								</div>
 								<div class="inline_elements_wrapper" style="justify-content: center;">
-
-
 								</div>
 							</div>
 						</div>
@@ -1077,9 +1099,9 @@ if (!$open_exchange_api_key) {
 							<div class="js_kartra_component_holder">
 								<div data-component="image" href="javascript: void(0);">
 									<picture>
-										<source type="image/webp" data-srcset="//d11n7da8rpqbjy.cloudfront.net/strategicsecrets/3829645_1554045518705New_Transformation_to_healthier_you_course.webp">
+										<source type="image/webp" data-srcset="https://d11n7da8rpqbjy.cloudfront.net/cooperwellness/9319516_1587509248039Transformation_to_healthier_you_course_banner.png">
 										</source>
-										<source type="image/png" data-srcset="//d11n7da8rpqbjy.cloudfront.net/strategicsecrets/3829645_1554045518705New_Transformation_to_healthier_you_course.png">
+										<source type="image/png" data-srcset="https://d11n7da8rpqbjy.cloudfront.net/cooperwellness/9319516_1587509248039Transformation_to_healthier_you_course_banner.png">
 										</source><img class="kartra_image kartra_image--full pull-center background_changer--blur0" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" style="border-color: rgb(51, 51, 51); border-style: none; border-width: 0px; margin: 0px auto 20px; opacity: 1; width: 540px; max-width: 100%; height: auto;" id="1544928106201_formbutton" data-original="//d11n7da8rpqbjy.cloudfront.net/strategicsecrets/3829645_1554045518705New_Transformation_to_healthier_you_course.png">
 									</picture>
 								</div>
@@ -1107,6 +1129,8 @@ if (!$open_exchange_api_key) {
 							</div>
 						</div>
 					</div>
+
+					<!-- Certified Health Coach -->
 					<div class="row background_changer--blur0" data-component="grid" id="pV7KKoMdTx" style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-style: none; border-width: 0px; margin-top: 0px; margin-bottom: 20px; background-image: none; opacity: 1;">
 						<div class="col-md-10 col-md-offset-1">
 							<div class="js_kartra_component_holder">
@@ -1140,7 +1164,7 @@ if (!$open_exchange_api_key) {
 					<div class="row background_changer--blur0" data-component="grid" style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-style: none; border-width: 0px; margin-top: 0px; margin-bottom: 30px; background-image: none; opacity: 1;">
 						<div class="col-md-5">
 							<div class="js_kartra_component_holder">
-								<div data-component="image" href="javascript: void(0);"><a href="https://app.kartra.com/redirect_to/?asset=page&amp;id=zp7QjqlNKPrK" class="toggle_pagelink " data-project-id="3" data-page-id="36" data-frame-id="_qsyk01xxr" target="_parent">
+								<div data-component="image" href="javascript: void(0);"><a href="#" class="toggle_pagelink " data-project-id="3" data-page-id="36" data-frame-id="_qsyk01xxr" target="_parent">
 										<picture>
 											<source type="image/webp" data-srcset="//d11n7da8rpqbjy.cloudfront.net/cooperwellness/10000412_1589854052547CWC-staff-team2.webp">
 											</source>
@@ -1180,6 +1204,8 @@ if (!$open_exchange_api_key) {
 							</div>
 						</div>
 					</div>
+
+					<!-- About Dr. Cooper -->
 					<div class="row background_changer--blur0" data-component="grid" id="apqN2AfzSy" style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-style: none; border-width: 0px; margin-top: 0px; margin-bottom: 20px; background-image: none; opacity: 1;">
 						<div class="col-md-10 col-md-offset-1">
 							<div class="js_kartra_component_holder">
@@ -1203,14 +1229,16 @@ if (!$open_exchange_api_key) {
 							</div>
 						</div>
 					</div>
+
+					
 					<div class="row row--equal background_changer--blur0" data-component="grid" style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-style: none; border-width: 0px; margin-top: 0px; margin-bottom: 10px; background-image: none; opacity: 1;">
 						<div class="col-md-5">
 							<div class="js_kartra_component_holder">
 								<div data-component="image" href="javascript: void(0);">
 									<picture>
-										<source type="image/webp" data-srcset="//d11n7da8rpqbjy.cloudfront.net/strategicsecrets/2548000_1542617857288DRCooper-image1.webp">
+										<source type="image/webp" data-srcset="https://d11n7da8rpqbjy.cloudfront.net/cooperwellness/20434784_60cbe72dd7bdb_DRCooper-image.png">
 										</source>
-										<source type="image/png" data-srcset="//d11n7da8rpqbjy.cloudfront.net/strategicsecrets/2548000_1542617857288DRCooper-image1.png">
+										<source type="image/png" data-srcset="https://d11n7da8rpqbjy.cloudfront.net/cooperwellness/20434784_60cbe72dd7bdb_DRCooper-image.png">
 										</source><img class="kartra_image kartra_image--full pull-center background_changer--blur0" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" id="1544660852442_formbutton" style="border-color: rgb(31, 47, 79); border-style: solid; border-width: 0px; margin: 0px auto 10px; opacity: 1; width: 379px; max-width: 100%; height: auto;" data-original="//d11n7da8rpqbjy.cloudfront.net/strategicsecrets/2548000_1542617857288DRCooper-image1.png">
 									</picture>
 								</div>
