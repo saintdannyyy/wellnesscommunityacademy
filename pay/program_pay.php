@@ -73,9 +73,9 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
         $mail->Port = 587;
 
         $mail->setFrom('noreply@wellnesscommunityacademy.com', 'Wellness Community Academy');
-        $mail->addAddress('seshun65@gmail.com','cooperdockeryhealth@gmail.com');
+        $mail->addAddress($_ENV['ADMIN_EMAIL']);
         $mail->addBCC('saintdannyyy@gmail.com');
-
+        $mail->addBCC('seshun65@gmail.com');
         $mail->isHTML(true);
         $mail->Subject = 'NEW PROGRAM PURCHASE';
         $mail->Body = "
