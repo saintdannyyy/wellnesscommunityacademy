@@ -130,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mail->setFrom('noreply@wellnesscommunityacademy.com', 'Wellness Community Academy');
         $mail->addAddress($_ENV['ADMIN_EMAIL']);
         $mail->addBCC('saintdannyyy@gmail.com');
-        $mail->addBCC('seshun65@gmail.com');
+        // $mail->addBCC('seshun65@gmail.com');
         $mail->isHTML(true);
         $mail->Subject = 'New User Registration';
         $mail->Body = "
@@ -301,20 +301,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->bind_param('ssssii', $name, $email, $phoneNumber, $hashedPassword, $isAffiliate, $referredAffiliateId);
 
                 if ($stmt->execute()) {
-                    echo "<script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            Swal.fire({
+                    $stmt->close();
+                    // If the user opted to be an affiliate, add to the affiliates table
+                    if ($isAffiliate === 1) {
+                        // Helper function: Generate unique affiliate ID
+                        function generateUniqueAffiliateId()
+                        {
+                            return 'AFF' . time() . strtoupper(substr(md5(uniqid()), 0, 6));
+                        }
+                        $affiliateId = generateUniqueAffiliateId();
+                        
+                        $customerId = $mysqli->insert_id; // Get the newly inserted customer ID
+                        $stmtAffiliate = $mysqli->prepare("INSERT INTO affiliates (customer_id, affiliate_id, referrer_id, created_at) VALUES (?, ?, ?, NOW())");
+                        $stmtAffiliate->bind_param('iss', $customerId, $affiliateId, $referralCode);
+
+                        if (!$stmtAffiliate->execute()) {
+                            throw new Exception("Database error: " . $stmtAffiliate->error);
+                        }
+                        echo "<script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                Swal.fire({
                                     icon: 'success',
-                                    title: 'Registration Succesfull',
-                                    text: 'You have successfully created your affiliate account. <br> An email has been sent to you for confirmation.',
+                                    title: 'Registration Successful',
+                                    text: 'You have successfully created your affiliate account. An email has been sent to you for confirmation.',
                                     timer: 2000, // 2-second timeout
                                     timerProgressBar: true
+                                }).then(function() {
+                                    window.location.href = 'login.php';
                                 });
+
                             });
                         </script>";
-                    exit();
-                } else {
-                    throw new Exception("Database error: " . $stmt->error);
+                        exit();
+                    }
                 }
             } else {
                 echo "<script>document.addEventListener('DOMContentLoaded', function() {Swal.fire('Email Error', 'We couldn't not send you a welcome email.<br>Try again later', 'error');});</script>";
