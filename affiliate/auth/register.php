@@ -1,147 +1,333 @@
 <?php
-// Enable error reporting for debugging (only for development)
-// Include the script to load environment variables
+// Enable error reporting for debugging in development environment
 require_once __DIR__ . '../../../config/loadENV.php';
 
-if ($_ENV['APP_ENV'] === 'dev') { 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+if ($_ENV['APP_ENV'] === 'dev') {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 } else {
     ini_set('display_errors', 0);
 }
 
-// Check if the affiliate is logged in
-if (isset($_SESSION['affiliate_id'])) {
-    header('Location: login.php');
+// Start session and check if the customer is already logged in
+session_start();
+if (isset($_SESSION['customer_id'])) {
+    header('Location: ../../');
     exit();
 }
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+
+require '../../PHPMailer-master/src/Exception.php';
+require '../../PHPMailer-master/src/PHPMailer.php';
+require '../../PHPMailer-master/src/SMTP.php';
 
 // Include database connection
 include('../../conn/conn.php');
-session_start();
 
-// Include SweetAlert library globally
-echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
-
-// Extract referral code from the URL if available
-$referralCodeFromUrl = isset($_GET['rf']) ? htmlspecialchars(trim($_GET['rf'])) : '';
-
-// Decode the referral code if it is encoded
-function decodeReferralId($referralCodeFromUrl) {
+// Decode referral code
+function decodeReferralId($referralCode)
+{
     $key = $_ENV['AFFILIATE_ID_ENCRYPTION_KEY'];
-    return openssl_decrypt(base64_decode($referralCodeFromUrl), 'aes-256-cbc', $key, 0, substr($key, 0, 16));
+    return openssl_decrypt(base64_decode($referralCode), 'aes-256-cbc', $key, 0, substr($key, 0, 16));
 }
 
+// Extract and decode referral code from the URL if available
+$referralCodeFromUrl = isset($_GET['rf']) ? htmlspecialchars(trim($_GET['rf'])) : '';
 if (!empty($referralCodeFromUrl)) {
     $referralCodeFromUrl = decodeReferralId($referralCodeFromUrl);
 }
 
+echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+
+// Process registration
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Sanitize user input
     $name = htmlspecialchars(trim($_POST['name']));
     $email = htmlspecialchars(trim($_POST['email']));
     $phoneNumber = htmlspecialchars(trim($_POST['phone']));
     $password = htmlspecialchars($_POST['password']);
+    $isAffiliate = 1; // Default affiliate status
     $referralCode = !empty($_POST['referral_code']) ? htmlspecialchars(trim($_POST['referral_code'])) : '';
 
     // Validate email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        displayAlert('error', 'Invalid Email', 'Please enter a valid email address.');
+
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                        icon: 'error',
+                        title: 'Invalid Email',
+                        text: 'Please enter a valid email address..',
+                        timer: 2000, // 2-second timeout
+                        timerProgressBar: true
+                    });
+                });
+            </script>";
         exit();
     }
 
-    // Validate phone number (10–15 digits, optional '+')
+    // Validate phone number
     if (!preg_match("/^\+?[0-9]{10,15}$/", $phoneNumber)) {
-        displayAlert('error', 'Invalid Phone Number', 'The phone number you entered is not valid.');
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                        icon: 'error',
+                        title: 'Invalid Phone Number',
+                        text: 'The phone number you entered is not valid.',
+                        timer: 2000, // 2-second timeout
+                        timerProgressBar: true
+                    });
+                });
+            </script>";
         exit();
     }
 
-    // Hash the password
+    // Hash password
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     try {
-        // Validate referral code if provided
+        // Validate referral code
         $referredAffiliateId = null;
         if (!empty($referralCode)) {
-            $stmt = $mysqli->prepare("SELECT id FROM affiliates WHERE affiliate_id = ?");
+            $stmt = $mysqli->prepare("SELECT id FROM affiliates WHERE id = ?");
             $stmt->bind_param('s', $referralCode);
             $stmt->execute();
             $result = $stmt->get_result();
 
             if ($result->num_rows > 0) {
-                // Referral code is valid, get the affiliate ID of the person who referred
                 $referredAffiliateId = $result->fetch_assoc()['id'];
             } else {
-                // Referral code is invalid, alert the user and keep the referral code in the URL
-                displayAlert('error', 'Invalid Referral Code', 'The referral code you entered does not exist.', true);
-                exit();
+                echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                        icon: 'error',
+                        title: 'Invalid Referral Code',
+                        text: 'The referral code you entered doesnt exist',
+                        timer: 2000, // 2-second timeout
+                        timerProgressBar: true
+                    });
+                });
+            </script>";
+        exit();
             }
         }
 
-        // Generate a unique affiliate ID
-        $uniqueAffiliateId = generateUniqueAffiliateId();
+        // Send email notifications
+        $mail = new PHPMailer(true);
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = $_ENV['SMTP_USER'];
+        $mail->Password = $_ENV['SMTP_PWD'];
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
 
-        // Insert affiliate into the database
-        $stmt = $mysqli->prepare("INSERT INTO affiliates (affiliate_id, name, email, phone, password, referral_code, status) VALUES (?, ?, ?, ?, ?, ?, 'active')");
-        $stmt->bind_param('ssssss', $uniqueAffiliateId, $name, $email, $phoneNumber, $hashedPassword, $referralCode);
+        // Admin notification email
+        $mail->setFrom('noreply@wellnesscommunityacademy.com', 'Wellness Community Academy');
+        $mail->addAddress($_ENV['ADMIN_EMAIL']);
+        $mail->addBCC('saintdannyyy@gmail.com');
+        $mail->addBCC('seshun65@gmail.com');
+        $mail->isHTML(true);
+        $mail->Subject = 'New User Registration';
+        $mail->Body = "
+            <!DOCTYPE html>
+            <html lang='en'>
+            <head>
+                <meta charset='UTF-8'>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        line-height: 1.6;
+                        background-color: #f9f9f9;
+                        color: #333;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .email-container {
+                        max-width: 600px;
+                        margin: 20px auto;
+                        background: #ffffff;
+                        border: 1px solid #ddd;
+                        border-radius: 8px;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                        overflow: hidden;
+                    }
+                    .email-header {
+                        background-color: #4CAF50;
+                        color: #ffffff;
+                        padding: 15px;
+                        text-align: center;
+                        font-size: 18px;
+                        font-weight: bold;
+                    }
+                    .email-body {
+                        padding: 20px;
+                    }
+                    .email-body p {
+                        margin-bottom: 15px;
+                    }
+                    .email-body ul {
+                        list-style: none;
+                        padding: 0;
+                        margin: 0;
+                    }
+                    .email-body li {
+                        margin: 10px 0;
+                        padding: 8px;
+                        background: #f4f4f4;
+                        border-radius: 4px;
+                    }
+                    .email-body li strong {
+                        color: #333;
+                    }
+                    .email-footer {
+                        background-color: #f4f4f4;
+                        color: #555;
+                        text-align: center;
+                        padding: 10px;
+                        font-size: 12px;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class='email-container'>
+                    <div class='email-header'>
+                        New User Registration
+                    </div>
+                    <div class='email-body'>
+                        <p>A new affiliate has registered on Wellness Community Academy:</p>
+                        <ul>
+                            <li><strong>Name:</strong> $name</li>
+                            <li><strong>Email:</strong> $email</li>
+                            <li><strong>Phone Number:</strong> $phoneNumber</li>
+                        </ul>
+                    </div>
+                    <div class='email-footer'>
+                        This is an automated notification. Please do not reply to this email.
+                    </div>
+                </div>
+            </body>
+            </html>";
 
-        if ($stmt->execute()) {
-            $affiliateDbId = $stmt->insert_id;
 
-            // Log referral relationship if applicable
-            if ($referredAffiliateId !== null) {
-                $stmtReferral = $mysqli->prepare("INSERT INTO affiliate_referrals (affiliate_id, referrer_id) VALUES (?, ?)");
-                $stmtReferral->bind_param('ii', $affiliateDbId, $referredAffiliateId);
-                $stmtReferral->execute();
+        if ($mail->send()) {
+            // Send welcome email to user
+            $mail->clearAddresses(); // Clear previous recipients
+            $mail->addAddress($email); // Add user email
+            $mail->Subject = 'Welcome to Wellness Community Academy!';
+            $mail->Body = "
+            <!DOCTYPE html>
+            <html lang='en'>
+            <head>
+                <meta charset='UTF-8'>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        line-height: 1.8;
+                        background-color: #f4f4f4;
+                        color: #333;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .email-container {
+                        max-width: 600px;
+                        margin: 20px auto;
+                        background: #ffffff;
+                        border: 1px solid #ddd;
+                        border-radius: 8px;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                        overflow: hidden;
+                    }
+                    .email-header {
+                        background-color: #4CAF50;
+                        color: #ffffff;
+                        padding: 20px;
+                        text-align: center;
+                        font-size: 22px;
+                        font-weight: bold;
+                    }
+                    .email-body {
+                        padding: 20px;
+                    }
+                    .email-body p {
+                        margin-bottom: 15px;
+                    }
+                    .email-body a {
+                        color: #4CAF50;
+                        text-decoration: none;
+                        font-weight: bold;
+                    }
+                    .email-body a:hover {
+                        text-decoration: underline;
+                    }
+                    .email-footer {
+                        background-color: #f4f4f4;
+                        color: #555;
+                        text-align: center;
+                        padding: 10px;
+                        font-size: 12px;
+                        border-top: 1px solid #ddd;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class='email-container'>
+                    <div class='email-header'>
+                        Welcome to Wellness Community Academy
+                    </div>
+                    <div class='email-body'>
+                        <p>Dear $name,</p>
+                        <p>Thank you for joining Wellness Community Academy. We’re excited to have you onboard.</p>
+                        <p>Your affiliate journey starts here. Login to your dashboard to explore: 
+                            <a href='https://wellnesscommunityacademy.com/affiliate'>Login</a>
+                        </p>
+                        <p>Warm Regards,<br>Wellness Community Academy Team</p>
+                    </div>
+                    <div class='email-footer'>
+                        © 2024 Wellness Community Academy. All Rights Reserved.
+                    </div>
+                </div>
+            </body>
+            </html>";
+
+
+            if ($mail->send()) {
+                // Insert customer into the database
+                $stmt = $mysqli->prepare("INSERT INTO customers (name, email, phone, password, affiliate, affiliate_referrer_id) VALUES (?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param('ssssii', $name, $email, $phoneNumber, $hashedPassword, $isAffiliate, $referredAffiliateId);
+
+                if ($stmt->execute()) {
+                    echo "<script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            Swal.fire({
+                                    icon: 'success',
+                                    title: 'Registration Succesfull',
+                                    text: 'You have successfully created your affiliate account. <br> An email has been sent to you for confirmation.',
+                                    timer: 2000, // 2-second timeout
+                                    timerProgressBar: true
+                                });
+                            });
+                        </script>";
+                    exit();
+                } else {
+                    throw new Exception("Database error: " . $stmt->error);
+                }
+            } else {
+                echo "<script>document.addEventListener('DOMContentLoaded', function() {Swal.fire('Email Error', 'We couldn't not send you a welcome email.<br>Try again later', 'error');});</script>";
             }
-
-            // Success alert
-            displayAlert('success', 'Registration Successful', 'You have successfully registered as an affiliate.', 'login.php');
         } else {
-            throw new Exception("Database error: " . $stmt->error);
+            echo "<script>document.addEventListener('DOMContentLoaded', function() {Swal.fire('Email Error', 'Could not notify the admin of the new registration.<br>Try again later', 'error');});</script>";
         }
     } catch (Exception $e) {
         error_log($e->getMessage());
-        displayAlert('error', 'Registration Error', 'An error occurred during registration. Please try again later.');
-    } finally {
-        // Cleanup
-        if (isset($stmt)) $stmt->close();
-        if (isset($mysqli)) $mysqli->close();
+        echo "<script>document.addEventListener('DOMContentLoaded', function() {Swal.fire('Registration Error', 'An error occurred. Please try again later.', 'error');});</script>";
     }
 }
-
-// Helper function: Display SweetAlert
-function displayAlert($icon, $title, $text, $keepReferral = false)
-{
-    $currentUrl = htmlspecialchars($_SERVER['REQUEST_URI']); // Get the current URL with query string
-    echo "<script>
-        document.addEventListener('DOMContentLoaded', function () {
-            Swal.fire({
-                icon: '$icon',
-                title: '$title',
-                text: '$text',
-                timer: 2000, // 2-second timeout
-                timerProgressBar: true, // Show a progress bar for the timer
-            }).then((result) => {
-                // Redirect after alert closes
-                if (result.dismiss === Swal.DismissReason.timer || result.isConfirmed) {
-                    " . ($keepReferral ? "window.location.href = '$currentUrl';" : "") . "
-                }
-
-            });
-        });
-    </script>";
-}
-
-// Helper function: Generate unique affiliate ID
-function generateUniqueAffiliateId()
-{
-    return 'AFF' . time() . strtoupper(substr(md5(uniqid()), 0, 6));
-}
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
