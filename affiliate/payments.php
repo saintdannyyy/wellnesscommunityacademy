@@ -1,3 +1,36 @@
+<?php
+session_start();
+require('../conn/conn.php');
+
+// Ensure the affiliate ID is available
+if (!isset($_SESSION['affiliate_id'])) {
+    die("Unauthorized access!");
+}
+$affiliate_id = $_SESSION['affiliate_id'];
+
+// Fetch Affiliate Earnings
+$stmt = $mysqli->prepare("
+    SELECT ae.id AS earning_id, 
+           ae.amount, 
+           ae.status, 
+           ae.created_at, 
+           ae.product_name
+    FROM affiliate_earnings ae
+    WHERE ae.affiliate_id = ?
+");
+$stmt->bind_param("i", $affiliate_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$stmt->close();
+
+// Calculate Total Earnings
+$total_earnings = 0;
+foreach ($result as $row) {
+    $total_earnings += $row['amount'];
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +43,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css">
+    <!-- jQuery (must come before DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" 
+        integrity="sha384-UG8ao2jwOWB7/oDdObZc6ItJmwUkR/PfMyt9Qs5AwX7PsnYn1CRKCTWyncPTWvaS" 
+        crossorigin="anonymous"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
 </head>
+
 
 <body>
     <div class="d-flex">
@@ -18,6 +60,158 @@
         <div>
             <?php include 'sidebar/sidebar.html'; ?>
         </div>
-    </div>
+
+        <!-- Main Content -->
+        <div class="container mt-4">
+            <h3 class="mb-3">Affiliate Purchases</h3>
+            <div class="table-responsive">
+                <table id="paymentsTable" class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Product</th>
+                            <th>Amount (GHS)</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $counter = 1;
+                        foreach ($result as $row) {
+                            echo "<tr>
+                            <td>{$counter}</td>
+                            <td>{$row['product_name']}</td>
+                            <td>" . number_format($row['amount'], 2) . "</td>
+                            <td>" . ucfirst($row['status']) . "</td>
+                            <td>{$row['created_at']}</td>
+                            <td>
+                                <button class='btn btn-success btn-sm payout-btn' data-id='{$row['earning_id']}'>
+                                    <i class='bi bi-wallet'></i> Payout
+                                </button>
+                            </td>
+                          </tr>";
+                            $counter++;
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Total Earnings and Payout Button -->
+            <div class="mt-4">
+                <h3>Total Earnings: GHS <?php echo number_format($total_earnings, 2); ?></h3>
+
+                <!-- Payout Button -->
+                <button class="btn btn-primary mt-3" id="payout-btn">Request Payout</button>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function() {
+                $('#paymentsTable').DataTable({
+                    "order": [
+                        [4, "desc"]
+                    ], // Order by Date column (descending)
+                    "pageLength": 10,
+                    "lengthMenu": [5, 10, 25, 50],
+                    "responsive": true,
+                    "language": {
+                        "search": "Search:",
+                        "lengthMenu": "Show _MENU_ entries",
+                        "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+                        "paginate": {
+                            "previous": "Previous",
+                            "next": "Next"
+                        }
+                    }
+                });
+
+                // Payout Logic
+                $('#payout-btn').on('click', function() {
+                    let bankName;
+                    let accountNumber;
+                    let accountHolder;
+                    // Check if payment details are available for the affiliate
+                    $.ajax({
+                        url: 'aff_api/check_payment_details.php',
+                        method: 'POST',
+                        success: function(response) {
+                            const data = JSON.parse(response);
+                            if (data.status === 'success') {
+                                Swal.fire({
+                                    title: 'Confirm Payout',
+                                    text: 'Are you sure you want to process this payout?',
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Yes, process it!',
+                                    cancelButtonText: 'No'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href = 'aff_api/process_payout.php';
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Add Payment Details',
+                                    html: '<form id="payment-form">' +
+                                        '<div class="mb-3">' +
+                                        '<label class="form-label">Bank Name</label>' +
+                                        '<input type="text" class="form-control" id="bank-name" required>' +
+                                        '</div>' +
+                                        '<div class="mb-3">' +
+                                        '<label class="form-label">Account Number</label>' +
+                                        '<input type="text" class="form-control" id="account-number" required>' +
+                                        '</div>' +
+                                        '<div class="mb-3">' +
+                                        '<label class="form-label">Account Holder</label>' +
+                                        '<input type="text" class="form-control" id="account-holder" required>' +
+                                        '</div>' +
+                                        '</form>',
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Save',
+                                    preConfirm: () => {
+                                        bankName = document.getElementById('bank-name').value;
+                                        accountNumber = document.getElementById('account-number').value;
+                                        accountHolder = document.getElementById('account-holder').value;
+                                        if (!bankName || !accountNumber || !accountHolder) {
+                                            Swal.showValidationMessage('Please fill all fields');
+                                        } else {
+                                            return {
+                                                bankName,
+                                                accountNumber,
+                                                accountHolder
+                                            };
+                                        }
+                                    }
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        const data = result.value;
+                                        console.log('Account details being sent,', data);
+                                        fetch('aff_api/save_payment_details.php', {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json'
+                                            },
+                                            body: JSON.stringify(data)
+                                        }).then(res => res.json()).then(response => {
+                                            if (response.status === 'success') {
+                                                Swal.fire('Success', 'Payment details saved!', 'success').then(() => {
+                                                    location.reload();
+                                                });
+                                            } else {
+                                                Swal.fire('Error', 'Failed to save payment details.', 'error');
+                                                console.log(response);
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
 </body>
+
 </html>
