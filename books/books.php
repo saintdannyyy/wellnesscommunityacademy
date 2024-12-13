@@ -43,7 +43,7 @@ if (!$mysqli) {
 }
 
 // Fetch book details
-$sql = "SELECT title, price FROM Books WHERE id = ?";
+$sql = "SELECT title, price, path FROM books WHERE id = ?";
 $stmt = $mysqli->prepare($sql);
 if (!$stmt) {
     echo json_encode(['success' => false, 'message' => 'SQL preparation error: ' . $mysqli->error]);
@@ -52,7 +52,7 @@ if (!$stmt) {
 
 $stmt->bind_param('i', $bookId);
 $stmt->execute();
-$stmt->bind_result($title, $price);
+$stmt->bind_result($title, $price, $path);
 $stmt->fetch();
 $stmt->close();
 $mysqli->close();
@@ -91,7 +91,8 @@ echo json_encode([
         'price_ghs' => $priceInGhs,
         'price_ngn' => $priceInNgn,
         'rate_usd_to_ghs' => $usdToGhsRate,
-        'rate_usd_to_ngn' => $usdToNgnRate
+        'rate_usd_to_ngn' => $usdToNgnRate,
+        'path' => $path
     ]
 ]);
 ?>
