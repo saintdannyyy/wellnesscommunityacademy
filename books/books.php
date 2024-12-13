@@ -41,9 +41,14 @@ if (!$mysqli) {
     echo json_encode(['success' => false, 'message' => 'Database connection failed: ' . $mysqli->connect_error]);
     exit;
 }
+require_once('../conn/conn.php');
+if (!$mysqli) {
+    echo json_encode(['success' => false, 'message' => 'Database connection failed: ' . $mysqli->connect_error]);
+    exit;
+}
 
 // Fetch book details
-$sql = "SELECT title, price FROM Books WHERE id = ?";
+$sql = "SELECT title, price, path FROM books WHERE id = ?";
 $stmt = $mysqli->prepare($sql);
 if (!$stmt) {
     echo json_encode(['success' => false, 'message' => 'SQL preparation error: ' . $mysqli->error]);
@@ -52,11 +57,24 @@ if (!$stmt) {
 
 $stmt->bind_param('i', $bookId);
 $stmt->execute();
-$stmt->bind_result($title, $price);
+$stmt->bind_result($title, $price, $path);
 $stmt->fetch();
 $stmt->close();
 $mysqli->close();
 
+if (!$title || !$price) {
+    echo json_encode(['success' => false, 'message' => 'Book not found.']);
+    exit;
+}
+
+// Fetch exchange rates
+$apiKey = $open_exchange_api_key;
+$url = "https://openexchangerates.org/api/latest.json?app_id=$apiKey&symbols=GHS,NGN&base=USD";
+$currencyData = @file_get_contents($url);
+if ($currencyData === false) {
+    echo json_encode(['success' => false, 'message' => 'Currency conversion API unavailable.']);
+    exit;
+}
 if (!$title || !$price) {
     echo json_encode(['success' => false, 'message' => 'Book not found.']);
     exit;
@@ -76,7 +94,16 @@ if (!$exchangeData || !isset($exchangeData['rates']['GHS'], $exchangeData['rates
     echo json_encode(['success' => false, 'message' => 'Failed to fetch exchange rate data.']);
     exit;
 }
+$exchangeData = json_decode($currencyData, true);
+if (!$exchangeData || !isset($exchangeData['rates']['GHS'], $exchangeData['rates']['NGN'])) {
+    echo json_encode(['success' => false, 'message' => 'Failed to fetch exchange rate data.']);
+    exit;
+}
 
+$usdToGhsRate = $exchangeData['rates']['GHS'];
+$usdToNgnRate = $exchangeData['rates']['NGN'];
+$priceInGhs = number_format($price * $usdToGhsRate, 2);
+$priceInNgn = number_format($price * $usdToNgnRate, 2);
 $usdToGhsRate = $exchangeData['rates']['GHS'];
 $usdToNgnRate = $exchangeData['rates']['NGN'];
 $priceInGhs = number_format($price * $usdToGhsRate, 2);
@@ -91,7 +118,8 @@ echo json_encode([
         'price_ghs' => $priceInGhs,
         'price_ngn' => $priceInNgn,
         'rate_usd_to_ghs' => $usdToGhsRate,
-        'rate_usd_to_ngn' => $usdToNgnRate
+        'rate_usd_to_ngn' => $usdToNgnRate,
+        'path' => $path
     ]
 ]);
 ?>

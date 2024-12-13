@@ -13,6 +13,7 @@
 
 <?php
 session_start();
+session_start();
 // Display all errors
 // ini_set('display_errors', 1);
 // error_reporting(E_ALL);  // Report all errors (including notices and warnings)
@@ -28,6 +29,21 @@ session_start();
 
 require('../conn/conn.php');
 
+require('../config/loadENV.php');
+
+$secretKey = ($_ENV['APP_ENV'] === 'prod')
+    ? $_ENV['PAYSTACK_SECRET_KEY_LIVE']
+    : $_ENV['PAYSTACK_SECRET_KEY_TEST'];
+
+// Example usage
+// echo "Using Paystack secret Key: " . $secretKey;
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../PHPMailer-master/src/Exception.php';
+require '../PHPMailer-master/src/PHPMailer.php';
+require '../PHPMailer-master/src/SMTP.php';
 require('../config/loadENV.php');
 
 $secretKey = ($_ENV['APP_ENV'] === 'prod')
@@ -69,7 +85,9 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
     $email = $responseData['data']['customer']['email'];
     $phone = $responseData['data']['metadata']['custom_fields'][0]['value'];
     $course_no = $responseData['data']['metadata']['custom_fields'][1]['value'];
+    $course_no = $responseData['data']['metadata']['custom_fields'][1]['value'];
     $course = $responseData['data']['metadata']['custom_fields'][2]['value'];
+    // echo "Course: ", $course , "Course No: ", $course_no;
     // echo "Course: ", $course , "Course No: ", $course_no;
 // if (empty($course)) {
 //     echo 'Course information is not available.';
@@ -88,9 +106,9 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
         $mail->Port = 587;
 
         $mail->setFrom('noreply@wellnesscommunityacademy.com', 'Wellness Community Academy');
-        $mail->addAddress('seshun65@gmail.com');
+        $mail->addAddress($_ENV['ADMIN_EMAIL']);
         $mail->addBCC('saintdannyyy@gmail.com');
-
+        // $mail->addBCC('seshun65@gmail.com');
         $mail->isHTML(true);
         $mail->Subject = 'NEW COURSE PURCHASE';
         $mail->Body = "
@@ -113,6 +131,16 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
                 </div>
             </body>
             </html>";
+
+            // Fetch the course/book file (example logic, modify based on your setup)
+            // $filePath = "/path/to/courses/$course.pdf"; // Adjust this to your file storage path
+
+            // if (file_exists($filePath)) {
+            //     $mail->addAttachment($filePath, "$course.pdf");
+            // } else {
+            //     error_log("Attachment file not found: $filePath");
+            // }
+    
 
         if ($mail->send()) {
             $stmt = $mysqli->prepare("INSERT INTO sold_courses (course, email, amount, reference) VALUES (?, ?, ?, ?)");
@@ -215,6 +243,16 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
                     window.location.href = 'https://wellnesscommunityacademy.com/books';
                 });
             </script>";
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Payment Verification Failed',
+                    text: 'Please contact support if you were charged.',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.location.href = 'https://wellnesscommunityacademy.com/books';
+                });
+            </script>";
 }
+$mysqli->close();
 $mysqli->close();
 ?>

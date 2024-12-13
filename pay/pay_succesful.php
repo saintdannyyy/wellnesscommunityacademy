@@ -6,12 +6,14 @@
     <title>Payment Status</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+</head>
 <body>
 
 </body>
 </html>
 
 <?php
+session_start();
 session_start();
 // // Check if reference is provided
 // if (!isset($_GET['reference'])) {
@@ -23,6 +25,22 @@ session_start();
 // }
 
 require('../conn/conn.php');
+require('../config/loadENV.php');
+
+$secretKey = ($_ENV['APP_ENV'] === 'prod')
+    ? $_ENV['PAYSTACK_SECRET_KEY_LIVE']
+    : $_ENV['PAYSTACK_SECRET_KEY_TEST'];
+
+// Example usage
+// echo "Using Paystack secret Key: " . $secretKey;
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../PHPMailer-master/src/Exception.php';
+require '../PHPMailer-master/src/PHPMailer.php';
+require '../PHPMailer-master/src/SMTP.php';
+
 require('../config/loadENV.php');
 
 $secretKey = ($_ENV['APP_ENV'] === 'prod')
@@ -65,6 +83,8 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
     $email = $responseData['data']['customer']['email'];
     $bookId = $responseData['data']['metadata']['custom_fields'][1]['value'];
     $bookName = $responseData['data']['metadata']['custom_fields'][2]['value'];
+    $bookpath = $responseData['data']['metadata']['custom_fields'][3]['value'];
+    // echo $bookpath;
 
     $mail = new PHPMailer(true);
     try {
@@ -77,9 +97,10 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
         $mail->Port = 587;
 
         $mail->setFrom('noreply@wellnesscommunityacademy.com', 'Wellness Community Academy');
-        $mail->addAddress('seshun65@gmail.com');
-        $mail->addBCC('saintdannyyy@gmail.com');
-
+        // $mail->addAddress($_ENV['ADMIN_EMAIL']);
+        $mail->addAddress('dannynhyira@gmail.com');
+        // $mail->addBCC('saintdannyyy@gmail.com');
+        // $mail->addBCC('seshun65@gmail.com');
         $mail->isHTML(true);
         $mail->Subject = 'NEW BOOK PURCHASE';
         $mail->Body = "
@@ -87,23 +108,105 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
             <html lang='en'>
             <head>
                 <meta charset='UTF-8'>
-                <style>/* Your CSS styling here */</style>
+                <style>
+                    body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f4f9;
+                    margin: 0;
+                    padding: 0;
+                    }
+                    .container {
+                        background-color: #fff;
+                        max-width: 600px;
+                        margin: 20px auto;
+                        padding: 20px;
+                        border-radius: 8px;
+                        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                    }
+                    h1 {
+                        font-size: 24px;
+                        color: #333;
+                        border-bottom: 2px solid #007bff;
+                        padding-bottom: 10px;
+                    }
+                    p {
+                        font-size: 16px;
+                        color: #555;
+                        margin: 10px 0;
+                    }
+                    .content {
+                        margin-top: 20px;
+                        padding: 15px;
+                        background-color: #f9f9f9;
+                        border-radius: 6px;
+                        border: 1px solid #ddd;
+                    }
+                    .content p {
+                        margin: 8px 0;
+                    }
+                    .footer {
+                        margin-top: 20px;
+                        text-align: center;
+                        font-size: 14px;
+                        color: #999;
+                    }
+                </style>
             </head>
             <body>
                 <div class='container'>
-                    <h1>BOOK PURCHASE</h1>
+                    <h1>New Book Purchase Notification</h1>
                     <p>Hello <b>Wellness Community Academy</b>,</p>
-                    <p>$email just made payment for a book. Here are the details:</p>
+                    <p>A new book purchase has been made. Below are the details:</p>
                     <div class='content'>
                         <p><b>Email:</b> $email</p>
                         <p><b>Book Purchased:</b> $bookName</p>
-                        <p><b>Amount Paid:</b>GHC $amount</p>
+                        <p><b>Amount Paid:</b> GHC $amount</p>
+                    </div>
+                    <div class='footer'>
+                        <p>This is an automated notification from the Wellness Community Academy system.</p>
                     </div>
                 </div>
             </body>
             </html>";
 
         if ($mail->send()) {
+            // Customer Thank-You Email
+            $mail->clearAddresses();
+            $mail->clearBCCs();
+            $mail->addAddress($email);
+            // $mail->addBCC('saintdannyyy@gmail.com');
+
+            // Attach the book file if it exists
+            if ($bookpath && file_exists($bookpath)) {
+                $mail->addAttachment($bookpath, basename($bookpath));
+            }
+
+            $mail->Subject = 'Thank You for Your Purchase!';
+            $mail->Body = "
+                <!DOCTYPE html>
+                <html lang='en'>
+                <head>
+                    <meta charset='UTF-8'>
+                    <style>
+                        body { font-family: Arial, sans-serif; line-height: 1.6; }
+                        .container { padding: 20px; }
+                        h1 { color: #007bff; }
+                        p { font-size: 1rem; }
+                    </style>
+                </head>
+                <body>
+                    <div class='container'>
+                        <h1>Thank You for Your Purchase!</h1>
+                        <p>Dear $email,</p>
+                        <p>Thank you for purchasing <b>$bookName</b> from Wellness Community Academy.</p>
+                        <p>Your payment of GHC $amount has been successfully processed. The book is attached to this email for your convenience.</p>
+                        <p>If you have any questions or need support, feel free to contact us.</p>
+                        <p>Best regards,<br><b>Wellness Community Academy Team</b></p>
+                    </div>
+                </body>
+                </html>";
+            $mail->send(); // Send customer email
+
             $stmt = $mysqli->prepare("INSERT INTO Transactions (reference, email, book_id, amount, status) VALUES (?, ?, ?, ?, ?)");
             $status = 'success';
             $stmt->bind_param("ssids", $reference, $email, $bookId, $amount, $status);
@@ -169,7 +272,7 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
                 Swal.fire({
                     icon: 'success',
                     title: 'Payment Successful!',
-                    html: '<p>Thank you for your purchase.<br>Reference: $reference<br>Amount Paid: GHS " . number_format($amount, 2) . "</p>',
+                    html: '<p>Your book will be sent via email <br>Thank you for your purchase.<br>Reference: $reference</p>',
                     confirmButtonText: 'OK'
                 }).then(() => {
                     window.location.href = 'https://wellnesscommunityacademy.com/books';
@@ -205,5 +308,6 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
                 });
             </script>";
 }
+$mysqli->close();
 $mysqli->close();
 ?>
