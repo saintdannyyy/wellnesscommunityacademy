@@ -90,7 +90,7 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
         $mail->setFrom('noreply@wellnesscommunityacademy.com', 'Wellness Community Academy');
         $mail->addAddress($_ENV['ADMIN_EMAIL']);
         $mail->addBCC('saintdannyyy@gmail.com');
-        $mail->addBCC('seshun65@gmail.com');
+        // $mail->addBCC('seshun65@gmail.com');
         $mail->isHTML(true);
         $mail->Subject = 'NEW COURSE PURCHASE';
         $mail->Body = "
@@ -113,6 +113,16 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
                 </div>
             </body>
             </html>";
+
+            // Fetch the course/book file (example logic, modify based on your setup)
+            // $filePath = "/path/to/courses/$course.pdf"; // Adjust this to your file storage path
+
+            // if (file_exists($filePath)) {
+            //     $mail->addAttachment($filePath, "$course.pdf");
+            // } else {
+            //     error_log("Attachment file not found: $filePath");
+            // }
+    
 
         if ($mail->send()) {
             $stmt = $mysqli->prepare("INSERT INTO sold_courses (course, email, amount, reference) VALUES (?, ?, ?, ?)");
