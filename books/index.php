@@ -1058,6 +1058,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                     let priceInUSD;
                                     let priceInNGN;
                                     let bookName;
+                                    let bookpath;
 
                                     function openPaymentPopup(bookId) {
                                         console.log("Fetching payment details for book ID:", bookId);
@@ -1080,6 +1081,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                                         // Process and display data
                                                         document.getElementById('price').innerText = data.data.price_ghs;
                                                         bookName = data.data.title;
+                                                        bookpath = data.data.path;
                                                         // console.log("Name of book passed into bookName", bookName);
                                                         document.getElementById('book_name').innerText = bookName;                                                        
                                                         document.getElementById('modal_price').value = data.data.price_ghs;
@@ -1189,6 +1191,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                             const email = document.getElementById("mail").value;
                                             const phone = document.getElementById("phone").value;
                                             bookName = bookName;
+                                            bookpath = bookpath;
                                             // console.log("Book name:", bookName);  
                                             const bookId = document.getElementById("book_id").value;
                                             const priceInGHS = document.getElementById("modal_price").value;
@@ -1234,6 +1237,11 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                                             display_name: "Book Name",
                                                             variable_name: "bookName",
                                                             value: bookName
+                                                        },
+                                                        {
+                                                            display_name: "Book Path",
+                                                            variable_name: "bookpath",
+                                                            value: bookpath
                                                         }
                                                     ]
                                                 },
@@ -1242,7 +1250,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                                     Swal.fire({
                                                         icon: 'success',
                                                         title: 'Payment Successful!',
-                                                        text: 'Reference: ' + response.reference,
+                                                        text: 'Please click Ok and hold on as we process your payment',
                                                         confirmButtonText: 'OK'
                                                     }).then(() => {
                                                         window.location.href = "../pay/pay_succesful.php?reference=" + response.reference;
