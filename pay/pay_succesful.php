@@ -6,12 +6,14 @@
     <title>Payment Status</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+</head>
 <body>
 
 </body>
 </html>
 
 <?php
+session_start();
 session_start();
 // // Check if reference is provided
 // if (!isset($_GET['reference'])) {
@@ -23,6 +25,22 @@ session_start();
 // }
 
 require('../conn/conn.php');
+require('../config/loadENV.php');
+
+$secretKey = ($_ENV['APP_ENV'] === 'prod')
+    ? $_ENV['PAYSTACK_SECRET_KEY_LIVE']
+    : $_ENV['PAYSTACK_SECRET_KEY_TEST'];
+
+// Example usage
+// echo "Using Paystack secret Key: " . $secretKey;
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../PHPMailer-master/src/Exception.php';
+require '../PHPMailer-master/src/PHPMailer.php';
+require '../PHPMailer-master/src/SMTP.php';
+
 require('../config/loadENV.php');
 
 $secretKey = ($_ENV['APP_ENV'] === 'prod')
@@ -290,5 +308,6 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
                 });
             </script>";
 }
+$mysqli->close();
 $mysqli->close();
 ?>

@@ -41,6 +41,11 @@ if (!$mysqli) {
     echo json_encode(['success' => false, 'message' => 'Database connection failed: ' . $mysqli->connect_error]);
     exit;
 }
+require_once('../conn/conn.php');
+if (!$mysqli) {
+    echo json_encode(['success' => false, 'message' => 'Database connection failed: ' . $mysqli->connect_error]);
+    exit;
+}
 
 // Fetch book details
 $sql = "SELECT title, price, path FROM books WHERE id = ?";
@@ -70,13 +75,35 @@ if ($currencyData === false) {
     echo json_encode(['success' => false, 'message' => 'Currency conversion API unavailable.']);
     exit;
 }
+if (!$title || !$price) {
+    echo json_encode(['success' => false, 'message' => 'Book not found.']);
+    exit;
+}
+
+// Fetch exchange rates
+$apiKey = $open_exchange_api_key;
+$url = "https://openexchangerates.org/api/latest.json?app_id=$apiKey&symbols=GHS,NGN&base=USD";
+$currencyData = @file_get_contents($url);
+if ($currencyData === false) {
+    echo json_encode(['success' => false, 'message' => 'Currency conversion API unavailable.']);
+    exit;
+}
 
 $exchangeData = json_decode($currencyData, true);
 if (!$exchangeData || !isset($exchangeData['rates']['GHS'], $exchangeData['rates']['NGN'])) {
     echo json_encode(['success' => false, 'message' => 'Failed to fetch exchange rate data.']);
     exit;
 }
+$exchangeData = json_decode($currencyData, true);
+if (!$exchangeData || !isset($exchangeData['rates']['GHS'], $exchangeData['rates']['NGN'])) {
+    echo json_encode(['success' => false, 'message' => 'Failed to fetch exchange rate data.']);
+    exit;
+}
 
+$usdToGhsRate = $exchangeData['rates']['GHS'];
+$usdToNgnRate = $exchangeData['rates']['NGN'];
+$priceInGhs = number_format($price * $usdToGhsRate, 2);
+$priceInNgn = number_format($price * $usdToNgnRate, 2);
 $usdToGhsRate = $exchangeData['rates']['GHS'];
 $usdToNgnRate = $exchangeData['rates']['NGN'];
 $priceInGhs = number_format($price * $usdToGhsRate, 2);
