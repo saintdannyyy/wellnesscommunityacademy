@@ -118,233 +118,238 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Send email notifications
         $mail = new PHPMailer(true);
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = $_ENV['SMTP_USER'];
-        $mail->Password = $_ENV['SMTP_PWD'];
-        $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;
+        try{
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = $_ENV['SMTP_USER'];
+            $mail->Password = $_ENV['SMTP_PWD'];
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
 
-        // Admin notification email
-        $mail->setFrom('noreply@wellnesscommunityacademy.com', 'Wellness Community Academy');
-        $mail->addAddress($_ENV['ADMIN_EMAIL']);
-        $mail->addBCC('saintdannyyy@gmail.com');
-        // $mail->addBCC('seshun65@gmail.com');
-        $mail->isHTML(true);
-        $mail->Subject = 'New User Registration';
-        $mail->Body = "
-            <!DOCTYPE html>
-            <html lang='en'>
-            <head>
-                <meta charset='UTF-8'>
-                <style>
-                    body {
-                        font-family: Arial, sans-serif;
-                        line-height: 1.6;
-                        background-color: #f9f9f9;
-                        color: #333;
-                        margin: 0;
-                        padding: 0;
-                    }
-                    .email-container {
-                        max-width: 600px;
-                        margin: 20px auto;
-                        background: #ffffff;
-                        border: 1px solid #ddd;
-                        border-radius: 8px;
-                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                        overflow: hidden;
-                    }
-                    .email-header {
-                        background-color: #4CAF50;
-                        color: #ffffff;
-                        padding: 15px;
-                        text-align: center;
-                        font-size: 18px;
-                        font-weight: bold;
-                    }
-                    .email-body {
-                        padding: 20px;
-                    }
-                    .email-body p {
-                        margin-bottom: 15px;
-                    }
-                    .email-body ul {
-                        list-style: none;
-                        padding: 0;
-                        margin: 0;
-                    }
-                    .email-body li {
-                        margin: 10px 0;
-                        padding: 8px;
-                        background: #f4f4f4;
-                        border-radius: 4px;
-                    }
-                    .email-body li strong {
-                        color: #333;
-                    }
-                    .email-footer {
-                        background-color: #f4f4f4;
-                        color: #555;
-                        text-align: center;
-                        padding: 10px;
-                        font-size: 12px;
-                    }
-                </style>
-            </head>
-            <body>
-                <div class='email-container'>
-                    <div class='email-header'>
-                        New User Registration
-                    </div>
-                    <div class='email-body'>
-                        <p>A new affiliate has registered on Wellness Community Academy:</p>
-                        <ul>
-                            <li><strong>Name:</strong> $name</li>
-                            <li><strong>Email:</strong> $email</li>
-                            <li><strong>Phone Number:</strong> $phoneNumber</li>
-                        </ul>
-                    </div>
-                    <div class='email-footer'>
-                        This is an automated notification. Please do not reply to this email.
-                    </div>
-                </div>
-            </body>
-            </html>";
-
-
-        if ($mail->send()) {
-            // Send welcome email to user
-            $mail->clearAddresses(); // Clear previous recipients
-            $mail->addAddress($email); // Add user email
-            $mail->Subject = 'Welcome to Wellness Community Academy!';
+            // Admin notification email
+            $mail->setFrom('noreply@wellnesscommunityacademy.com', 'Wellness Community Academy');
+            $mail->addAddress($_ENV['ADMIN_EMAIL']);
+            $mail->addBCC('saintdannyyy@gmail.com');
+            // $mail->addBCC('seshun65@gmail.com');
+            $mail->isHTML(true);
+            $mail->Subject = 'New User Registration';
             $mail->Body = "
-            <!DOCTYPE html>
-            <html lang='en'>
-            <head>
-                <meta charset='UTF-8'>
-                <style>
-                    body {
-                        font-family: Arial, sans-serif;
-                        line-height: 1.8;
-                        background-color: #f4f4f4;
-                        color: #333;
-                        margin: 0;
-                        padding: 0;
-                    }
-                    .email-container {
-                        max-width: 600px;
-                        margin: 20px auto;
-                        background: #ffffff;
-                        border: 1px solid #ddd;
-                        border-radius: 8px;
-                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                        overflow: hidden;
-                    }
-                    .email-header {
-                        background-color: #4CAF50;
-                        color: #ffffff;
-                        padding: 20px;
-                        text-align: center;
-                        font-size: 22px;
-                        font-weight: bold;
-                    }
-                    .email-body {
-                        padding: 20px;
-                    }
-                    .email-body p {
-                        margin-bottom: 15px;
-                    }
-                    .email-body a {
-                        color: #4CAF50;
-                        text-decoration: none;
-                        font-weight: bold;
-                    }
-                    .email-body a:hover {
-                        text-decoration: underline;
-                    }
-                    .email-footer {
-                        background-color: #f4f4f4;
-                        color: #555;
-                        text-align: center;
-                        padding: 10px;
-                        font-size: 12px;
-                        border-top: 1px solid #ddd;
-                    }
-                </style>
-            </head>
-            <body>
-                <div class='email-container'>
-                    <div class='email-header'>
-                        Welcome to Wellness Community Academy
+                <!DOCTYPE html>
+                <html lang='en'>
+                <head>
+                    <meta charset='UTF-8'>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            line-height: 1.6;
+                            background-color: #f9f9f9;
+                            color: #333;
+                            margin: 0;
+                            padding: 0;
+                        }
+                        .email-container {
+                            max-width: 600px;
+                            margin: 20px auto;
+                            background: #ffffff;
+                            border: 1px solid #ddd;
+                            border-radius: 8px;
+                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                            overflow: hidden;
+                        }
+                        .email-header {
+                            background-color: #4CAF50;
+                            color: #ffffff;
+                            padding: 15px;
+                            text-align: center;
+                            font-size: 18px;
+                            font-weight: bold;
+                        }
+                        .email-body {
+                            padding: 20px;
+                        }
+                        .email-body p {
+                            margin-bottom: 15px;
+                        }
+                        .email-body ul {
+                            list-style: none;
+                            padding: 0;
+                            margin: 0;
+                        }
+                        .email-body li {
+                            margin: 10px 0;
+                            padding: 8px;
+                            background: #f4f4f4;
+                            border-radius: 4px;
+                        }
+                        .email-body li strong {
+                            color: #333;
+                        }
+                        .email-footer {
+                            background-color: #f4f4f4;
+                            color: #555;
+                            text-align: center;
+                            padding: 10px;
+                            font-size: 12px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class='email-container'>
+                        <div class='email-header'>
+                            New User Registration
+                        </div>
+                        <div class='email-body'>
+                            <p>A new affiliate has registered on Wellness Community Academy:</p>
+                            <ul>
+                                <li><strong>Name:</strong> $name</li>
+                                <li><strong>Email:</strong> $email</li>
+                                <li><strong>Phone Number:</strong> $phoneNumber</li>
+                            </ul>
+                        </div>
+                        <div class='email-footer'>
+                            This is an automated notification. Please do not reply to this email.
+                        </div>
                     </div>
-                    <div class='email-body'>
-                        <p>Dear $name,</p>
-                        <p>Thank you for joining Wellness Community Academy. We’re excited to have you onboard.</p>
-                        <p>Your affiliate journey starts here. Login to your dashboard to explore: 
-                            <a href='https://wellnesscommunityacademy.com/affiliate'>Login</a>
-                        </p>
-                        <p>Warm Regards,<br>Wellness Community Academy Team</p>
-                    </div>
-                    <div class='email-footer'>
-                        © 2024 Wellness Community Academy. All Rights Reserved.
-                    </div>
-                </div>
-            </body>
-            </html>";
+                </body>
+                </html>";
 
 
             if ($mail->send()) {
-                // Insert customer into the database
-                $stmt = $mysqli->prepare("INSERT INTO customers (name, email, phone, password, affiliate, affiliate_referrer_id) VALUES (?, ?, ?, ?, ?, ?)");
-                $stmt->bind_param('ssssii', $name, $email, $phoneNumber, $hashedPassword, $isAffiliate, $referredAffiliateId);
-
-                if ($stmt->execute()) {
-                    $stmt->close();
-                    // If the user opted to be an affiliate, add to the affiliates table
-                    if ($isAffiliate === 1) {
-                        // Helper function: Generate unique affiliate ID
-                        function generateUniqueAffiliateId()
-                        {
-                            return 'AFF' . time() . strtoupper(substr(md5(uniqid()), 0, 6));
+                // Send welcome email to user
+                $mail->clearAddresses(); // Clear previous recipients
+                $mail->addAddress($email); // Add user email
+                $mail->Subject = 'Welcome to Wellness Community Academy!';
+                $mail->Body = "
+                <!DOCTYPE html>
+                <html lang='en'>
+                <head>
+                    <meta charset='UTF-8'>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            line-height: 1.8;
+                            background-color: #f4f4f4;
+                            color: #333;
+                            margin: 0;
+                            padding: 0;
                         }
-                        $affiliateId = generateUniqueAffiliateId();
-                        
-                        $customerId = $mysqli->insert_id; // Get the newly inserted customer ID
-                        $stmtAffiliate = $mysqli->prepare("INSERT INTO affiliates (customer_id, affiliate_id, referrer_id, created_at) VALUES (?, ?, ?, NOW())");
-                        $stmtAffiliate->bind_param('iss', $customerId, $affiliateId, $referralCode);
-
-                        if (!$stmtAffiliate->execute()) {
-                            throw new Exception("Database error: " . $stmtAffiliate->error);
+                        .email-container {
+                            max-width: 600px;
+                            margin: 20px auto;
+                            background: #ffffff;
+                            border: 1px solid #ddd;
+                            border-radius: 8px;
+                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                            overflow: hidden;
                         }
-                        echo "<script>
-                            document.addEventListener('DOMContentLoaded', function () {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Registration Successful',
-                                    text: 'You have successfully created your affiliate account. An email has been sent to you for confirmation.',
-                                    timer: 2000, // 2-second timeout
-                                    timerProgressBar: true
-                                }).then(function() {
-                                    window.location.href = 'login.php';
+                        .email-header {
+                            background-color: #4CAF50;
+                            color: #ffffff;
+                            padding: 20px;
+                            text-align: center;
+                            font-size: 22px;
+                            font-weight: bold;
+                        }
+                        .email-body {
+                            padding: 20px;
+                        }
+                        .email-body p {
+                            margin-bottom: 15px;
+                        }
+                        .email-body a {
+                            color: #4CAF50;
+                            text-decoration: none;
+                            font-weight: bold;
+                        }
+                        .email-body a:hover {
+                            text-decoration: underline;
+                        }
+                        .email-footer {
+                            background-color: #f4f4f4;
+                            color: #555;
+                            text-align: center;
+                            padding: 10px;
+                            font-size: 12px;
+                            border-top: 1px solid #ddd;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class='email-container'>
+                        <div class='email-header'>
+                            Welcome to Wellness Community Academy
+                        </div>
+                        <div class='email-body'>
+                            <p>Dear $name,</p>
+                            <p>Thank you for joining Wellness Community Academy. We’re excited to have you onboard.</p>
+                            <p>Your affiliate journey starts here. Login to your dashboard to explore: 
+                                <a href='https://wellnesscommunityacademy.com/affiliate'>Login</a>
+                            </p>
+                            <p>Warm Regards,<br>Wellness Community Academy Team</p>
+                        </div>
+                        <div class='email-footer'>
+                            © 2024 Wellness Community Academy. All Rights Reserved.
+                        </div>
+                    </div>
+                </body>
+                </html>";
+
+
+                if ($mail->send()) {
+                    // Insert customer into the database
+                    $stmt = $mysqli->prepare("INSERT INTO customers (name, email, phone, password, affiliate, affiliate_referrer_id) VALUES (?, ?, ?, ?, ?, ?)");
+                    $stmt->bind_param('ssssii', $name, $email, $phoneNumber, $hashedPassword, $isAffiliate, $referredAffiliateId);
+
+                    if ($stmt->execute()) {
+                        $stmt->close();
+                        // If the user opted to be an affiliate, add to the affiliates table
+                        if ($isAffiliate === 1) {
+                            // Helper function: Generate unique affiliate ID
+                            function generateUniqueAffiliateId()
+                            {
+                                return 'AFF' . time() . strtoupper(substr(md5(uniqid()), 0, 6));
+                            }
+                            $affiliateId = generateUniqueAffiliateId();
+                            
+                            $customerId = $mysqli->insert_id; // Get the newly inserted customer ID
+                            $stmtAffiliate = $mysqli->prepare("INSERT INTO affiliates (customer_id, affiliate_id, referrer_id, created_at) VALUES (?, ?, ?, NOW())");
+                            $stmtAffiliate->bind_param('iss', $customerId, $affiliateId, $referralCode);
+
+                            if (!$stmtAffiliate->execute()) {
+                                throw new Exception("Database error: " . $stmtAffiliate->error);
+                            }
+                            echo "<script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Registration Successful',
+                                        text: 'You have successfully created your affiliate account. An email has been sent to you for confirmation.',
+                                        timer: 2000, // 2-second timeout
+                                        timerProgressBar: true
+                                    }).then(function() {
+                                        window.location.href = 'login.php';
+                                    });
+
                                 });
-
-                            });
-                        </script>";
-                        exit();
+                            </script>";
+                            exit();
+                        }
                     }
+                } else {
+                    echo "<script>document.addEventListener('DOMContentLoaded', function() {Swal.fire('Email Error', 'We couldn't not send you a welcome email.<br>Try again later', 'error');});</script>";
                 }
             } else {
-                echo "<script>document.addEventListener('DOMContentLoaded', function() {Swal.fire('Email Error', 'We couldn't not send you a welcome email.<br>Try again later', 'error');});</script>";
+                echo "<script>document.addEventListener('DOMContentLoaded', function() {Swal.fire('Email Error', 'Could not notify the admin of the new registration.<br>Try again later', 'error');});</script>";
             }
-        } else {
-            echo "<script>document.addEventListener('DOMContentLoaded', function() {Swal.fire('Email Error', 'Could not notify the admin of the new registration.<br>Try again later', 'error');});</script>";
-        }
+        } catch (Exception $e) {
+            echo json_encode(["status" => "error", "message" => "Failed to send email. Error: " . $e->getMessage()]);
+        }        
     } catch (Exception $e) {
         error_log($e->getMessage());
         echo "<script>document.addEventListener('DOMContentLoaded', function() {Swal.fire('Registration Error', 'An error occurred. Please try again later.', 'error');});</script>";
     }
+    $mysqli->close();
 }
 ?>
 <!DOCTYPE html>
@@ -376,7 +381,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="text" id="referral_code" name="referral_code" 
                    value="<?php echo $referralCodeFromUrl; ?>">
 
-            <button type="submit">Register</button>
+            <button type="submit" id="registerButton">Register</button>
+            <script>
+                document.querySelector('form').addEventListener('submit', function() {
+                    const buttonwhenloading = document.getElementById('registerButton');
+                    buttonwhenloading.disabled = true;
+                    buttonwhenloading.style.backgroundColor = 'grey';
+                    buttonwhenloading.innerHTML='Creating Account....'
+                });
+            </script>
         </form>
         <p>Already have an account? <a href="login.php">Sign In Here</a></p>
     </div>
