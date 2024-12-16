@@ -14,7 +14,8 @@ $stmt = $mysqli->prepare("
            ae.amount, 
            ae.status, 
            ae.created_at, 
-           ae.product_name
+           ae.product_name,
+           ae.typeof_purchase
     FROM affiliate_earnings ae
     WHERE ae.affiliate_id = ?
 ");
@@ -55,6 +56,7 @@ foreach ($result as $row) {
 
 
 <body>
+    
     <div class="d-flex">
         <!-- Include Sidebar -->
         <div>
@@ -71,30 +73,44 @@ foreach ($result as $row) {
                             <th>#</th>
                             <th>Product</th>
                             <th>Amount (GHS)</th>
+                            <th>Earnings (GHS)</th>
                             <th>Status</th>
                             <th>Date</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
+                    <?php
                         $counter = 1;
                         foreach ($result as $row) {
+                            // Calculate earnings based on typeof_purchase
+                            if ($row['typeof_purchase'] === 'L1 Purchase') {
+                                $earnings = $row['amount'] * 0.15;
+                            } elseif ($row['typeof_purchase'] === 'L2 Purchase') {
+                                $earnings = $row['amount'] * 0.02;
+                            } else {
+                                $earnings = 0; // Default to 0 if type is not L1 or L2
+                            }
+
+                            $formattedDate = date('F j, Y g:i A', strtotime($row['created_at']));
+
                             echo "<tr>
-                            <td>{$counter}</td>
-                            <td>{$row['product_name']}</td>
-                            <td>" . number_format($row['amount'], 2) . "</td>
-                            <td>" . ucfirst($row['status']) . "</td>
-                            <td>{$row['created_at']}</td>
-                            <td>
-                                <button class='btn btn-success btn-sm payout-btn' data-id='{$row['earning_id']}'>
-                                    <i class='bi bi-wallet'></i> Payout
-                                </button>
-                            </td>
-                          </tr>";
+                                <td>{$counter}</td>
+                                <td>{$row['product_name']}</td>
+                                <td>" . number_format($row['amount'], 2) . "</td>
+                                <td>" . number_format($earnings, 2) . "</td>
+                                <td>" . ucfirst($row['status']) . "</td>
+                                <td>{$formattedDate}</td>
+                                <td>
+                                    <button class='btn btn-success btn-sm payout-btn' data-id='{$row['earning_id']}'>
+                                        <i class='bi bi-wallet'></i> Payout
+                                    </button>
+                                </td>
+                            </tr>";
                             $counter++;
                         }
                         ?>
+
                     </tbody>
                 </table>
             </div>
