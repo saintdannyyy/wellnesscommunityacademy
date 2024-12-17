@@ -101,15 +101,24 @@ foreach ($result as $row) {
                                 <td>" . number_format($earnings, 2) . "</td>
                                 <td>" . ucfirst($row['status']) . "</td>
                                 <td>{$formattedDate}</td>
-                                <td>
-                                    <button class='btn btn-success btn-sm payout-btn' data-id='{$row['earning_id']}'>
+                                <td>";
+                            
+                            // Conditional rendering based on status
+                            if ($row['status'] === 'paid') {
+                                echo "<span class='text-success'>Paid Out</span>";
+                            } else {
+                                echo "<button class='btn btn-success btn-sm payout-btn' data-id='{$row['earning_id']}'>
                                         <i class='bi bi-wallet'></i> Payout
-                                    </button>
-                                </td>
+                                    </button>";
+                            }
+
+                            echo "</td>
                             </tr>";
+
                             $counter++;
                         }
                         ?>
+
 
                     </tbody>
                 </table>
