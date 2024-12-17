@@ -50,12 +50,6 @@ $secretKey = ($_ENV['APP_ENV'] === 'prod')
 // Example usage
 // echo "Using Paystack secret Key: " . $secretKey;
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-require '../PHPMailer-master/src/Exception.php';
-require '../PHPMailer-master/src/PHPMailer.php';
-require '../PHPMailer-master/src/SMTP.php';
 
 
 // Get reference from query string
