@@ -1103,7 +1103,15 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                                 <option value="USD">USD Dollars</option>
                                                 <option value="NGN">NGN Naira</option>
                                             </select>
-                                            <button type="submit" style="padding: 10px 20px; background-color: #f37121; color: #fff; border: none; border-radius: 4px; font-size: 18px; cursor: pointer; font-weight: bold;">Proceed to Payment</button>
+                                            <button type="submit" id="paymentproceed" style="padding: 10px 20px; background-color: #f37121; color: #fff; border: none; border-radius: 4px; font-size: 18px; cursor: pointer; font-weight: bold;">Proceed to Payment</button>
+                                            <script>
+                                                document.querySelector('form').addEventListener('submit', function() {
+                                                    const paymentproceed = document.getElementById('paymentproceed');
+                                                    paymentproceed.disabled = true;
+                                                    paymentproceed.style.backgroundColor = 'grey';
+                                                    paymentproceed.innerHTML = 'Payment processing...'
+                                                });
+                                            </script>
                                         </form>
                                         <button onclick="document.getElementById('paymentModal').style.display='none';" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer; color: #555;">&times;</button>
                                     </div>
@@ -3441,7 +3449,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
     </footer>
     <!-- GDPR cookie BANNER -->
     <!-- GDPR cookie BANNER -->
-    <div class="gdpr_flapjack_banner js_gdpr_flapjack_banner lang-var-{language_code}" style="display: none;">
+    <!-- <div class="gdpr_flapjack_banner js_gdpr_flapjack_banner lang-var-{language_code}" style="display: none;">
         <button type="button" class="gdpr-uncollapse-button js_show_gdpr_banner">
             {:lang_general_banner_cookies}
         </button>
@@ -3492,7 +3500,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!--// GDPR cookie BANNER -->
 
     <script src="//app.kartra.com/resources/js/kartra_embed_wild_card?type=kartra_page&amp;owner=DpwDQa6g"></script>
