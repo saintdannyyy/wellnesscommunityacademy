@@ -13,19 +13,6 @@
 
 <?php
 session_start();
-session_start();
-// Display all errors
-// ini_set('display_errors', 1);
-// error_reporting(E_ALL);  // Report all errors (including notices and warnings)
-
-// // Check if reference is provided
-// if (!isset($_GET['reference'])) {
-//     echo "<script>
-//         alert('No reference supplied');
-//         window.location.href = 'https://wellnesscommunityacademy.com/books';
-//     </script>";
-//     exit;
-// }
 
 require('../conn/conn.php');
 
@@ -35,8 +22,25 @@ $secretKey = ($_ENV['APP_ENV'] === 'prod')
     ? $_ENV['PAYSTACK_SECRET_KEY_LIVE']
     : $_ENV['PAYSTACK_SECRET_KEY_TEST'];
 
-// Example usage
-// echo "Using Paystack secret Key: " . $secretKey;
+    if ($_ENV['APP_ENV'] === 'dev') {
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
+        $smtpHost = $_ENV['SMTP_dev_HOST'];
+        $smtpUser = $_ENV['SMTP_dev_USER'];
+        $smtpPwd = $_ENV['SMTP_dev_PWD'];
+        $smtpPort = $_ENV['SMTP_dev_PORT'];
+        $smtpSecure = $_ENV['SMTP_dev_SECURE'];
+        $adminMail = $_ENV['ADMIN_dev_EMAIL'];
+    } else {
+        ini_set('display_errors', 0);
+        $smtpHost = $_ENV['SMTP_prod_HOST'];
+        $smtpUser = $_ENV['SMTP_prod_USER'];
+        $smtpPwd = $_ENV['SMTP_prod_PWD'];
+        $smtpPort = $_ENV['SMTP_prod_PORT'];
+        $smtpSecure = $_ENV['SMTP_prod_SECURE'];
+        $adminMail = $_ENV['ADMIN_prod_EMAIL'];
+    }
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -46,19 +50,6 @@ require '../PHPMailer-master/src/PHPMailer.php';
 require '../PHPMailer-master/src/SMTP.php';
 require('../config/loadENV.php');
 
-$secretKey = ($_ENV['APP_ENV'] === 'prod')
-    ? $_ENV['PAYSTACK_SECRET_KEY_LIVE']
-    : $_ENV['PAYSTACK_SECRET_KEY_TEST'];
-
-// Example usage
-// echo "Using Paystack secret Key: " . $secretKey;
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-require '../PHPMailer-master/src/Exception.php';
-require '../PHPMailer-master/src/PHPMailer.php';
-require '../PHPMailer-master/src/SMTP.php';
 
 // Get reference from query string
 $reference = $_GET['reference'];
@@ -87,27 +78,37 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
     $course_no = $responseData['data']['metadata']['custom_fields'][1]['value'];
     $course_no = $responseData['data']['metadata']['custom_fields'][1]['value'];
     $course = $responseData['data']['metadata']['custom_fields'][2]['value'];
-    // echo "Course: ", $course , "Course No: ", $course_no;
-    // echo "Course: ", $course , "Course No: ", $course_no;
-// if (empty($course)) {
-//     echo 'Course information is not available.';
-// } else {
-//     echo $course;
-// }
+    $isAffiliate=0;
+
+    // Checking if user already exists
+    $sql = "SELECT * FROM customers WHERE email = ? OR phone = ?";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param("ss", $email, $phone);
+    $stmt->execute();
+    $userExist = $stmt->get_result();
+    $stmt->close();
+    if ($userExist->num_rows == 0) {
+        $referralCodeFromUrl = isset($_COOKIE['referralCode']) ? $_COOKIE['referralCode'] : null;
+        $sqlAddCus = "INSERT INTO customers (name, email, phone, affiliate, affiliate_referrer_id) VALUES (?, ?, ?, ?, ?)";
+        $stmtAddCus = $mysqli->prepare($sqlAddCus);
+        $stmtAddCus->bind_param("sssii", $name, $email, $phone, $isAffiliate, $referralCodeFromUrl);
+        $stmtAddCus->execute();
+        $stmtAddCus->close();
+    }
 
     $mail = new PHPMailer(true);
     try {
         $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
+        $mail->Host = $smtpHost;
         $mail->SMTPAuth = true;
-        $mail->Username = $_ENV['SMTP_USER'];
-        $mail->Password = $_ENV['SMTP_PWD'];
-        $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;
+        $mail->Username =$smtpUser;
+        $mail->Password = $smtpPwd;
+        $mail->SMTPSecure =$smtpSecure;
+        $mail->Port = $smtpPort;
 
         $mail->setFrom('noreply@wellnesscommunityacademy.com', 'Wellness Community Academy');
-        $mail->addAddress($_ENV['ADMIN_EMAIL']);
-        $mail->addBCC('saintdannyyy@gmail.com');
+        $mail->addAddress($adminMail);
+        $mail->addBCC($_ENV['BCC_EMAIL']);
         // $mail->addBCC('seshun65@gmail.com');
         $mail->isHTML(true);
         $mail->Subject = 'NEW COURSE PURCHASE';
@@ -243,16 +244,6 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
                     window.location.href = 'https://wellnesscommunityacademy.com/books';
                 });
             </script>";
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Payment Verification Failed',
-                    text: 'Please contact support if you were charged.',
-                    confirmButtonText: 'OK'
-                }).then(() => {
-                    window.location.href = 'https://wellnesscommunityacademy.com/books';
-                });
-            </script>";
 }
-$mysqli->close();
 $mysqli->close();
 ?>
