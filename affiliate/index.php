@@ -25,7 +25,8 @@ function encodeReferralId($affiliateId)
     return base64_encode(openssl_encrypt($affiliateId, 'aes-256-cbc', $key, 0, substr($key, 0, 16)));
 }
 $encodedReferral = encodeReferralId($affiliateId);
-$affiliateLink = "https://wellnesscommunityacademy.com/acc/auth/register.php?rf=" . urlencode($encodedReferral);
+$affiliateRef = "https://wellnesscommunityacademy.com/affiliate/auth/register.php?rf=" . urlencode($encodedReferral);
+$cusRef = "https://wellnesscommunityacademy.com?rf=" . urlencode($encodedReferral);
 
 // Fetching all books
 $books = [];
@@ -114,7 +115,8 @@ $products = array_merge($books, $courses, $programs);
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <button class="btn btn-outline-primary" onclick="copyAffiliateLink()">My Link</button>
+                <button class="btn btn-outline-primary m-2 p-2" onclick="copyCusRef()">Refer A Customer</button>
+                <button class="btn btn-outline-primary p-2" onclick="copyAffiliateRef()">Refer Another Affiliate</button>
             </div>
 
             <!-- Affiliate Earning Table -->
@@ -146,14 +148,34 @@ $products = array_merge($books, $courses, $programs);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Script to copy affiliate link to clipboard
-        function copyAffiliateLink() {
-            const link = "<?php echo $affiliateLink; ?>";
+        function copyAffiliateRef() {
+            const link = "<?php echo $affiliateRef; ?>";
             navigator.clipboard.writeText(link).then(() => {
                 Swal.fire({
                     icon: 'success',
                     title: 'Link Copied',
                     html: `
-                        <p>Your affiliate link has been copied to the clipboard!</p>
+                        <p>Your link to refer another affiliate has been copied to the clipboard!</p>
+                        <div class="input-group">
+                            <input type="text" value="${link}" class="form-control" readonly style="background-color: #f0f0f0;">
+                            <button class="btn btn-primary" onclick="navigator.clipboard.writeText('${link}')">
+                                <i class="bi bi-clipboard"></i> Copy Again
+                            </button>
+                        </div>
+                    `,
+                });
+            });
+        }
+
+        // Script to copy customer link to clipboard
+        function copyCusRef() {
+            const link = "<?php echo $cusRef; ?>";
+            navigator.clipboard.writeText(link).then(() => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Link Copied',
+                    html: `
+                        <p>Your link to refer a customer has been copied to the clipboard!</p>
                         <div class="input-group">
                             <input type="text" value="${link}" class="form-control" readonly style="background-color: #f0f0f0;">
                             <button class="btn btn-primary" onclick="navigator.clipboard.writeText('${link}')">

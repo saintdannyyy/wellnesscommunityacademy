@@ -17,7 +17,15 @@
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" required>
         
-    <input type="submit" value="Log In" style="background-color: #e65c00; color:white; cursor:pointer">
+    <input type="submit" id="logInButton" value="Log In" style="background-color: #e65c00; color:white; cursor:pointer">
+    <script>
+        document.querySelector('form').addEventListener('submit', function() {
+            const inputWhenloading = document.getElementById('logInButton');
+            inputWhenloading.disabled = true;
+            inputWhenloading.style.backgroundColor = 'grey';
+            inputWhenloading.innerHTML = 'Logging In...'
+        });
+            </script>
 </form>
 <p>Don't have an account? <a href="register.php">Register Here</a></p>
     </div>
@@ -54,12 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     try {
             // Prepare and execute query to fetch user data along with affiliate details
-            $query = "SELECT c.id AS customer_id, c.name AS customer_name, c.email AS customer_email, c.password, 
-                             a.affiliate_id, a.id
-                      FROM customers c 
-                      JOIN affiliates a ON c.id = a.customer_id 
-                      WHERE c.email = ?";
-                      
+            $query = "SELECT c.id AS customer_id, c.name AS customer_name, c.email AS customer_email, c.password, a.id
+                FROM customers c JOIN affiliates a ON c.id = a.customer_id WHERE c.email = ?";
             $stmt = $mysqli->prepare($query);
             $stmt->bind_param('s', $email);
             $stmt->execute();

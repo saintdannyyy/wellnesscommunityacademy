@@ -676,41 +676,6 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                                 style="font-size: 24px; color: #4CAF50;"></i>
                                         </a>
                                     </div>
-                                    <div class="dropdown">
-                                        <?php if (isset($_SESSION['customer_id'])): ?>
-                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                                style="background-color: #28a745; border: none; color: white; padding: 5px 5px; border-radius: 5px;">
-                                                <span style="font-size: 20px; color: white; border-radius: 50%; background-color: #28a745; padding: 10px;"><?php echo strtoupper(substr($_SESSION['customer_name'], 0, 3)); ?></span>
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
-                                                style="min-width: 150px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 5px;">
-                                                <a class="dropdown-item" href="#" style="padding: 10px 20px; color: #333; text-decoration: none; font-size: 14px;" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                                    Logout
-                                                </a>
-                                                <form id="logout-form" action="../acc/auth/logout.php" method="POST" style="display: none;">
-                                                    <input type="hidden" name="logout" value="true">
-                                                </form>
-                                            </div>
-                                        <?php else: ?>
-                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                                style="background-color: #dc3545; border: none; color: white; padding: 10px 20px; border-radius: 5px;">
-                                                <i class="fas fa-user-circle" style="font-size: 20px; color: white;"></i>
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
-                                                style="min-width: 150px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 5px;">
-                                                <a class="dropdown-item" href="../acc/auth/login.php" style="padding: 10px 20px; color: #333; text-decoration: none; font-size: 14px;">
-                                                    Login
-                                                </a>
-                                                <div class="dropdown-divider" style="margin: 5px 0; border-top: 1px solid #e9ecef;"></div>
-                                                <a class="dropdown-item" href="../acc/auth/register.php"
-                                                    style="padding: 10px 20px; color: #dc3545; text-decoration: none; font-size: 14px;">
-                                                    Register
-                                                </a>
-                                            </div>
-                                        <?php endif; ?>
-                                    </div>
                                     <div data-component="button" style="width: auto;">
                                         <!--<a class="kartra_button1 kartra_button1--royal-blue kartra_button1--icon-right kartra_button1--md-sm-margin-top-extra-small kartra_button1--solid kartra_button1--small kartra_button1--rounded pull-center toggle_pagelink"-->
                                         <!--    style="font-weight: 700; background-color: rgb(49, 85, 40); color: rgb(255, 255, 255); margin: 20px auto; font-family: lato;"-->
@@ -1591,10 +1556,10 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                             <input type="hidden" name="price" id="prog_price">
                                 
                                             <label for="email1" style="align-self: flex-start; font-size: 14px; margin-bottom: 5px; color: #333;">Email:</label>
-                                            <input type="email" id="email1" name="email1" value="<?php echo htmlspecialchars($_SESSION['customer_email']); ?>" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+                                            <input type="email" id="email1" name="email1" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
                                 
                                             <label for="phone" style="align-self: flex-start; font-size: 14px; margin-bottom: 5px; color: #333;">Phone:</label>
-                                            <input type="text" id="phone" name="phone" value="<?php echo htmlspecialchars($_SESSION['customer_phone']); ?>" required style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+                                            <input type="text" id="phone" name="phone" required style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
                                 
                                             <button type="submit" style="padding: 10px 20px; background-color: #f37121; color: #fff; border: none; border-radius: 4px; font-size: 18px; cursor: pointer; font-weight: bold;">Proceed to Payment</button>
                                         </form>

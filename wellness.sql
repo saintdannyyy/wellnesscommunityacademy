@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 10, 2024 at 01:51 PM
+-- Generation Time: Dec 18, 2024 at 04:09 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -30,21 +30,24 @@ SET time_zone = "+00:00";
 CREATE TABLE `affiliates` (
   `id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `affiliate_id` varchar(50) DEFAULT NULL,
   `referrer_id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `status` varchar(255) NOT NULL
+  `status` varchar(255) NOT NULL,
+  `account_name` varchar(255) DEFAULT NULL,
+  `phone_number` int(15) DEFAULT NULL,
+  `service_provider` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `affiliates`
 --
 
-INSERT INTO `affiliates` (`id`, `customer_id`, `affiliate_id`, `referrer_id`, `created_at`, `status`) VALUES
-(31, 13, 'AFF173329868441AEBB', 0, '2024-12-04 07:51:24', 'active'),
-(32, 24, 'AFF17333031505FC0AF', 31, '2024-12-04 09:05:50', '1'),
-(34, 28, 'AFF173334307031E1E5', 32, '2024-12-04 20:11:10', 'active'),
-(35, 29, 'AFF173334324419BEDD', 34, '2024-12-04 20:14:04', 'inactive');
+INSERT INTO `affiliates` (`id`, `customer_id`, `referrer_id`, `created_at`, `status`, `account_name`, `phone_number`, `service_provider`) VALUES
+(31, 13, 0, '2024-12-04 07:51:24', 'active', '', NULL, NULL),
+(32, 24, 31, '2024-12-04 09:05:50', '1', '', NULL, NULL),
+(34, 28, 32, '2024-12-04 20:11:10', 'active', NULL, NULL, NULL),
+(44, 57, 0, '2024-12-18 13:53:03', '', NULL, NULL, NULL),
+(45, 59, 0, '2024-12-18 14:50:27', '', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -59,39 +62,29 @@ CREATE TABLE `affiliate_earnings` (
   `product_id` int(11) NOT NULL,
   `product_name` varchar(255) NOT NULL,
   `typeof_purchase` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `affiliate_earnings`
 --
 
-INSERT INTO `affiliate_earnings` (`id`, `affiliate_id`, `amount`, `product_id`, `product_name`, `typeof_purchase`, `created_at`) VALUES
-(39, 31, 8.92, 8, '', 'L1 Purchase', '2024-12-09 12:00:16'),
-(40, 34, 8.88, 1, '14 DAYS TO AMAZING HEALTH', 'L1 Purchase', '2024-12-09 14:20:43'),
-(41, 32, 1.18, 1, '14 DAYS TO AMAZING HEALTH', 'L2 Purchase', '2024-12-09 14:20:44'),
-(42, 34, 8.88, 1, '14 DAYS TO AMAZING HEALTH', 'L1 Purchase', '2024-12-09 14:37:55'),
-(43, 32, 1.18, 1, '14 DAYS TO AMAZING HEALTH', 'L2 Purchase', '2024-12-09 14:37:55'),
-(44, 32, 278.13, 0, '3', 'L1 Purchase', '2024-12-09 15:15:24'),
-(45, 31, 37.08, 0, '3', 'L2 Purchase', '2024-12-09 15:15:24'),
-(46, 32, 278.13, 0, '3', 'L1 Purchase', '2024-12-09 15:15:37'),
-(47, 31, 37.08, 0, '3', 'L2 Purchase', '2024-12-09 15:15:37'),
-(48, 32, 278.13, 0, '3', 'L1 Purchase', '2024-12-09 15:18:31'),
-(49, 31, 37.08, 0, '3', 'L2 Purchase', '2024-12-09 15:18:31'),
-(50, 32, 278.13, 0, '3', 'L1 Purchase', '2024-12-09 15:18:51'),
-(51, 31, 37.08, 0, '3', 'L2 Purchase', '2024-12-09 15:18:51'),
-(52, 32, 278.13, 0, '3', 'L1 Purchase', '2024-12-09 15:20:17'),
-(53, 31, 37.08, 0, '3', 'L2 Purchase', '2024-12-09 15:20:17'),
-(54, 32, 278.13, 3, '0', 'L1 Purchase', '2024-12-09 15:22:03'),
-(55, 31, 37.08, 3, '0', 'L2 Purchase', '2024-12-09 15:22:03'),
-(56, 32, 278.13, 3, 'CERTIFIED HEALTH COACH', 'L1 Purchase', '2024-12-09 15:25:42'),
-(57, 31, 37.08, 3, 'CERTIFIED HEALTH COACH', 'L2 Purchase', '2024-12-09 15:25:42'),
-(58, 31, 278.13, 3, 'CERTIFIED HEALTH COACH', 'L1 Purchase', '2024-12-09 15:29:34'),
-(59, 31, 278.13, 3, 'CERTIFIED HEALTH COACH', 'L1 Purchase', '2024-12-09 15:31:53'),
-(60, 34, 887.80, 1, 'VIRTUAL 8 WEEKS TO WELLNESS', 'L1 Purchase', '2024-12-09 16:07:40'),
-(61, 32, 118.37, 1, 'VIRTUAL 8 WEEKS TO WELLNESS', 'L2 Purchase', '2024-12-09 16:07:40'),
-(62, 34, 887.80, 1, 'VIRTUAL 8 WEEKS TO WELLNESS', 'L1 Purchase', '2024-12-09 16:07:56'),
-(63, 32, 118.37, 1, 'VIRTUAL 8 WEEKS TO WELLNESS', 'L2 Purchase', '2024-12-09 16:07:56');
+INSERT INTO `affiliate_earnings` (`id`, `affiliate_id`, `amount`, `product_id`, `product_name`, `typeof_purchase`, `created_at`, `status`) VALUES
+(40, 34, 8.88, 1, '14 DAYS TO AMAZING HEALTH', 'L1 Purchase', '2024-12-09 14:20:43', 0),
+(41, 32, 1.18, 1, '14 DAYS TO AMAZING HEALTH', 'L2 Purchase', '2024-12-09 14:20:44', 0),
+(42, 34, 8.88, 1, '14 DAYS TO AMAZING HEALTH', 'L1 Purchase', '2024-12-09 14:37:55', 0),
+(43, 32, 1.18, 1, '14 DAYS TO AMAZING HEALTH', 'L2 Purchase', '2024-12-09 14:37:55', 0),
+(56, 32, 278.13, 3, 'CERTIFIED HEALTH COACH', 'L1 Purchase', '2024-12-09 15:25:42', 0),
+(57, 31, 37.08, 3, 'CERTIFIED HEALTH COACH', 'L2 Purchase', '2024-12-09 15:25:42', 0),
+(58, 31, 278.13, 3, 'CERTIFIED HEALTH COACH', 'L1 Purchase', '2024-12-09 15:29:34', 0),
+(59, 31, 278.13, 3, 'CERTIFIED HEALTH COACH', 'L1 Purchase', '2024-12-09 15:31:53', 0),
+(60, 34, 887.80, 1, 'VIRTUAL 8 WEEKS TO WELLNESS', 'L1 Purchase', '2024-12-09 16:07:40', 0),
+(61, 32, 118.37, 1, 'VIRTUAL 8 WEEKS TO WELLNESS', 'L2 Purchase', '2024-12-09 16:07:40', 0),
+(62, 34, 887.80, 1, 'VIRTUAL 8 WEEKS TO WELLNESS', 'L1 Purchase', '2024-12-09 16:07:56', 0),
+(63, 32, 118.37, 1, 'VIRTUAL 8 WEEKS TO WELLNESS', 'L2 Purchase', '2024-12-09 16:07:56', 0),
+(64, 31, 110.64, 5, 'Fourteen Days Skinny Tummy Challenge', 'L1 Purchase', '2024-12-11 01:14:56', 0),
+(65, 31, 110.64, 5, 'Fourteen Days Skinny Tummy Challenge', 'L1 Purchase', '2024-12-11 01:15:10', 0);
 
 -- --------------------------------------------------------
 
@@ -128,30 +121,30 @@ CREATE TABLE `books` (
   `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `price` double NOT NULL,
-  `cover_img` varchar(255) DEFAULT NULL
+  `path` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `books`
 --
 
-INSERT INTO `books` (`id`, `title`, `price`, `cover_img`) VALUES
+INSERT INTO `books` (`id`, `title`, `price`, `path`) VALUES
 (1, '14 DAYS TO AMAZING HEALTH', 3.99, NULL),
 (2, '14 DAYS TO AMAZING HEALTH WORK MANUAL', 3.99, NULL),
-(3, 'MY HEALTH AND THE CREATOR (DIGITAL)', 4.99, NULL),
+(3, 'MY HEALTH AND THE CREATOR (DIGITAL)', 4.99, '../eBooks/My Health and The Creator Bible Study CWC.pdf'),
 (4, 'MY HEALTH AND THE CREATOR (PHYSICAL)', 0.01, NULL),
 (5, 'EXERCISE & NUTRITION MANUAL', 3.99, NULL),
-(6, 'FIGHT CANCER & BOOST IMMUNE SYSTEM', 5, NULL),
-(7, 'GET HEALTHY FOR LIFE', 3.99, NULL),
+(6, 'FIGHT CANCER & BOOST IMMUNE SYSTEM', 5, '../eBooks/FIGHT CANCER AND BOOST IMMUNE SYSTEM.pdf'),
+(7, 'GET HEALTHY FOR LIFE', 3.99, '../eBooks/Get Healthy For Life.pdf'),
 (8, 'INCREDIBLY DELICIOUS VEGAN RECIPES (2nd Ed.)', 3.99, NULL),
-(9, 'UNDO HYPERTENSION GUIDE', 5, NULL),
-(10, 'UNDO DIABETES GUIDE', 5, NULL),
-(11, 'UNDO HEART DISEASE GUIDE', 5, NULL),
-(12, 'UNDO OBESITY & FATTY LIVER GUIDE\r\n', 5, NULL),
+(9, 'UNDO HYPERTENSION GUIDE', 5, '../eBooks/UNDO HYPERTENSION.pdf'),
+(10, 'UNDO DIABETES GUIDE', 5, '../eBooks/UNDO DIABETES BROCHURE.pdf'),
+(11, 'UNDO HEART DISEASE GUIDE', 5, '../eBooks/UNDO HEART DISEASE.pdf'),
+(12, 'UNDO OBESITY & FATTY LIVER GUIDE\r\n', 5, '../eBooks/OBESITY AND FATTY LIVER.pdf'),
 (13, 'UNDO DISEASES BOOKLETS COMBO', 20, NULL),
 (14, 'INCREDIBLY DELICIOUS VEGAN (1ST ED.)', 9.99, NULL),
 (15, 'COOPER WELLNESS CENTER PROGRAM MANUAL', 9.99, NULL),
-(16, 'CHARLIE GOES TO THE DOCTOR', 24.99, NULL);
+(16, 'CHARLIE GOES TO THE DOCTOR', 24.99, '../eBooks/Charlie Goes To The Doctor.pdf');
 
 -- --------------------------------------------------------
 
@@ -172,7 +165,8 @@ CREATE TABLE `courses` (
 INSERT INTO `courses` (`id`, `course`, `price`) VALUES
 (1, 'FOURTEEN DAYS to Amazing Health', 79),
 (2, 'Transformation To a Healthier You', 59),
-(3, 'CERTIFIED HEALTH COACH', 125);
+(3, 'CERTIFIED HEALTH COACH', 125),
+(5, 'Fourteen Days Skinny Tummy Challenge', 49.99);
 
 -- --------------------------------------------------------
 
@@ -199,7 +193,10 @@ INSERT INTO `customers` (`id`, `name`, `email`, `phone`, `password`, `affiliate`
 (13, 'Daniel', 'danieltesla746@gmail.com', 202248817, '$2y$10$hGLyMKLlV0bagLOVf8XWZuDnrVSkQNGHtAG71h2wohzHdZ4xOrTgW', 1, NULL, '2024-12-04 07:51:24'),
 (24, 'Stephen', 'seshun65@gmail.com', 505987567, '$2y$10$K1JRwwTcs/y6RNFj.xolOOyMJYee76UQ15ldUd5uZFkaUqzQ1DY5G', 1, 31, '2024-12-04 09:05:50'),
 (28, 'Joseph', 'joseph@gmail.com', 549264541, '$2y$10$MirFShTsBDlyU7G4SDvly.cVlVKpiC/XvB6uZVyp5lyTnHk8mG7Ca', 1, 32, '2024-12-04 20:11:10'),
-(29, 'Hanfred', 'hanfred@gmail.com', 200000000, '$2y$10$0K2B4tgSOHSBZ3KfCEbYNO9ZGGbAPSJb52ALPdk/iHovj5LAz3YhS', 1, 34, '2024-12-04 20:14:04');
+(29, 'Hanfred', 'hanfred@gmail.com', 200000000, '$2y$10$0K2B4tgSOHSBZ3KfCEbYNO9ZGGbAPSJb52ALPdk/iHovj5LAz3YhS', 1, 34, '2024-12-04 20:14:04'),
+(57, 'Steve', 'gamiest_framed.8z@icloud.com', 548636054, '$2y$10$q8j1nARu2d4t93o3gVxqc.rp.cEh18meD9gL9RCnR6fQtWco1SZD2', 1, NULL, '2024-12-18 13:53:03'),
+(58, 'Nicholas Ashiatey', 'nic1ash@yahoo.co.uk', 249234134, '$2y$10$PylJqm6PrG/T6ez/4Bk8WObDnLPwgr5PKJR9yCesrrF9ncb.8dzd.', 0, NULL, '2024-12-13 17:10:01'),
+(59, 'Dondre Dockery', 'donadockerymd@gmail.com', 2147483647, '$2y$10$HAOxjcdRXqrs2OO8EvSU3OqO7gfSaht0BSxgdWG/5PoAdKMr/UCKq', 1, NULL, '2024-12-18 14:50:27');
 
 -- --------------------------------------------------------
 
@@ -221,6 +218,22 @@ CREATE TABLE `one-time_donation` (
 
 INSERT INTO `one-time_donation` (`id`, `email`, `amount`, `reference`, `date`) VALUES
 (1, 'test', 0, 'test', '2024-12-09 20:51:07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payouts`
+--
+
+CREATE TABLE `payouts` (
+  `id` int(11) NOT NULL,
+  `affiliate_id` int(11) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `recipient_code` varchar(255) NOT NULL,
+  `transaction_id` varchar(255) DEFAULT NULL,
+  `status` enum('pending','success','failed') DEFAULT 'pending',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -262,7 +275,6 @@ CREATE TABLE `sold_courses` (
 --
 
 INSERT INTO `sold_courses` (`id`, `course`, `email`, `amount`, `reference`, `date`) VALUES
-(1, 'FOURTEEN DAYS to Amazing Health', 'bamanguah@gmail.com', 1249, 'COURSE210655735', '2024-11-23 13:48:54'),
 (2, 'test', 'test', 0, 'test', '2024-12-09 20:49:13');
 
 -- --------------------------------------------------------
@@ -341,8 +353,7 @@ INSERT INTO `users` (`id`, `username`, `password`, `role`, `created_at`, `update
 -- Indexes for table `affiliates`
 --
 ALTER TABLE `affiliates`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `affiliate_id` (`affiliate_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `affiliate_earnings`
@@ -380,6 +391,13 @@ ALTER TABLE `customers`
 --
 ALTER TABLE `one-time_donation`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `payouts`
+--
+ALTER TABLE `payouts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `affiliate_id` (`affiliate_id`);
 
 --
 -- Indexes for table `programs`
@@ -421,13 +439,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `affiliates`
 --
 ALTER TABLE `affiliates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `affiliate_earnings`
 --
 ALTER TABLE `affiliate_earnings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `booked_appointments`
@@ -445,19 +463,25 @@ ALTER TABLE `books`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `one-time_donation`
 --
 ALTER TABLE `one-time_donation`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `payouts`
+--
+ALTER TABLE `payouts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `programs`
@@ -469,7 +493,7 @@ ALTER TABLE `programs`
 -- AUTO_INCREMENT for table `sold_courses`
 --
 ALTER TABLE `sold_courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `sold_programs`
@@ -481,13 +505,23 @@ ALTER TABLE `sold_programs`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `payouts`
+--
+ALTER TABLE `payouts`
+  ADD CONSTRAINT `payouts_ibfk_1` FOREIGN KEY (`affiliate_id`) REFERENCES `affiliates` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
