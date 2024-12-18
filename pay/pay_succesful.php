@@ -88,24 +88,28 @@
         // Retrieve transaction details
         $amount = $responseData['data']['amount'] / 100; // Convert from pesewas to GHS
         $email = $responseData['data']['customer']['email'];
+        $phone = $responseData['data']['customer']['phone'];
         $bookId = $responseData['data']['metadata']['custom_fields'][1]['value'];
         $bookName = $responseData['data']['metadata']['custom_fields'][2]['value'];
         $bookpath = $responseData['data']['metadata']['custom_fields'][3]['value'];
         // echo $bookpath;
+        $isAffiliate=0;
 
-            //Checking if user already exists
-            // $sql = "SELECT * FROM customers WHERE email = ? || phone = ?";
-            // $stmt = $mysqli->prepare($sql);
-            // $stmt->bind_param("ss", $email, $phone);
-            // $stmt->execute();
-            // $userExist = $stmt->get_result();
-            // $stmt->close();
-            // if($userExist == 0){
-            //     $sqlAddCus = "INSERT INTO customers (name, email, phone) VALUES (?, ?, ?)";
-            //     $stmtAddCus = $mysqli->prepare($sqlAddCus);
-            //     $stmtAddCus->bind_param("sss", $name, $email, $phone);
-            //     $stmtAddCus->execute();
-            //     $stmtAddCus->close();
+            // Checking if user already exists
+            $sql = "SELECT * FROM customers WHERE email = ? OR phone = ?";
+            $stmt = $mysqli->prepare($sql);
+            $stmt->bind_param("ss", $email, $phone);
+            $stmt->execute();
+            $userExist = $stmt->get_result();
+            $stmt->close();
+            if ($userExist->num_rows == 0) {
+                $referralCodeFromUrl = isset($_COOKIE['referralCode']) ? $_COOKIE['referralCode'] : null;
+                $sqlAddCus = "INSERT INTO customers (name, email, phone, affiliate, affiliate_referrer_id) VALUES (?, ?, ?, ?, ?)";
+                $stmtAddCus = $mysqli->prepare($sqlAddCus);
+                $stmtAddCus->bind_param("sssii", $name, $email, $phone, $isAffiliate, $referralCodeFromUrl);
+                $stmtAddCus->execute();
+                $stmtAddCus->close();
+            }
                 
         $mail = new PHPMailer(true);
         try {
