@@ -132,6 +132,10 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
         let course_purchased;
         async function payWithPaystack(e) {
             e.preventDefault();
+			const paymentprocessing = document.getElementById('paymentprocessing');
+            paymentprocessing.disabled = true;
+            paymentprocessing.style.backgroundColor = 'grey';
+            paymentprocessing.innerHTML = 'Processing payment...';
             const email = document.getElementById("mail").value;
             const phone = document.getElementById("phone").value;
             const course_no = courseNO;
@@ -1043,7 +1047,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
 												<div class="form-step" id="step-2" style="display: none;">
 													<h3 style="text-align: center; margin-bottom: 20px;">Payment Amount: $<span
 															id="price">0</span></h3>
-													<button onclick="payWithPaystack(event)"
+													<button onclick="payWithPaystack(event)"  id="paymentprocessing"
 														style="width: 100%; padding: 10px; background-color: #008cdd; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Pay
 														Now</button>
 													<button onclick="nextStep(1)"
