@@ -462,43 +462,6 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                                 style="font-size: 24px; color: #4CAF50;"></i>
                                         </a>
                                     </div>
-                                    <div class="dropdown">
-                                        <?php if (isset($_SESSION['customer_id'])): ?>
-                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                                style="background-color: #28a745; border: none; color: white; padding: 5px 5px; border-radius: 5px;">
-                                                <span style="font-size: 20px; color: white; border-radius: 50%; background-color: #28a745; padding: 10px;"><?php echo strtoupper(substr($_SESSION['customer_name'], 0, 3)); ?></span>
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
-                                                style="min-width: 150px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 5px;">
-                                                <a class="dropdown-item" href="#" style="padding: 10px 20px; color: #333; text-decoration: none; font-size: 14px;" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                                    Logout
-                                                </a>
-                                                <form id="logout-form" action="../acc/auth/logout.php" method="POST" style="display: none;">
-                                                    <input type="hidden" name="logout" value="true">
-                                                </form>
-                                            </div>
-                                        <?php else: ?>
-                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                                style="background-color: #dc3545; border: none; color: white; padding: 10px 20px; border-radius: 5px;">
-                                                <i class="fas fa-user-circle" style="font-size: 20px; color: white;"></i>
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
-                                                style="min-width: 150px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 5px;">
-                                                <a class="dropdown-item" href="../acc/auth/login.php" style="padding: 10px 20px; color: #333; text-decoration: none; font-size: 14px;">
-                                                    Login
-                                                </a>
-                                                <div class="dropdown-divider" style="margin: 5px 0; border-top: 1px solid #e9ecef;"></div>
-                                                <a class="dropdown-item" href="../acc/auth/register.php"
-                                                    style="padding: 10px 20px; color: #dc3545; text-decoration: none; font-size: 14px;">
-                                                    Register
-                                                </a>
-                                            </div>
-                                        <?php endif; ?>
-                                    </div>
-
-
                                     <div data-component="button" style="width: auto;">
                                         <!--<a class="kartra_button1 kartra_button1--royal-blue kartra_button1--icon-right kartra_button1--md-sm-margin-top-extra-small kartra_button1--solid kartra_button1--small kartra_button1--rounded pull-center toggle_pagelink"-->
                                         <!--    style="font-weight: 700; background-color: rgb(49, 85, 40); color: rgb(255, 255, 255); margin: 20px auto; font-family: lato;"-->
@@ -758,7 +721,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                     }
 
                                     // Conversion to cedis API with Open Exchange Rates
-                                    const openExchangeAppID = '0d6f5687149b407fb1c561d00ecdb908';
+                                    const openExchangeAppID = $_ENV['open_exchange_api_key'];
                                     const openExchangeUrl = `https://openexchangerates.org/api/latest.json?app_id=${openExchangeAppID}&symbols=GHS&base=USD`;
 
 
@@ -1094,7 +1057,6 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                                     } else {
                                                         console.error("Server responded with an error:", data.message);
                                                         alert(`Error: ${data.message}`);
-                                                        window.location.href = "../acc/auth/login.php";
                                                     }
                                                 } catch (error) {
                                                     console.error("Failed to parse JSON. Raw response:", rawData, "Error:", error);
@@ -1105,46 +1067,6 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                                 console.error("Fetch Error:", err);
                                                 alert('Failed to fetch price details. Please check your connection or try again.');
                                             });
-
-
-                                        // fetch('books.php', {
-                                        //     method: 'POST',
-                                        //     body: formData
-                                        // })
-                                        // .then(response => {
-                                        //     console.log("Response status:", response.status);
-                                        //     return response.json(); // Parse JSON
-                                        // })
-                                        // .then(data => {
-                                        //     console.log("Data received from server:", data);
-                                        //     if (data.success) {
-                                        //         document.getElementById('price').innerText = data.data.price_ghs;
-                                        //         // document.getElementById('amount').innerText = data.data.price_ghs;
-                                        //         document.getElementById('book_name').innerText = data.data.title;
-                                        //         document.getElementById('modal_price').value = data.data.price_ghs;
-                                        //         // document.getElementById('usdghs_rate').innerText = data.data.rate_usd_to_ghs;
-                                        //         document.getElementById('usd_price').innerText = data.data.price_usd;
-                                        //         priceInUSD = data.data.price_usd;
-                                        //         priceInNGN = data.data.price_ngn;
-                                        //         console.log("Book title:", data.data.title);
-                                        //         console.log("Price in USD:", data.data.price_usd);
-                                        //         console.log("Price in GHS:", data.data.price_ghs);
-                                        //         console.log("Price in NGN:", data.data.price_ngn);
-                                        //         console.log("USDGHS rate:", data.data.rate_usd_to_ghs);
-                                        //         console.log("USDNGN rate:", data.data.rate_usd_to_ngn);
-                                        //         document.getElementById('book_id').value = bookId;
-                                        //         document.getElementById('paymentModal').style.display = 'flex';
-                                        //     } else {
-                                        //         console.error("Error: Failed to fetch price details. Server responded with:", data);
-                                        //         alert(`Failed to fetch the price. ${data.message}`);
-                                        //     }
-                                        // })
-                                        // .catch(err => {
-                                        //     // Log the error for debugging
-                                        //     console.error('Error fetching price:', err);
-                                        //     alert('An unexpected error occurred. Please try again later.');
-                                        // });
-
                                     }
                                     // Close the modal when clicking outside of it
                                     window.onclick = function(event) {
@@ -1170,10 +1092,10 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                             <input type="hidden" name="price" id="modal_price">
 
                                             <label for="email" style="align-self: flex-start; font-size: 14px; margin-bottom: 5px; color: #333;">Email:</label>
-                                            <input type="mail" id="mail" name="email" value="<?php echo htmlspecialchars($_SESSION['customer_email'], ENT_QUOTES, 'UTF-8'); ?>" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+                                            <input type="mail" id="mail" name="email" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
 
                                             <label for="phone" style="align-self: flex-start; font-size: 14px; margin-bottom: 5px; color: #333;">Phone:</label>
-                                            <input type="text" id="phone" name="phone" value="<?php echo htmlspecialchars($_SESSION['customer_phone'], ENT_QUOTES, 'UTF-8'); ?>" required style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+                                            <input type="text" id="phone" name="phone" required style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
 
                                             <label for="currency" style="align-self: flex-start; font-size: 14px; margin-bottom: 5px; color: #333;">Currency:</label>
                                             <select id="currency" name="currency" required style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
