@@ -1591,10 +1591,10 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                             <input type="hidden" name="price" id="prog_price">
                                 
                                             <label for="email1" style="align-self: flex-start; font-size: 14px; margin-bottom: 5px; color: #333;">Email:</label>
-                                            <input type="email" id="email1" name="email1" value="<?php echo htmlspecialchars($_SESSION['customer_email']); ?>" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+                                            <input type="email" id="email1" name="email1" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
                                 
                                             <label for="phone" style="align-self: flex-start; font-size: 14px; margin-bottom: 5px; color: #333;">Phone:</label>
-                                            <input type="text" id="phone" name="phone" value="<?php echo htmlspecialchars($_SESSION['customer_phone']); ?>" required style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+                                            <input type="text" id="phone" name="phone" required style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
                                 
                                             <button type="submit" style="padding: 10px 20px; background-color: #f37121; color: #fff; border: none; border-radius: 4px; font-size: 18px; cursor: pointer; font-weight: bold;">Proceed to Payment</button>
                                         </form>
