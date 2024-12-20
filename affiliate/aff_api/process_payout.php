@@ -7,8 +7,10 @@ require_once __DIR__ . '../../../config/loadENV.php';
 if ($_ENV['APP_ENV'] === 'dev') {
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
+    $paystack_secret_key = $_ENV['PAYSTACK_SECRET_KEY_TEST'];
 } else {
     ini_set('display_errors', 0);
+    $paystack_secret_key = $_ENV['PAYSTACK_SECRET_KEY_LIVE'];
 }
 
 // Redirect if affiliate is not authenticated
@@ -67,21 +69,28 @@ $response = [
     }
         
     $amount = $total_earnings; // Payout amount
+    echo $affiliate['account_name'];
+    $phone ='233' . $affiliate['phone_number'];
+    echo $phone;
+    $provider = strtolower(trim($affiliate['service_provider'])) === 'vodafone' ? 'vodafonecash' : strtolower(trim($affiliate['service_provider']));
+    echo $provider;
     $mobile_money_data = [
         'type' => 'mobile_money',
-        'name' => $affiliate,
-        'phone' => $affiliate['phone_number'],
-        'provider' => strtolower($affiliate['service_provider']), // e.g., 'mtn', 'vodafone', 'airteltigo'
+        'name' => $affiliate['account_name'],
+        'phone' => $phone,
+        'provider' => $provider,
         'currency' => 'GHS',
     ];
-    
-    // Step 1: Create a Paystack Recipient
+
+
+    var_dump($mobile_money_data);
+
     $ch = curl_init('https://api.paystack.co/transferrecipient');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($mobile_money_data));
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        'Authorization: Bearer ' . getenv('PAYSTACK_SECRET_KEY'),
+        'Authorization: Bearer ' . $paystack_secret_key,
         'Content-Type: application/json',
     ]);
     
@@ -90,9 +99,20 @@ $response = [
     curl_close($ch);
     
     $recipient_data = json_decode($recipient_response, true);
-    
-    if ($http_code !== 200 || !$recipient_data['status']) {
-        echo json_encode(['status' => 'error', 'message' => 'Failed to create mobile money recipient.']);
+
+    // Debug Response
+    echo 'debugging <br/>';
+
+    print_r([
+        'http_code' => $http_code,
+        'response' => $recipient_response,
+        'payload' => $mobile_money_data,
+    ]);
+
+    if ($http_code === 200 && $response_data['status']) {
+        echo "Recipient created successfully.";
+    } else if($http_code !== 200 || !$recipient_data['status']) {
+        echo json_encode(['status' => 'error', 'message' => 'Failed to create mobile money recipient.', 'data' => $recipient_data]);
         exit;
     }
     
@@ -111,7 +131,7 @@ $response = [
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($transfer_data));
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        'Authorization: Bearer ' . getenv('PAYSTACK_SECRET_KEY'),
+        'Authorization: Bearer ' . $paystack_secret_key,
         'Content-Type: application/json',
     ]);
     
@@ -123,7 +143,7 @@ $response = [
     
     if ($http_code === 200 && $transfer_data['status']) {
         // Record successful payout in the database
-        $stmt = $pdo->prepare("
+        $stmt = $mysqli->prepare("
             INSERT INTO payouts (affiliate_id, amount, recipient_code, transaction_id, status)
             VALUES (:affiliate_id, :amount, :recipient_code, :transaction_id, :status)
         ");
@@ -138,7 +158,7 @@ $response = [
         echo json_encode(['status' => 'success', 'message' => 'Payout processed successfully.']);
     } else {
         // Log failed payout
-        $stmt = $pdo->prepare("
+        $stmt = $mysqli->prepare("
             INSERT INTO payouts (affiliate_id, amount, recipient_code, status)
             VALUES (:affiliate_id, :amount, :recipient_code, :status)
         ");
