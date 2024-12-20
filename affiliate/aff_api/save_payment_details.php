@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $affiliate_id = $_SESSION['affiliate_id'];
     $service_provider = $data['service_provider'] ?? null;
-    $phone_number = $data['phone-number'] ?? null;
+    $phone_number = $data['phone_number'] ?? null;
     $account_holder = $data['accountHolder'] ?? null;
 
     if ($account_holder && $phone_number && $service_provider) {

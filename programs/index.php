@@ -165,6 +165,10 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
         
         function payWithPaystackforPrograms(e) {
             e.preventDefault();
+            const paymentprocessing = document.getElementById('paymentprocessing');
+            paymentprocessing.disabled = true;
+            paymentprocessing.style.backgroundColor = 'grey';
+            paymentprocessing.innerHTML = 'Processing payment...';
             const email1 = document.getElementById("email1").value;
             // console.log('Paystack email:', email1);
             const phone = document.getElementById("phone").value;
@@ -1551,7 +1555,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                         <!--<p style="font-size: 15px; color: #555; margin-bottom: 20px;">Amount Payable: GHS <span id="amount" style="font-weight: bold;"></span></p>-->
 
                                         
-                                        <form id="paymentForm" onsubmit="payWithPaystackforPrograms(event)" style="display: flex; flex-direction: column; align-items: center;">
+                                        <form id="paymentForm" onsubmit="payWithPaystackforPrograms(event)" id="paymentprocessing" style="display: flex; flex-direction: column; align-items: center;">
                                             <!--<input type="hidden" name="p_ID" id="p_ID">-->
                                             <input type="hidden" name="price" id="prog_price">
                                 

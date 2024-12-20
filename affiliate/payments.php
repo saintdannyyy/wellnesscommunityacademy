@@ -145,8 +145,8 @@ foreach ($result as $row) {
 
                 // Payout Logic
                 $('#payout-btn').on('click', function() {
-                    let bankName;
-                    let accountNumber;
+                    let service_provider;
+                    let phone_number;
                     let accountHolder;
                     // Check if payment details are available for the affiliate
                     $.ajax({
@@ -154,6 +154,7 @@ foreach ($result as $row) {
                         method: 'POST',
                         success: function(response) {
                             const data = JSON.parse(response);
+                            console.log(data);
                             console.log(response);
                             if (data.status === 'exists') {
                                 Swal.fire({
@@ -174,7 +175,7 @@ foreach ($result as $row) {
                                     html: '<form id="payment-form">' +
                                         '<div class="mb-3">' +
                                         '<label class="form-label">Mobile Network</label>' +
-                                        '<select class="form-control" id="bank-name" required>' +
+                                        '<select class="form-control" id="service_provider" required>' +
                                             '<option value="MTN">MTN</option>'+
                                             '<option value="Vodafone">Vodafone</option>'+
                                             '<option value="AirtelTigo">AirtelTigo</option>'+
@@ -191,15 +192,15 @@ foreach ($result as $row) {
                                     showCancelButton: true,
                                     confirmButtonText: 'Save',
                                     preConfirm: () => {
-                                        bankName = document.getElementById('bank-name').value;
-                                        accountNumber = document.getElementById('account-number').value;
+                                        service_provider = document.getElementById('service_provider').value;
+                                        phone_number = document.getElementById('phone-number').value;
                                         accountHolder = document.getElementById('account-holder').value;
-                                        if (!bankName || !accountNumber || !accountHolder) {
+                                        if (!service_provider || !phone_number || !accountHolder) {
                                             Swal.showValidationMessage('Please fill all fields');
                                         } else {
                                             return {
-                                                bankName,
-                                                accountNumber,
+                                                service_provider,
+                                                phone_number,
                                                 accountHolder
                                             };
                                         }

@@ -18,14 +18,18 @@ try {
     $result = $stmt->get_result();
     if ($result->num_rows > 0) {
         $details = $result->fetch_assoc();
-        echo json_encode([
-            'status' => 'exists',
-            'data' => [
-                'service_provider' => $details['service_provider'],
-                'phone_number' => $details['phone_number'],
-                'account_holder' => $details['account_name']
-            ]
-        ]);
+        if (is_null($details['service_provider']) || is_null($details['phone_number']) || is_null($details['account_name'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Payment details are incomplete. Contact your administrator.']);
+        } else {
+            echo json_encode([
+                'status' => 'exists',
+                'data' => [
+                    'service_provider' => $details['service_provider'],
+                    'phone_number' => $details['phone_number'],
+                    'account_holder' => $details['account_name']
+                ]
+            ]);
+        }
     } else {
         echo json_encode(['status' => 'error', 'message' => 'No payment details found.']);
     }
