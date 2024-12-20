@@ -12,25 +12,28 @@ $affiliate_id = $_SESSION['affiliate_id'];
 
 try {
     // Query to check payment details for the affiliate
-    $stmt = $mysqli->prepare("SELECT bank_name, account_number, account_name FROM affiliates WHERE id = ?");
+    $stmt = $mysqli->prepare("SELECT service_provider, phone_number, account_name FROM affiliates WHERE id = ?");
     $stmt->bind_param("i", $affiliate_id);
     $stmt->execute();
     $result = $stmt->get_result();
-    $stmt->close();
-
     if ($result->num_rows > 0) {
         $details = $result->fetch_assoc();
-        echo json_encode([
-            'status' => 'success',
-            'data' => [
-                'bank_name' => $details['bank_name'],
-                'account_number' => $details['account_number'],
-                'account_holder' => $details['account_name']
-            ]
-        ]);
+        if (is_null($details['service_provider']) || is_null($details['phone_number']) || is_null($details['account_name'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Payment details are incomplete. Contact your administrator.']);
+        } else {
+            echo json_encode([
+                'status' => 'exists',
+                'data' => [
+                    'service_provider' => $details['service_provider'],
+                    'phone_number' => $details['phone_number'],
+                    'account_holder' => $details['account_name']
+                ]
+            ]);
+        }
     } else {
         echo json_encode(['status' => 'error', 'message' => 'No payment details found.']);
     }
+    $stmt->close();
 } catch (Exception $e) {
     echo json_encode(['status' => 'error', 'message' => 'An error occurred: ' . $e->getMessage()]);
 }

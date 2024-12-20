@@ -109,6 +109,10 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
         let price_ghs;
         async function payWithPaystack(e) {
             e.preventDefault();
+            const paymentprocessing = document.getElementById('paymentprocessing');
+            paymentprocessing.disabled = true;
+            paymentprocessing.style.backgroundColor = 'grey';
+            paymentprocessing.innerHTML = 'Processing payment...';
             const email = document.getElementById("mail").value;
             const phone = document.getElementById("phone").value;
             course_no = courseNO;
@@ -768,16 +772,16 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                         <!-- Step 1: Personal Information -->
                                         <div class="form-step active" id="step-1" style="display: block;">
                                             <label for="name" style="font-weight: bold; color: #555;">Full Name:</label>
-                                            <input type="text" id="name" value="<?php echo htmlspecialchars($_SESSION['customer_name']); ?>" required
+                                            <input type="text" id="name" required
                                                 style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
 
                                             <label for="mail" style="font-weight: bold; color: #555;">Email:</label>
-                                            <input type="email" id="mail" value="<?php echo htmlspecialchars($_SESSION['customer_email']); ?>" required
+                                            <input type="email" id="mail" required
                                                 style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
 
                                             <label for="phone" style="font-weight: bold; color: #555;">Phone
                                                 Number:</label>
-                                            <input type="text" id="phone" value="<?php echo htmlspecialchars($_SESSION['customer_phone']); ?>" required
+                                            <input type="text" id="phone" required
                                                 style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
                                                 
                                             <p>This course costs <span style="color: red; font-weight:bold;">$</span><span id="course_price" style=" font-weight:bold; color: red;"></span><br/>You'll be charged in your local currency.</p>    
@@ -810,7 +814,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                         <div class="form-step" id="step-2" style="display: none;">
                                             <h3 style="text-align: center; margin-bottom: 20px;">Payment Amount: $<span
                                                     id="price">0</span></h3>
-                                            <button onclick="payWithPaystack(event)"
+                                            <button onclick="payWithPaystack(event)" id="paymentprocessing"
                                                 style="width: 100%; padding: 10px; background-color: #008cdd; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Pay
                                                 Now</button>
                                             <button onclick="nextStep(1)"

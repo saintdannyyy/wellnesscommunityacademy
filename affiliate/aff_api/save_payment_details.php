@@ -17,13 +17,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $affiliate_id = $_SESSION['affiliate_id'];
-    $bank_name = $data['bankName'] ?? null;
-    $account_number = $data['accountNumber'] ?? null;
+    $service_provider = $data['service_provider'] ?? null;
+    $phone_number = $data['phone_number'] ?? null;
     $account_holder = $data['accountHolder'] ?? null;
 
-    if ($account_holder && $account_number && $bank_name) {
-        $stmt = $mysqli->prepare("UPDATE affiliates SET account_name = ?, account_number = ?, bank_name = ? WHERE id = ?");
-        $stmt->bind_param('sisi', $account_holder, $account_number, $bank_name, $affiliate_id);
+    if ($account_holder && $phone_number && $service_provider) {
+        $stmt = $mysqli->prepare("UPDATE affiliates SET account_name = ?, phone_number = ?, service_provider = ? WHERE id = ?");
+        $stmt->bind_param('sisi', $account_holder, $phone_number, $service_provider, $affiliate_id);
 
         if ($stmt->execute()) {
             $response['status'] = 'success';
@@ -32,8 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $response['message'] = 'Failed to save payment details. Please try again.';
             $response['debug'] = [
                 'account_name' => $account_holder,
-                'account_number' => $account_number,
-                'bank_name' => $bank_name,
+                'phone_number' => $phone_number,
+                'service_provider' => $service_provider,
                 'affiliate_id' => $affiliate_id,
                 'error' => $stmt->error
             ];
@@ -43,8 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $response['message'] = 'All fields are required.';
         $response['details'] = [
             'account_holder' => $account_holder,
-            'account_number' => $account_number,
-            'bank_name' => $bank_name,
+            'phone_number' => $phone_number,
+            'service_provider' => $service_provider,
             'affiliate_id' => $affiliate_id
         ];
     }

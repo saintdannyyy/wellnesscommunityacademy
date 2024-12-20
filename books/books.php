@@ -16,13 +16,6 @@ if (!$open_exchange_api_key) {
 
 header('Content-Type: application/json');
 
-// Start session and check login
-session_start();
-if (!isset($_SESSION['customer_id'])) {
-    echo json_encode(['success' => false, 'message' => 'You are not logged in. Please log in.']);
-    exit;
-}
-
 // Check request method
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'message' => 'Invalid request method.']);

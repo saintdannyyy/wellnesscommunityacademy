@@ -7,13 +7,6 @@ if ($_ENV['APP_ENV'] === 'dev') {
     ini_set('display_errors', 0);  // Hide errors in production environment
 }
 
-// Start session and check login
-session_start();
-if (!isset($_SESSION['customer_id'])) {
-    echo json_encode(['success' => false, 'message' => 'You are not logged in. Please log in.']);
-    exit;
-}
-
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pID = $_POST['instanceNumber'] ?? null;
 

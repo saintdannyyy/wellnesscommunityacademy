@@ -1,3 +1,21 @@
+<?php
+session_start();
+require('conn/conn.php');
+// Decode referral code
+function decodeReferralId($referralCode)
+{
+    $key = $_ENV['AFFILIATE_ID_ENCRYPTION_KEY'];
+    return openssl_decrypt(base64_decode($referralCode), 'aes-256-cbc', $key, 0, substr($key, 0, 16));
+}
+
+// Extract and decode referral code from the URL if available
+$referralCodeFromUrl = isset($_GET['rf']) ? htmlspecialchars(trim($_GET['rf'])) : '';
+if (!empty($referralCodeFromUrl)) {
+    $referralCodeFromUrl = decodeReferralId($referralCodeFromUrl);
+    setcookie('referralCode', $referralCodeFromUrl, time() + (86400 * 30), "/");
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,24 +73,24 @@
 
     <script>
         /*! loadCSS rel=preload polyfill. [c]2017 Filament Group, Inc. MIT License */
-        (function (w) {
+        (function(w) {
             "use strict";
             if (!w.loadCSS) {
-                w.loadCSS = function () { }
+                w.loadCSS = function() {}
             }
             var rp = loadCSS.relpreload = {};
-            rp.support = function () {
+            rp.support = function() {
                 var ret;
                 try {
                     ret = w.document.createElement("link").relList.supports("preload")
                 } catch (e) {
                     ret = false
                 }
-                return function () {
+                return function() {
                     return ret
                 }
             }();
-            rp.bindMediaToggle = function (link) {
+            rp.bindMediaToggle = function(link) {
                 var finalMedia = link.media || "all";
 
                 function enableStylesheet() {
@@ -83,13 +101,13 @@
                 } else if (link.attachEvent) {
                     link.attachEvent("onload", enableStylesheet)
                 }
-                setTimeout(function () {
+                setTimeout(function() {
                     link.rel = "stylesheet";
                     link.media = "only x"
                 });
                 setTimeout(enableStylesheet, 3e3)
             };
-            rp.poly = function () {
+            rp.poly = function() {
                 if (rp.support()) {
                     return
                 }
@@ -106,12 +124,12 @@
                 rp.poly();
                 var run = w.setInterval(rp.poly, 500);
                 if (w.addEventListener) {
-                    w.addEventListener("load", function () {
+                    w.addEventListener("load", function() {
                         rp.poly();
                         w.clearInterval(run)
                     })
                 } else if (w.attachEvent) {
-                    w.attachEvent("onload", function () {
+                    w.attachEvent("onload", function() {
                         rp.poly();
                         w.clearInterval(run)
                     })
@@ -164,73 +182,73 @@
     </style>
     <script>
         var google_analytics = null; <
-            !--Global site tag(gtag.js) - Google Analytics-- >
-                <
-			script async src="https://www.googletagmanager.com/gtag/js?id=UA-175519445-2" >
+        !--Global site tag(gtag.js) - Google Analytics-- >
+            <
+            script async src = "https://www.googletagmanager.com/gtag/js?id=UA-175519445-2" >
     </script>
     <script>
-                window.dataLayer = window.dataLayer || [];
+        window.dataLayer = window.dataLayer || [];
 
-                function gtag() {
-                    dataLayer.push(arguments);
-		}
-                gtag('js', new Date());
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
 
-                gtag('config', 'UA-175519445-2');
+        gtag('config', 'UA-175519445-2');
     </script>
 
     <script type="text/javascript">
-                (function(c, l, a, r, i, t, y) {
-                    c[a] = c[a] || function () {
-                        (c[a].q = c[a].q || []).push(arguments)
-                    };
-                t = l.createElement(r);
-                t.async = 1;
-                t.src = "https://www.clarity.ms/tag/" + i;
-                y = l.getElementsByTagName(r)[0];
-                y.parentNode.insertBefore(t, y);
-		})(window, document, "clarity", "script", "aqpjjtqipr");
+        (function(c, l, a, r, i, t, y) {
+            c[a] = c[a] || function() {
+                (c[a].q = c[a].q || []).push(arguments)
+            };
+            t = l.createElement(r);
+            t.async = 1;
+            t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0];
+            y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "aqpjjtqipr");
     </script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-217187331-1"></script>
     <script>
-                window.dataLayer = window.dataLayer || [];
+        window.dataLayer = window.dataLayer || [];
 
-                function gtag() {
-                    dataLayer.push(arguments);
-		}
-                gtag('js', new Date());
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
 
-                gtag('config', 'UA-217187331-1');
+        gtag('config', 'UA-217187331-1');
     </script>
 
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-217187331-1"></script>
     <script>
-                window.dataLayer = window.dataLayer || [];
+        window.dataLayer = window.dataLayer || [];
 
-                function gtag() {
-                    dataLayer.push(arguments);
-		}
-                gtag('js', new Date());
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
 
-                gtag('config', 'UA-217187331-1');
+        gtag('config', 'UA-217187331-1');
     </script>
 
 
     <script type="text/javascript">
-                (function(c, l, a, r, i, t, y) {
-                    c[a] = c[a] || function () {
-                        (c[a].q = c[a].q || []).push(arguments)
-                    };
-                t = l.createElement(r);
-                t.async = 1;
-                t.src = "https://www.clarity.ms/tag/" + i;
-                y = l.getElementsByTagName(r)[0];
-                y.parentNode.insertBefore(t, y);
-		})(window, document, "clarity", "script", "aqpjjtqipr");
+        (function(c, l, a, r, i, t, y) {
+            c[a] = c[a] || function() {
+                (c[a].q = c[a].q || []).push(arguments)
+            };
+            t = l.createElement(r);
+            t.async = 1;
+            t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0];
+            y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "aqpjjtqipr");
     </script>
     <link rel=“canonical” href=“https://www.cooperwellnesscenter.com/” />
 
@@ -657,147 +675,166 @@
                                 </div>
 
                                 <script>
-                // Open modal
-                function openDoctorMeetingModal(event) {
-                    event.preventDefault();
-                document.getElementById("meetModal").style.display = "flex";
-                                        }
+                                    // Open modal
+                                    function openDoctorMeetingModal(event) {
+                                        event.preventDefault();
+                                        document.getElementById("meetModal").style.display = "flex";
+                                    }
 
-                // Close modal
-                function closeDoctorMeetingModal() {
-                    document.getElementById("meetModal").style.display = "none";
-                                        }
+                                    // Close modal
+                                    function closeDoctorMeetingModal() {
+                                        document.getElementById("meetModal").style.display = "none";
+                                    }
 
-                // Close modal on outside click
-                window.onclick = function(event) {
-                                            var modal = document.getElementById("meetModal");
-                if (event.target == modal) {
-                    modal.style.display = "none";
+                                    // Close modal on outside click
+                                    window.onclick = function(event) {
+                                        var modal = document.getElementById("meetModal");
+                                        if (event.target == modal) {
+                                            modal.style.display = "none";
+                                        }
+                                    }
+
+                                    // Set minimum datetime to prevent past selection
+                                    const visitDateTime = document.getElementById("visitDateTime");
+                                    const now = new Date();
+                                    visitDateTime.min = now.toISOString().slice(0, 16);
+
+                                    // Declare cost as a global variable
+                                    let cost = 0;
+
+                                    // Update duration to cost
+                                    function updateDuration(change) {
+                                        const durationInput = document.getElementById("duration");
+                                        const totalCostElement = document.getElementById("totalCost");
+                                        let duration = parseInt(durationInput.value) + change;
+
+                                        // Minimum duration is 30 minutes
+                                        if (duration >= 30) {
+                                            durationInput.value = duration;
+                                            cost = 75 * (duration / 30); // Update the global cost variable
+                                            totalCostElement.innerText = `$${cost}`;
+                                        }
+                                    }
+
+                                    // Conversion to cedis API with Open Exchange Rates
+                                    const openExchangeAppID = '0d6f5687149b407fb1c561d00ecdb908';
+                                    const openExchangeUrl = `https://openexchangerates.org/api/latest.json?app_id=${openExchangeAppID}&symbols=GHS&base=USD`;
+
+
+                                    // Conversion to cedis
+                                    async function fetchOpenExchangeData(cost) {
+                                        try {
+                                            const response = await fetch(openExchangeUrl);
+                                            const exchangeData = await response.json();
+                                            // console.log("Exchange Data:", exchangeData);
+                                            // console.log("exchange rate object:", exchangeData.rates);
+
+                                            // Verify if API returned expected data
+                                            if (exchangeData && exchangeData.rates && exchangeData.timestamp) {
+                                                console.log("exchange rate from api:", exchangeData.rates.GHS);
+                                                console.log("Cost object:", cost);
+                                                const usdToGhsRate = exchangeData.rates.GHS;
+                                                const priceInGhs = (cost * usdToGhsRate).toFixed(2);
+                                                return priceInGhs;
+                                            } else {
+                                                throw new Error("Failed to retrieve exchange rate data");
                                             }
+                                        } catch (error) {
+                                            console.error("Error fetching currency data:", error);
+                                            return null;
                                         }
+                                    }
 
-                // Set minimum datetime to prevent past selection
-                const visitDateTime = document.getElementById("visitDateTime");
-                const now = new Date();
-                visitDateTime.min = now.toISOString().slice(0, 16);
+                                    // Payment script
+                                    async function payWithPaystack(e) {
+                                        e.preventDefault();
+                                        const email = document.getElementById("email").value;
+                                        const phone = document.getElementById("number").value;
+                                        const name = document.getElementById("name").value;
+                                        const datetime = document.getElementById("visitDateTime").value;
+                                        const reason = document.getElementById("reason").value;
+                                        const duration = parseInt(document.getElementById("duration").value);
 
-                // Declare cost as a global variable
-                let cost = 0;
+                                        // Calculate cost in USD
+                                        const cost = (75 * (duration / 30)).toFixed(2);
 
-                // Update duration to cost
-                function updateDuration(change) {
-                                            const durationInput = document.getElementById("duration");
-                const totalCostElement = document.getElementById("totalCost");
-                let duration = parseInt(durationInput.value) + change;
+                                        // Convert USD cost to GHS
+                                        const priceInGhs = await fetchOpenExchangeData(cost);
 
-                                            // Minimum duration is 30 minutes
-                                            if (duration >= 30) {
-                    durationInput.value = duration;
-                cost = 75 * (duration / 30); // Update the global cost variable
-                totalCostElement.innerText = `$${cost}`;
-                                            }
-                                        }
-
-                // Conversion to cedis API with Open Exchange Rates
-                const openExchangeAppID = '0d6f5687149b407fb1c561d00ecdb908';
-                const openExchangeUrl = `https://openexchangerates.org/api/latest.json?app_id=${openExchangeAppID}&symbols=GHS&base=USD`;
-
-
-                // Conversion to cedis
-                async function fetchOpenExchangeData(cost) {
-                                            try {
-                                                const response = await fetch(openExchangeUrl);
-                const exchangeData = await response.json();
-                // console.log("Exchange Data:", exchangeData);
-                // console.log("exchange rate object:", exchangeData.rates);
-
-                // Verify if API returned expected data
-                if (exchangeData && exchangeData.rates && exchangeData.timestamp) {
-                    console.log("exchange rate from api:", exchangeData.rates.GHS);
-                console.log("Cost object:", cost);
-                const usdToGhsRate = exchangeData.rates.GHS;
-                const priceInGhs = (cost * usdToGhsRate).toFixed(2);
-                return priceInGhs;
-                                                } else {
-                                                    throw new Error("Failed to retrieve exchange rate data");
-                                                }
-                                            } catch (error) {
-                    console.error("Error fetching currency data:", error);
-                return null;
-                                            }
-                                        }
-
-                // Payment script
-                async function payWithPaystack(e) {
-                    e.preventDefault();
-                const email = document.getElementById("email").value;
-                const phone = document.getElementById("number").value;
-                const name = document.getElementById("name").value;
-                const datetime = document.getElementById("visitDateTime").value;
-                const reason = document.getElementById("reason").value;
-                const duration = parseInt(document.getElementById("duration").value);
-
-                // Calculate cost in USD
-                const cost = (75 * (duration / 30)).toFixed(2);
-
-                // Convert USD cost to GHS
-                const priceInGhs = await fetchOpenExchangeData(cost);
-
-                // Check if the price conversion succeeded
-                if (!priceInGhs) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Conversion Error',
-                        text: 'Unable to retrieve conversion rate. Please try again later.'
-                    });
-                return;
-                                            }
-
-                // Calculate amount in pesewas for Paystack (GHS to pesewas)
-                const amountInPesewas = Math.round(priceInGhs * 100);
-
-                const paystackPublicKey = "pk_test_f5b5f05ffa20e04d5a54bedf16e0605ddab5281c";
-
-                // Initialize Paystack payment
-                const handler = PaystackPop.setup({
-                    key: paystackPublicKey,
-                email: email,
-                amount: amountInPesewas,
-                currency: "GHS",
-                ref: "VMeet" + Math.floor((Math.random() * 1000000000) + 1),
-                metadata: {
-                    custom_fields: [
-                {display_name: "Phone", variable_name: "phone", value: phone },
-                {display_name: "Duration", variable_name: "duration", value: duration },
-                {display_name: "Datetime", variable_name: "datetime", value: datetime },
-                {display_name: "Name", variable_name: "name", value: name },
-                {display_name: "Reason", variable_name: "reason", value: reason },
-                ]
-                                                },
-                callback: function(response) {
-                    // Payment successful
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Payment Successful!',
-                        text: 'Reference: ' + response.reference,
-                        confirmButtonText: 'OK'
-                    }).then(() => {
-                        window.location.href = "pay/meeting_pay.php?reference=" + response.reference;
-                    });
-                                                },
-                onClose: function() {
-                    // Payment was canceled
-                    Swal.fire({
-                        icon: 'info',
-                        title: 'Transaction Cancelled',
-                        text: 'Transaction was not completed. Please try again.',
-                        confirmButtonText: 'OK'
-                    });
-                                                }
+                                        // Check if the price conversion succeeded
+                                        if (!priceInGhs) {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Conversion Error',
+                                                text: 'Unable to retrieve conversion rate. Please try again later.'
                                             });
-
-                handler.openIframe(); // Open Paystack inline modal
+                                            return;
                                         }
+
+                                        // Calculate amount in pesewas for Paystack (GHS to pesewas)
+                                        const amountInPesewas = Math.round(priceInGhs * 100);
+
+                                        const paystackPublicKey = "pk_test_f5b5f05ffa20e04d5a54bedf16e0605ddab5281c";
+
+                                        // Initialize Paystack payment
+                                        const handler = PaystackPop.setup({
+                                            key: paystackPublicKey,
+                                            email: email,
+                                            amount: amountInPesewas,
+                                            currency: "GHS",
+                                            ref: "VMeet" + Math.floor((Math.random() * 1000000000) + 1),
+                                            metadata: {
+                                                custom_fields: [{
+                                                        display_name: "Phone",
+                                                        variable_name: "phone",
+                                                        value: phone
+                                                    },
+                                                    {
+                                                        display_name: "Duration",
+                                                        variable_name: "duration",
+                                                        value: duration
+                                                    },
+                                                    {
+                                                        display_name: "Datetime",
+                                                        variable_name: "datetime",
+                                                        value: datetime
+                                                    },
+                                                    {
+                                                        display_name: "Name",
+                                                        variable_name: "name",
+                                                        value: name
+                                                    },
+                                                    {
+                                                        display_name: "Reason",
+                                                        variable_name: "reason",
+                                                        value: reason
+                                                    },
+                                                ]
+                                            },
+                                            callback: function(response) {
+                                                // Payment successful
+                                                Swal.fire({
+                                                    icon: 'success',
+                                                    title: 'Payment Successful!',
+                                                    text: 'Reference: ' + response.reference,
+                                                    confirmButtonText: 'OK'
+                                                }).then(() => {
+                                                    window.location.href = "pay/meeting_pay.php?reference=" + response.reference;
+                                                });
+                                            },
+                                            onClose: function() {
+                                                // Payment was canceled
+                                                Swal.fire({
+                                                    icon: 'info',
+                                                    title: 'Transaction Cancelled',
+                                                    text: 'Transaction was not completed. Please try again.',
+                                                    confirmButtonText: 'OK'
+                                                });
+                                            }
+                                        });
+
+                                        handler.openIframe(); // Open Paystack inline modal
+                                    }
                                 </script>
                             </div>
                         </div>
@@ -1337,85 +1374,6 @@
                                                                                 </button>
                                                                             </label>
                                                                         </div>
-                                                                        <div class="js_kartra_gdpr_popover js_kartra_popover kartra_optin_gdpr_terms_offer"
-                                                                            style="display: none;">
-                                                                            <div class="kartra_optin_popover">
-                                                                                <div
-                                                                                    class="kartra_optin_popover-content kartra_optin_popover-content-npadding">
-                                                                                    <span class="js_gdpr_terms_text">I
-                                                                                        confirm that I am at least 16
-                                                                                        years of age or older<br>
-                                                                                        <br>
-                                                                                        I have read and accept any EULA,
-                                                                                        Terms and Conditions, Acceptable
-                                                                                        Use Policy, and/or Data
-                                                                                        Processing Addendum which has
-                                                                                        been provided to me in
-                                                                                        connection with the software,
-                                                                                        products and/or services. <br>
-                                                                                        <br>
-                                                                                        I have been fully informed and
-                                                                                        consent to the collection and
-                                                                                        use of my personal data for any
-                                                                                        purpose in connection with the
-                                                                                        software, products and/or
-                                                                                        services. <br>
-                                                                                        <br>
-                                                                                        I understand that certain data,
-                                                                                        including personal data, must be
-                                                                                        collected or processed in order
-                                                                                        for you to provide any products
-                                                                                        or services I have requested or
-                                                                                        contracted for. I understand
-                                                                                        that in some cases it may be
-                                                                                        required to use cookies or
-                                                                                        similar tracking to provide
-                                                                                        those products or services..
-                                                                                        <br>
-                                                                                        <br>
-                                                                                        I understand that I have the
-                                                                                        right to request access annually
-                                                                                        to any personal data you have
-                                                                                        obtained or collected regarding
-                                                                                        me. You have agreed to provide
-                                                                                        me with a record of my personal
-                                                                                        data in a readable format. <br>
-                                                                                        <br>
-                                                                                        I also understand that I can
-                                                                                        revoke my consent and that I
-                                                                                        have the right to be forgotten.
-                                                                                        If I revoke my consent you will
-                                                                                        stop collecting or processing my
-                                                                                        personal data. I understand that
-                                                                                        if I revoke my consent, you may
-                                                                                        be unable to provide contracted
-                                                                                        products or services to me, and
-                                                                                        I can not hold you responsible
-                                                                                        for that. <br>
-                                                                                        <br>
-                                                                                        Likewise, if I properly request
-                                                                                        to be forgotten, you will delete
-                                                                                        the data you have for me, or
-                                                                                        make it inaccessible. I also
-                                                                                        understand that if there is a
-                                                                                        dispute regarding my personal
-                                                                                        data, I can contact someone who
-                                                                                        is responsible for handling
-                                                                                        data-related concerns. If we are
-                                                                                        unable to resolve any issue, you
-                                                                                        will provide an independent
-                                                                                        service to arbitrate a
-                                                                                        resolution. If I have any
-                                                                                        questions regarding my rights or
-                                                                                        privacy, I can contact the email
-                                                                                        address provided.</span>
-                                                                                </div>
-                                                                                <button type="button"
-                                                                                    class="js_gdpr_popover_close kartra_optin_popover-close js_utility_popover_close">
-                                                                                    <i class="kartraico-clear"></i>
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <button type="submit"
@@ -1839,37 +1797,37 @@
             </div>
         </div>
         <!--<div class="content" style="padding: 0px 0px 30px; background-color: rgb(243, 113, 33);" id="_muyzel5sm">-->
-            <!--<div class="background_changer background_changer--blur0" style="background-image: none; opacity: 1;"></div>-->
-            <!--<div class="background_changer_overlay" style="background-image: none;"></div>-->
-            <!--<div>-->
-            <!--	<div class="row row--equal row--margin-left-right-none" data-component="grid">-->
-            <!--		<div class="col-md-12 column--padding-top-bottom-extra-large background_changer--blur0" style="margin-top: 0px; margin-bottom: 0px; padding: 0px; background-color: rgb(255, 255, 255); border-radius: 0px; border-style: none; border-width: 0px; background-image: none; opacity: 1;">-->
-            <!--			<div class="js_kartra_component_holder js_kartra_component_holder--min-height-auto">-->
-            <!--				<div class="kartra_element_bg kartra_element_bg--padding-top-bottom-tiny kartra_element_bg--padding-left-right-extra-small pull-center kartra_element_bg--margin-bottom-extra-small js_kartra_component_holder js_kartra_component_holder--height-auto" data-component="bundle" id="vq5ZYiN9H2_5qWkDX8yZX" style="margin-top: 5px; margin-bottom: 30px; padding: 20px 30px 13px;">-->
-            <!--					<div style="border-radius: 10px; border-color: rgba(255, 255, 255, 0.2); border-style: double; border-width: 3px; background-image: none; opacity: 1; background-color: rgba(255, 255, 255, 0);" class="background-item background-item--border-style-double background_changer--blur0"></div>-->
-            <!--				</div>-->
-            <!--				<div class="kartra_element_wrapper kartra_element_wrapper--mockup kartra_element_wrapper--three-ipad-mockup" data-component="bundle" id="PDai61hGBe_nq9WTGJWhg" style="margin-top: 25px; margin-bottom: 0px; padding: 0px;">-->
-            <!--					<div style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-color: rgb(51, 51, 51); border-style: none; border-width: 0px; opacity: 1;" class="background-item background-item--first-ipad background_changer--blur0 js-bg-next-gen" data-bg='url("//d11n7da8rpqbjy.cloudfront.net/cooperwellness/9200734_1587117751093GHClub-pkg-1024x683.jpg")'></div>-->
-            <!--					<div style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-color: rgb(51, 51, 51); border-style: none; border-width: 0px; opacity: 1;" class="background-item background-item---second-ipad background_changer--blur0 js-bg-next-gen" data-bg='url("//d11n7da8rpqbjy.cloudfront.net/cooperwellness/9314254_1587496099176Juices_CWC.jpg")'></div>-->
-            <!--					<div style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-color: rgb(51, 51, 51); border-style: none; border-width: 0px; opacity: 1;" class="background-item background-item--third-ipad background_changer--blur0 js-bg-next-gen" data-bg='url("//d11n7da8rpqbjy.cloudfront.net/cooperwellness/9200813_1587117966140DrCooper-9.jpg")'></div>-->
-            <!--					<img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="joint_device_mock_up--frame" data-original="//d2uolguxr56s4e.cloudfront.net/img/kartrapages/kp-component/kp-three-ipad.png">-->
-            <!--				</div>-->
-            <!--			</div>-->
-            <!--		</div>-->
-            <!--	</div>-->
-            <!--</div>-->
-            <!--    <div class="container">-->
-            <!--	    <div class="row" data-component="grid" id="Bt0V0mjGpO">-->
-            <!--		    <div class="col-md-12">-->
-            <!--			    <div class="js_kartra_component_holder">-->
-            <!--                                <div data-component="button" id="rFuD8tkds2">-->
-            <!--					    <a href="https://app.kartra.com/redirect_to/?asset=page&amp;id=X7M6t4dB2vZa" class="kartra_button1 kartra_button1--roboto-font kartra_button1--white-bg-blue-text kartra_button1--font-weight-medium kartra_button1--icon-right kartra_button1--solid kartra_button1--full-width kartra_button1--rounded kartra_button1--shadow-small pull-center toggle_pagelink" data-frame-id="_muyzel5sm" style="background-color: rgb(49, 85, 40); color: rgb(252, 255, 251); margin: 25px auto 20px; font-weight: 700; font-family: Roboto; border-radius: 40px;" data-project-id="3" data-page-id="25" data-effect="kartra_css_effect_7" target="_parent">&gt;&gt; View Our Supplements Catalog Here &lt;&lt;<span class="kartra_icon__icon fa fa-shopping-cart" style="color: rgb(252, 253, 251); border-color: rgb(252, 253, 251); font-weight: 700;"></span></a>-->
-            <!--								</div>-->
-            <!-- 						</div>-->
-            <!--  				</div>-->
-            <!--   		</div>-->
-            <!--					<div class="row row--equal" data-component="grid"></div>-->
-            <!--  			<div class="row" data-component="grid"></div>-->
+        <!--<div class="background_changer background_changer--blur0" style="background-image: none; opacity: 1;"></div>-->
+        <!--<div class="background_changer_overlay" style="background-image: none;"></div>-->
+        <!--<div>-->
+        <!--	<div class="row row--equal row--margin-left-right-none" data-component="grid">-->
+        <!--		<div class="col-md-12 column--padding-top-bottom-extra-large background_changer--blur0" style="margin-top: 0px; margin-bottom: 0px; padding: 0px; background-color: rgb(255, 255, 255); border-radius: 0px; border-style: none; border-width: 0px; background-image: none; opacity: 1;">-->
+        <!--			<div class="js_kartra_component_holder js_kartra_component_holder--min-height-auto">-->
+        <!--				<div class="kartra_element_bg kartra_element_bg--padding-top-bottom-tiny kartra_element_bg--padding-left-right-extra-small pull-center kartra_element_bg--margin-bottom-extra-small js_kartra_component_holder js_kartra_component_holder--height-auto" data-component="bundle" id="vq5ZYiN9H2_5qWkDX8yZX" style="margin-top: 5px; margin-bottom: 30px; padding: 20px 30px 13px;">-->
+        <!--					<div style="border-radius: 10px; border-color: rgba(255, 255, 255, 0.2); border-style: double; border-width: 3px; background-image: none; opacity: 1; background-color: rgba(255, 255, 255, 0);" class="background-item background-item--border-style-double background_changer--blur0"></div>-->
+        <!--				</div>-->
+        <!--				<div class="kartra_element_wrapper kartra_element_wrapper--mockup kartra_element_wrapper--three-ipad-mockup" data-component="bundle" id="PDai61hGBe_nq9WTGJWhg" style="margin-top: 25px; margin-bottom: 0px; padding: 0px;">-->
+        <!--					<div style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-color: rgb(51, 51, 51); border-style: none; border-width: 0px; opacity: 1;" class="background-item background-item--first-ipad background_changer--blur0 js-bg-next-gen" data-bg='url("//d11n7da8rpqbjy.cloudfront.net/cooperwellness/9200734_1587117751093GHClub-pkg-1024x683.jpg")'></div>-->
+        <!--					<div style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-color: rgb(51, 51, 51); border-style: none; border-width: 0px; opacity: 1;" class="background-item background-item---second-ipad background_changer--blur0 js-bg-next-gen" data-bg='url("//d11n7da8rpqbjy.cloudfront.net/cooperwellness/9314254_1587496099176Juices_CWC.jpg")'></div>-->
+        <!--					<div style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-color: rgb(51, 51, 51); border-style: none; border-width: 0px; opacity: 1;" class="background-item background-item--third-ipad background_changer--blur0 js-bg-next-gen" data-bg='url("//d11n7da8rpqbjy.cloudfront.net/cooperwellness/9200813_1587117966140DrCooper-9.jpg")'></div>-->
+        <!--					<img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" class="joint_device_mock_up--frame" data-original="//d2uolguxr56s4e.cloudfront.net/img/kartrapages/kp-component/kp-three-ipad.png">-->
+        <!--				</div>-->
+        <!--			</div>-->
+        <!--		</div>-->
+        <!--	</div>-->
+        <!--</div>-->
+        <!--    <div class="container">-->
+        <!--	    <div class="row" data-component="grid" id="Bt0V0mjGpO">-->
+        <!--		    <div class="col-md-12">-->
+        <!--			    <div class="js_kartra_component_holder">-->
+        <!--                                <div data-component="button" id="rFuD8tkds2">-->
+        <!--					    <a href="https://app.kartra.com/redirect_to/?asset=page&amp;id=X7M6t4dB2vZa" class="kartra_button1 kartra_button1--roboto-font kartra_button1--white-bg-blue-text kartra_button1--font-weight-medium kartra_button1--icon-right kartra_button1--solid kartra_button1--full-width kartra_button1--rounded kartra_button1--shadow-small pull-center toggle_pagelink" data-frame-id="_muyzel5sm" style="background-color: rgb(49, 85, 40); color: rgb(252, 255, 251); margin: 25px auto 20px; font-weight: 700; font-family: Roboto; border-radius: 40px;" data-project-id="3" data-page-id="25" data-effect="kartra_css_effect_7" target="_parent">&gt;&gt; View Our Supplements Catalog Here &lt;&lt;<span class="kartra_icon__icon fa fa-shopping-cart" style="color: rgb(252, 253, 251); border-color: rgb(252, 253, 251); font-weight: 700;"></span></a>-->
+        <!--								</div>-->
+        <!-- 						</div>-->
+        <!--  				</div>-->
+        <!--   		</div>-->
+        <!--					<div class="row row--equal" data-component="grid"></div>-->
+        <!--  			<div class="row" data-component="grid"></div>-->
         <!--</div>-->
     </div>
     <div class="content content--padding-medium content--padding-bottom-none content--padding-top-none"
@@ -1914,7 +1872,7 @@
                                     <!--    data-frame-id="_6723f824ea44e"-->
                                     <!--    style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "Open Sans";'-->
                                     <!--    target="_blank">Affiliates</a>-->
-                                        <a
+                                    <a
                                         class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant toggle_pagelink"
                                         href="othersites"
                                         data-frame-id="_6723f824ea44e"
@@ -2127,23 +2085,23 @@
     <!-- /#page -->
     <div style="height:0px;width:0px;opacity:0;position:fixed">
         <script>
-                ! function() {
-                    function e() {
-                        var e = ((new Date).getTime(), document.createElement("script"));
-                        e.type = "text/javascript", e.async = !0, e.setAttribute("embed-id", "e2a8e9c8-04f9-42cb-ba60-ba91aa1f5eaf"), e.src = "https://embed.adabundle.com/embed-scripts/e2a8e9c8-04f9-42cb-ba60-ba91aa1f5eaf";
-                        var t = document.getElementsByTagName("script")[0];
-                        t.parentNode.insertBefore(e, t)
-                    }
-				var t = window;
+            ! function() {
+                function e() {
+                    var e = ((new Date).getTime(), document.createElement("script"));
+                    e.type = "text/javascript", e.async = !0, e.setAttribute("embed-id", "e2a8e9c8-04f9-42cb-ba60-ba91aa1f5eaf"), e.src = "https://embed.adabundle.com/embed-scripts/e2a8e9c8-04f9-42cb-ba60-ba91aa1f5eaf";
+                    var t = document.getElementsByTagName("script")[0];
+                    t.parentNode.insertBefore(e, t)
+                }
+                var t = window;
                 t.attachEvent ? t.attachEvent("onload", e) : t.addEventListener("load", e, !1)
-			}();
+            }();
         </script>
     </div>
     <div style="height:0px;width:0px;opacity:0;position:fixed">
         <!-- Meta Pixel Code -->
         <script>
-                ! function(f, b, e, v, n, t, s) {
-				if (f.fbq) return;
+            ! function(f, b, e, v, n, t, s) {
+                if (f.fbq) return;
                 n = f.fbq = function() {
                     n.callMethod ?
                         n.callMethod.apply(n, arguments) : n.queue.push(arguments)
@@ -2158,10 +2116,10 @@
                 t.src = v;
                 s = b.getElementsByTagName(e)[0];
                 s.parentNode.insertBefore(t, s)
-			}(window, document, 'script',
+            }(window, document, 'script',
                 'https://connect.facebook.net/en_US/fbevents.js');
-                fbq('init', '1445107009514995');
-                fbq('track', 'PageView');
+            fbq('init', '1445107009514995');
+            fbq('track', 'PageView');
         </script>
         <noscript><img height="1" width="1" style="display:none"
                 src="https://www.facebook.com/tr?id=1445107009514995&ev=PageView&noscript=1" /></noscript>
@@ -2169,8 +2127,8 @@
 
         <!-- Facebook Pixel Code -->
         <script>
-                ! function(f, b, e, v, n, t, s) {
-				if (f.fbq) return;
+            ! function(f, b, e, v, n, t, s) {
+                if (f.fbq) return;
                 n = f.fbq = function() {
                     n.callMethod ?
                         n.callMethod.apply(n, arguments) : n.queue.push(arguments)
@@ -2185,10 +2143,10 @@
                 t.src = v;
                 s = b.getElementsByTagName(e)[0];
                 s.parentNode.insertBefore(t, s)
-			}(window, document, 'script',
+            }(window, document, 'script',
                 'https://connect.facebook.net/en_US/fbevents.js');
-                fbq('init', '307347596535190');
-                fbq('track', 'PageView');
+            fbq('init', '307347596535190');
+            fbq('track', 'PageView');
         </script>
         <noscript><img height="1" width="1" style="display:none"
                 src="https://www.facebook.com/tr?id=307347596535190&ev=PageView&noscript=1" /></noscript>
@@ -2196,8 +2154,8 @@
 
         <!-- Facebook Pixel Code -->
         <script>
-                ! function(f, b, e, v, n, t, s) {
-				if (f.fbq) return;
+            ! function(f, b, e, v, n, t, s) {
+                if (f.fbq) return;
                 n = f.fbq = function() {
                     n.callMethod ?
                         n.callMethod.apply(n, arguments) : n.queue.push(arguments)
@@ -2212,10 +2170,10 @@
                 t.src = v;
                 s = b.getElementsByTagName(e)[0];
                 s.parentNode.insertBefore(t, s)
-			}(window, document, 'script',
+            }(window, document, 'script',
                 'https://connect.facebook.net/en_US/fbevents.js');
-                fbq('init', '1163530910472602');
-                fbq('track', 'PageView');
+            fbq('init', '1163530910472602');
+            fbq('track', 'PageView');
         </script>
         <noscript><img height="1" width="1" style="display:none"
                 src="https://www.facebook.com/tr?id=1163530910472602&ev=PageView&noscript=1" /></noscript>
@@ -2228,21 +2186,21 @@
     <script src="//app.kartra.com/resources/js/analytics/DpwDQa6g" async defer></script>
     <script src="//app.kartra.com/resources/js/page_check?page_id=6hMi8IQ4msrK" async defer></script>
     <script>
-                if (typeof window['jQuery'] !== 'undefined') {
-                    window.jsVars = {
-                        "page_title": "Dr Cooper Health  and Disease Prevention Center",
-                        "page_description": "We are a leading Health and Healing center in  Texas, helps you to boost your immunity in Covid 19 days.  Book your Apointment @ 956-627-3106.",
-                        "page_keywords": "Wellness and Disease Prevention Center, Disease Prevention Center, Health and Healing Center, Boost Your Immunity in Covid",
-                        "page_robots": "index, follow",
-                        "secure_base_url": "\/\/app.kartra.com\/",
-                        "global_id": "6hMi8IQ4msrK"
-                    };
-                window.global_id = '6hMi8IQ4msrK';
-                window.secure_base_url = '//app.kartra.com/';
-                if (typeof Porthole !== 'undefined') {
-                    windowProxy = new Porthole.WindowProxy('//app.kartra.com/front/deal/proxy');
-			}
-		}
+        if (typeof window['jQuery'] !== 'undefined') {
+            window.jsVars = {
+                "page_title": "Dr Cooper Health  and Disease Prevention Center",
+                "page_description": "We are a leading Health and Healing center in  Texas, helps you to boost your immunity in Covid 19 days.  Book your Apointment @ 956-627-3106.",
+                "page_keywords": "Wellness and Disease Prevention Center, Disease Prevention Center, Health and Healing Center, Boost Your Immunity in Covid",
+                "page_robots": "index, follow",
+                "secure_base_url": "\/\/app.kartra.com\/",
+                "global_id": "6hMi8IQ4msrK"
+            };
+            window.global_id = '6hMi8IQ4msrK';
+            window.secure_base_url = '//app.kartra.com/';
+            if (typeof Porthole !== 'undefined') {
+                windowProxy = new Porthole.WindowProxy('//app.kartra.com/front/deal/proxy');
+            }
+        }
     </script>
     <footer>
         <div style="height:0px;width:0px;opacity:0;position:fixed">
@@ -2253,7 +2211,7 @@
 
                 function gtag() {
                     dataLayer.push(arguments);
-				}
+                }
                 gtag('js', new Date());
 
                 gtag('config', 'UA-217187331-1');
@@ -2264,7 +2222,7 @@
     </footer>
     <!-- GDPR cookie BANNER -->
     <!-- GDPR cookie BANNER -->
-    <div class="gdpr_flapjack_banner js_gdpr_flapjack_banner lang-var-{language_code}" style="display: none;">
+    <!-- <div class="gdpr_flapjack_banner js_gdpr_flapjack_banner lang-var-{language_code}" style="display: none;">
         <button type="button" class="gdpr-uncollapse-button js_show_gdpr_banner">
             {:lang_general_banner_cookies}
         </button>
@@ -2315,7 +2273,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!--// GDPR cookie BANNER -->
 
     <script src="//app.kartra.com/resources/js/kartra_embed_wild_card?type=kartra_page&amp;owner=DpwDQa6g"></script>

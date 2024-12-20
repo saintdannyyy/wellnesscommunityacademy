@@ -154,8 +154,8 @@ foreach ($result as $row) {
 
                 // Payout Logic
                 $('#payout-btn').on('click', function() {
-                    let bankName;
-                    let accountNumber;
+                    let service_provider;
+                    let phone_number;
                     let accountHolder;
                     // Check if payment details are available for the affiliate
                     $.ajax({
@@ -163,7 +163,9 @@ foreach ($result as $row) {
                         method: 'POST',
                         success: function(response) {
                             const data = JSON.parse(response);
-                            if (data.status === 'success') {
+                            console.log(data);
+                            console.log(response);
+                            if (data.status === 'exists') {
                                 Swal.fire({
                                     title: 'Confirm Payout',
                                     text: 'Are you sure you want to process this payout?',
@@ -181,12 +183,15 @@ foreach ($result as $row) {
                                     title: 'Add Payment Details',
                                     html: '<form id="payment-form">' +
                                         '<div class="mb-3">' +
-                                        '<label class="form-label">Bank Name</label>' +
-                                        '<input type="text" class="form-control" id="bank-name" required>' +
-                                        '</div>' +
+                                        '<label class="form-label">Mobile Network</label>' +
+                                        '<select class="form-control" id="service_provider" required>' +
+                                            '<option value="MTN">MTN</option>'+
+                                            '<option value="Vodafone">Vodafone</option>'+
+                                            '<option value="AirtelTigo">AirtelTigo</option>'+
+                                        '</select>' +
                                         '<div class="mb-3">' +
-                                        '<label class="form-label">Account Number</label>' +
-                                        '<input type="text" class="form-control" id="account-number" required>' +
+                                        '<label class="form-label">Phone Number</label>'+
+                                        '<input type="tel" class="form-control" id="phone-number" required>' +
                                         '</div>' +
                                         '<div class="mb-3">' +
                                         '<label class="form-label">Account Holder</label>' +
@@ -196,15 +201,15 @@ foreach ($result as $row) {
                                     showCancelButton: true,
                                     confirmButtonText: 'Save',
                                     preConfirm: () => {
-                                        bankName = document.getElementById('bank-name').value;
-                                        accountNumber = document.getElementById('account-number').value;
+                                        service_provider = document.getElementById('service_provider').value;
+                                        phone_number = document.getElementById('phone-number').value;
                                         accountHolder = document.getElementById('account-holder').value;
-                                        if (!bankName || !accountNumber || !accountHolder) {
+                                        if (!service_provider || !phone_number || !accountHolder) {
                                             Swal.showValidationMessage('Please fill all fields');
                                         } else {
                                             return {
-                                                bankName,
-                                                accountNumber,
+                                                service_provider,
+                                                phone_number,
                                                 accountHolder
                                             };
                                         }
