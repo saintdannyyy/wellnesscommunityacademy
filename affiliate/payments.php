@@ -175,7 +175,58 @@ foreach ($result as $row) {
                                     cancelButtonText: 'No'
                                 }).then((result) => {
                                     if (result.isConfirmed) {
-                                        window.location.href = 'aff_api/process_payout.php';
+                                        $.ajax({
+                                            url: 'aff_api/process_payout.php',
+                                            method: 'POST',
+                                            success: function(response) {
+                                                console.log('Response from api ', response);
+                                                const data = JSON.parse(response);
+                                                console.log('Data from api ', data);
+                                                const transfer_code = data.transfer_code;
+                                                console.log('Transfer code', transfer_code);
+                                                if (data.status === 'pending') {
+                                                    Swal.fire({
+                                                        title: 'Enter OTP',
+                                                        input: 'text',
+                                                        inputLabel: 'An OTP was sent to your mail',
+                                                        inputPlaceholder: 'Enter the OTP sent to your mail',
+                                                        showCancelButton: true,
+                                                        confirmButtonText: 'Submit',
+                                                        preConfirm: (otp) => {
+                                                            if (!otp) {
+                                                                Swal.showValidationMessage('Please enter the OTP');
+                                                            } else {
+                                                                return otp;
+                                                            }
+                                                        }
+                                                    }).then((result) => {
+                                                        if (result.isConfirmed) {
+                                                            const otp = result.value;
+                                                            $.ajax({
+                                                                url: 'aff_api/finalize_transfer.php',
+                                                                method: 'POST',
+                                                                data: { otp: otp, transfer_code: transfer_code },
+                                                                success: function(response) {
+                                                                    const data = JSON.parse(response);
+                                                                    message = data.message;
+                                                                    if (data.status === 'success') {
+                                                                        Swal.fire('Success', 'Payout made successfully!', 'success').then(() => {
+                                                                            location.reload();
+                                                                        });
+                                                                    } else {
+                                                                        Swal.fire('Error', data.message, 'error');
+                                                                        console.log(data);
+                                                                    }
+                                                                }
+                                                            });
+                                                        }
+                                                    });
+                                                } else {
+                                                    Swal.fire('Error', data.message, 'error');
+                                                    console.log(data);
+                                                }
+                                            }
+                                        });
                                     }
                                 });
                             } else {
