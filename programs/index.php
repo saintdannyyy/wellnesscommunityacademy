@@ -165,10 +165,6 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
         
         function payWithPaystackforPrograms(e) {
             e.preventDefault();
-            const paymentprocessing = document.getElementById('paymentprocessing');
-            paymentprocessing.disabled = true;
-            paymentprocessing.style.backgroundColor = 'grey';
-            paymentprocessing.innerHTML = 'Processing payment...';
             const email1 = document.getElementById("email1").value;
             // console.log('Paystack email:', email1);
             const phone = document.getElementById("phone").value;
@@ -215,7 +211,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                         text: 'Reference: ' + response.reference,
                         confirmButtonText: 'OK'
                     }).then(() => {
-                        window.location.href = "../pay/program_pay.php?reference=" + response.reference;
+                        window.location.href = "pay/program_pay.php?reference=" + response.reference;
                     });
                 },
                 onClose: function() {
@@ -1022,7 +1018,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                         text: 'Reference: ' + response.reference,
                         confirmButtonText: 'OK'
                     }).then(() => {
-                        window.location.href = "pay/meeting_pay.php?reference=" + response.reference;
+                        window.location.href = "../pay/meeting_pay.php?reference=" + response.reference;
                     });
                                                 },
                 onClose: function() {
@@ -1566,6 +1562,13 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                             <input type="text" id="phone" name="phone" required style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
                                 
                                             <button type="submit" style="padding: 10px 20px; background-color: #f37121; color: #fff; border: none; border-radius: 4px; font-size: 18px; cursor: pointer; font-weight: bold;">Proceed to Payment</button>
+                                            <script>
+                                                document.querySelector('form').addEventListener('submit', function() {
+                                                const paymentprocessing = document.getElementById('paymentprocessing');
+                                                paymentprocessing.disabled = true;
+                                                paymentprocessing.style.backgroundColor = 'grey';
+                                                paymentprocessing.innerHTML = 'Processing payment...';
+                                            </script>
                                         </form>
                                         <button onclick="document.getElementById('paymentModal').style.display='none';" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer; color: #555;">&times;</button>
                                     </div>
