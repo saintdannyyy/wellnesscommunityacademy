@@ -1,62 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Promotions</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- DataTables JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        /* Sidebar style */
-        .sidebar {
-            min-width: 200px;
-            max-width: 250px;
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
             background-color: #f8f9fa;
-            padding: 20px;
-            position: fixed;
-            height: 100vh;
-            z-index: 1;
         }
-
-        /* Main content style */
+        .d-flex {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+        .sidebar {
+            flex-shrink: 0;
+            width: 250px;
+        }
         .main-content {
-            margin-left: 250px; /* Width of the sidebar */
-            padding: 20px;
-            overflow-y: auto;
-            height: 100vh;
-            max-height: 100vh; /* Makes the content area scrollable */
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
-        /* Make the tabs sticky */
-        .nav-tabs {
-            position: sticky;
-            top: 0;
-            z-index: 0;
-            background-color: #fff; /* Make sure tabs have a background */
+        .coming-soon-container {
+            text-align: center;
+            max-width: 600px;
+            margin: auto;
         }
-
-        /* Optional: To prevent overlap of tabs with content */
-        .tab-content {
-            margin-top: 20px;
+        .coming-soon-container h1 {
+            font-size: 3rem;
+            color: #343a40;
+        }
+        .coming-soon-container p {
+            color: #6c757d;
+            margin-bottom: 1.5rem;
+        }
+        .coming-soon-container .btn {
+            margin-top: 1rem;
         }
     </style>
 </head>
 
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <!-- Sidebar -->
+    <div class="d-flex">
+        <!-- Include Sidebar -->
         <div class="sidebar">
             <?php include 'sidebar.html'; ?>
         </div>
-
         <!-- Main Content -->
         <div class="main-content">
-            <div class="p-3">
-                <h3 class="mb-3">Help</h3>
+            <div class="coming-soon-container">
+                <h1>Coming Soon</h1>
+                <p>This page is currently under maintenance. We're working hard to bring you an amazing experience!</p>
+                <button class="btn btn-primary" id="notify-btn">Notify Me</button>
+                <div class="mt-3">
+                    <i class="bi bi-clock-history" style="font-size: 3rem; color: #6c757d;"></i>
+                </div>
+                <script>
+                    document.getElementById('notify-btn').addEventListener('click', function () {
+                        Swal.fire({
+                            title: 'Notify Me',
+                            text: 'Enter your email address, and we’ll notify you once we’re back online!',
+                            input: 'email',
+                            inputPlaceholder: 'Enter your email',
+                            showCancelButton: true,
+                            confirmButtonText: 'Submit',
+                            cancelButtonText: 'Cancel',
+                            preConfirm: (email) => {
+                                if (!email) {
+                                    Swal.showValidationMessage('Please enter a valid email!');
+                                }
+                                return email;
+                            }
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Thank You!',
+                                    text: 'We’ll notify you as soon as the site is live.'
+                                });
+                            }
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
