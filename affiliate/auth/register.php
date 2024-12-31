@@ -1,4 +1,6 @@
 <?php
+    session_start();
+
     // Enable error reporting for debugging in development environment
     require_once __DIR__ . '../../../config/loadENV.php';
 
@@ -7,25 +9,14 @@
         ini_set('display_errors', 1);
         ini_set('display_startup_errors', 1);
         error_reporting(E_ALL);
-        $smtpHost = $_ENV['SMTP_dev_HOST'];
-        $smtpUser = $_ENV['SMTP_dev_USER'];
-        $smtpPwd = $_ENV['SMTP_dev_PWD'];
-        $smtpPort = $_ENV['SMTP_dev_PORT'];
-        $smtpSecure = $_ENV['SMTP_dev_SECURE'];
         $adminMail = $_ENV['ADMIN_dev_EMAIL'];
     } else {
         ini_set('display_errors', 0);
         ini_set('display_startup_errors', 0);
-        $smtpHost = $_ENV['SMTP_prod_HOST'];
-        $smtpUser = $_ENV['SMTP_prod_USER'];
-        $smtpPwd = $_ENV['SMTP_prod_PWD'];
-        $smtpPort = $_ENV['SMTP_prod_PORT'];
-        $smtpSecure = $_ENV['SMTP_prod_SECURE'];
-        $adminMail = $_ENV['ADMIN_prod_EMAIL'];
+        $adminMail = $_ENV['ADMIN_EMAIL'];
     }
 
     // Start session and check if the customer is already logged in
-    session_start();
     if (isset($_SESSION['customer_id'])) {
         header('Location: ../../');
         exit();
@@ -133,12 +124,12 @@
             $mail = new PHPMailer(true);
             try {
                 $mail->isSMTP();
-                $mail->Host = $smtpHost;
+                $mail->Host = $_ENV['SMTP_HOST'];
                 $mail->SMTPAuth = true;
-                $mail->Username = $smtpUser;
-                $mail->Password = $smtpPwd;
-                $mail->SMTPSecure = $smtpSecure;
-                $mail->Port = $smtpPort;
+                $mail->Username = $_ENV['SMTP_USER'];
+                $mail->Password = $_ENV['SMTP_PWD'];
+                $mail->SMTPSecure = $_ENV['SMTP_SECURE'];
+                $mail->Port = $_ENV['SMTP_PORT'];
 
                 // Admin notification email
                 $mail->setFrom('noreply@wellnesscommunityacademy.com', 'Wellness Community Academy');
@@ -356,7 +347,19 @@
                     echo "<script>document.addEventListener('DOMContentLoaded', function() {Swal.fire('Email Error', 'Could not notify the admin of the new registration.<br>Try again later', 'error');});</script>";
                 }
             } catch (Exception $e) {
-                echo json_encode(["status" => "error", "message" => "Failed to send email. Error: " . $e->getMessage()]);
+                echo "<script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Network Issue',
+                            text: 'Failed to send email.Please check your network.',
+                            timer: 3000, // 3-second timeout
+                            timerProgressBar: true
+                        });
+                    });
+                    console.log('Failed to send email. Error: " . $e->getMessage() . "');
+                </script>";
+                // echo json_encode(["status" => "error", "message" => "Failed to send email. Error: " . $e->getMessage()]);
             }
         } catch (Exception $e) {
             error_log($e->getMessage());
