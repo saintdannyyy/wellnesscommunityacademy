@@ -92,10 +92,12 @@
                         data: 'customer_name'
                     },
                     {
-                        data: 'referrer_affiliate_id'
+                        data: 'referrer_name'
                     },
                     {
-                        data: 'status'
+                        data: function(row) {
+                            return row.status == 1 ? "active" : "inactive";
+                        }
                     },
                     {
                         data: 'created_at'
@@ -111,13 +113,14 @@
                         }
                     }
                 ]
+
             });
 
             $('#affiliateTable').on('click', '.activate-btn', function() {
                 const id = $(this).data('id');
                 
                 // Send the POST request to update the status
-                $.post('api/update_status.php', { id, status: 'active' })
+                $.post('api/update_status.php', { id, status: 1 })
                     .done(function(response) {
                         let data;
                         
@@ -133,6 +136,7 @@
                         // Handle the success or failure of the operation
                         if (data.success) {
                             alert('Status updated successfully!');
+                            window.reload;
                         } else {
                             console.warn('Server response:', data);
                             alert(data.message || 'Failed to update status. Please try again.');
@@ -153,7 +157,7 @@
                 const id = $(this).data('id');
 
                 // Send the POST request to deactivate the affiliate
-                $.post('api/update_status.php', { id, status: 'inactive' })
+                $.post('api/update_status.php', { id, status: 0 })
                     .done(function(response) {
                         let data;
 
@@ -220,7 +224,7 @@
                 nodes.forEach(node => {
                     html += `
                         <li>
-                            <strong>${node.customer_name}</strong> (Affiliate ID: ${node.affiliate_id})
+                            <strong>${node.customer_name}</strong> (${node.customer_email})
                             ${node.referrals ? renderTree(node.referrals) : ''}
                         </li>`;
                 });
