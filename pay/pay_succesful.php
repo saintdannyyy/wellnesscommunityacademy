@@ -20,20 +20,11 @@
         ini_set('display_errors', 1);
         ini_set('display_startup_errors', 1);
         error_reporting(E_ALL);
-        $smtpHost = $_ENV['SMTP_dev_HOST'];
-        $smtpUser = $_ENV['SMTP_dev_USER'];
-        $smtpPwd = $_ENV['SMTP_dev_PWD'];
-        $smtpPort = $_ENV['SMTP_dev_PORT'];
-        $smtpSecure = $_ENV['SMTP_dev_SECURE'];
         $adminMail = $_ENV['ADMIN_dev_EMAIL'];
     } else {
         ini_set('display_errors', 0);
-        $smtpHost = $_ENV['SMTP_prod_HOST'];
-        $smtpUser = $_ENV['SMTP_prod_USER'];
-        $smtpPwd = $_ENV['SMTP_prod_PWD'];
-        $smtpPort = $_ENV['SMTP_prod_PORT'];
-        $smtpSecure = $_ENV['SMTP_prod_SECURE'];
-        $adminMail = $_ENV['ADMIN_prod_EMAIL'];
+        ini_set('display_startup_errors', 0);
+        $adminMail = $_ENV['ADMIN_EMAIL'];
     }
 
     require('../conn/conn.php');
@@ -102,12 +93,12 @@
         $mail = new PHPMailer(true);
         try {
             $mail->isSMTP();
-            $mail->Host = $smtpHost;
+            $mail->Host = $_ENV['SMTP_HOST'];
             $mail->SMTPAuth = true;
-            $mail->Username =$smtpUser;
-            $mail->Password = $smtpPwd;
-            $mail->SMTPSecure =$smtpSecure;
-            $mail->Port = $smtpPort;
+            $mail->Username = $_ENV['SMTP_USER'];
+            $mail->Password = $_ENV['SMTP_PWD'];
+            $mail->SMTPSecure = $_ENV['SMTP_SECURE'];
+            $mail->Port = $_ENV['SMTP_PORT'];
 
             $mail->setFrom('noreply@wellnesscommunityacademy.com', 'Wellness Community Academy');
             $mail->addAddress($adminMail);
@@ -186,7 +177,7 @@
                 $mail->clearAddresses();
                 $mail->clearBCCs();
                 $mail->addAddress($email);
-                // $mail->addBCC('saintdannyyy@gmail.com');
+                $mail->addBCC($_ENV['BCC_EMAIL']);
 
                 // Attach the book file if it exists
                 if ($bookpath && file_exists($bookpath)) {
@@ -306,8 +297,7 @@
             }
         } catch (Exception $e) {
             echo json_encode(["status" => "error", "message" => "Failed to send email. Error: " . $e->getMessage()]);
-        }    
-        
+        }
     } else {
         echo "<script>
                     Swal.fire({

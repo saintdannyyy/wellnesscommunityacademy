@@ -10,12 +10,26 @@
 </html>
 
 <?php
-require('../config/loadENV.php');
+session_start();
+
+require_once __DIR__ . '../../config/loadENV.php';
+
+if ($_ENV['APP_ENV'] === 'dev') {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+    $adminMail = $_ENV['ADMIN_dev_EMAIL'];
+} else {
+    ini_set('display_errors', 0);
+    ini_set('display_startup_errors', 0);
+    $adminMail = $_ENV['ADMIN_EMAIL'];
+}
 
 $secretKey = ($_ENV['APP_ENV'] === 'prod')
     ? $_ENV['PAYSTACK_SECRET_KEY_LIVE']
     : $_ENV['PAYSTACK_SECRET_KEY_TEST'];
 
+require('../conn/conn.php');
 // Example usage
 // echo "Using Paystack secret Key: " . $secretKey;
 
@@ -52,17 +66,17 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
     $mail = new PHPMailer(true);
     try {
         $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
+        $mail->Host = $_ENV['SMTP_HOST'];
         $mail->SMTPAuth = true;
         $mail->Username = $_ENV['SMTP_USER'];
         $mail->Password = $_ENV['SMTP_PWD'];
-        $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;
+        $mail->SMTPSecure = $_ENV['SMTP_SECURE'];
+        $mail->Port = $_ENV['SMTP_PORT'];
 
         $mail->setFrom('noreply@wellnesscommunityacademy.com', 'Wellness Community Academy');
-        $mail->addAddress($_ENV['ADMIN_EMAIL']);
-        $mail->addBCC('saintdannyyy@gmail.com');
-        $mail->addBCC('seshun65@gmail.com');
+        $mail->addAddress($adminMail);
+        $mail->addBCC($_ENV['BCC_EMAIL']);
+        // $mail->addBCC('seshun65@gmail.com');
         $mail->isHTML(true);
         $mail->Subject = 'New Virtual Meeting Request';
         $mail->Body = "
@@ -70,7 +84,62 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
             <html lang='en'>
             <head>
                 <meta charset='UTF-8'>
-                <style>/* Your CSS styling here */</style>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        background-color: #f4f4f4;
+                        color: #333;
+                        line-height: 1.6;
+                        padding: 0;
+                        margin: 0;
+                    }
+                    .container {
+                        background-color: #ffffff;
+                        padding: 20px;
+                        border-radius: 10px;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                        max-width: 600px;
+                        margin: 20px auto;
+                    }
+                    h1 {
+                        color: #0056b3;
+                    }
+                    .content {
+                        margin-top: 20px;
+                        padding: 10px 0;
+                    }
+                    .content b {
+                        color: #333;
+                    }
+                    .footer {
+                        margin-top: 20px;
+                        padding-top: 10px;
+                        border-top: 1px solid #ddd;
+                        font-size: 12px;
+                        color: #777;
+                        text-align: center;
+                    }
+                    a {
+                        color: #0056b3;
+                        text-decoration: none;
+                    }
+                    a:hover {
+                        text-decoration: underline;
+                    }
+                    .btn {
+                        background-color: #0056b3;
+                        color: #ffffff;
+                        padding: 10px 20px;
+                        text-align: center;
+                        display: inline-block;
+                        border-radius: 5px;
+                        text-decoration: none;
+                        margin-top: 20px;
+                    }
+                    .btn:hover {
+                        background-color: #004494;
+                    }
+                </style>
             </head>
             <body>
                 <div class='container'>
@@ -90,7 +159,38 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
             </html>";
 
         if ($mail->send()) {
-            include_once('conn/conn.php');    
+            // Customer Thank-You Email
+            $mail->clearAddresses();
+            $mail->clearBCCs();
+            $mail->addAddress($email);
+            $mail->addBCC($_ENV['BCC_EMAIL']);
+
+            $mail->Subject = 'Meeting Request Confirmation';
+            $mail->Body = "
+                <!DOCTYPE html>
+                <html lang='en'>
+                <head>
+                    <meta charset='UTF-8'>
+                    <style>
+                        body { font-family: Arial, sans-serif; line-height: 1.6; }
+                        .container { padding: 20px; }
+                        h1 { color: #007bff; }
+                        p { font-size: 1rem; }
+                    </style>
+                </head>
+                <body>
+                    <div class='container'>
+                        <h1>Meeting Request Confirmation</h1>
+                        <p>Dear $name,</p>
+                        <p>Thank you for requesting a meeting with Wellness Community Academy.</p>
+                        <p>Your payment of GHC $amount has been successfully processed. We will contact you shortly to confirm the meeting date and time.</p>
+                        <p>If you have any questions or need support, feel free to contact us.</p>
+                        <p>Best regards,<br><b>Wellness Community Academy Team</b></p>
+                    </div>
+                </body>
+                </html>";
+            $mail->send(); // Send customer email
+            
             $stmt = $mysqli->prepare("INSERT INTO booked_appointments (name, email, number, visit_date, message, duration, amount) VALUES (?, ?, ?, ?, ?, ?, ?)");
             $stmt->bind_param("ssidsii", $name, $email, $phone, $datetime, $reason, $duration, $amount);
             $stmt->execute();
