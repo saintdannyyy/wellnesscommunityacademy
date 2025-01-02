@@ -58,7 +58,7 @@
             <?php include 'sidebar.html'; ?>
         </div>
         <!-- Main Content -->
-        <div class="main-content">
+        <div class="main-content" style="border-top: 5px solid #007bff;">
             <div class="coming-soon-container">
                 <h1>Coming Soon</h1>
                 <p>This page is currently under maintenance. We're working hard to bring you an amazing experience!</p>
