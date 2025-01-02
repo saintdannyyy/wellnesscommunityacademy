@@ -17,6 +17,7 @@
             margin: 2px;
             position: fixed;
             transition: transform 0.3s ease, padding 0.3s ease;
+            z-index: 1;
         }
 
         .sidebar.collapsed {
@@ -24,11 +25,12 @@
         }
 
         .main-content {
-            margin-left: 190px;
+            margin-left: 250px;
             padding: 5px;
             height: 100vh;
             overflow-y: auto;
             transition: margin-left 0.3s ease;
+            z-index: 0;
         }
 
         .main-content.collapsed {
@@ -77,7 +79,6 @@
 
             .sidebar.collapsed {
             transform: translateX(0);
-            padding: 0; /* Adjust padding as needed */
             }
 
             .main-content {
