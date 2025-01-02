@@ -160,7 +160,7 @@ $response = [
             exit();
         }
     } else {
-        echo json_encode(['status' => 'error', 'message' => 'Failed to process payout.', 'data' => $transfer_data]);
+        echo json_encode(['status' => 'error', 'message' => 'Error processing payout.', 'data' => $transfer_data]);
         exit();
     }
 ?>

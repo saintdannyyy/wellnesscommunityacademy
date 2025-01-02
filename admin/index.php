@@ -54,28 +54,9 @@ if (!$sold_books_result || !$sold_programs_result || !$sold_courses_result || !$
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
     <style>
-        /* Sidebar style */
-        .sidebar {
-            min-width: 200px;
-            max-width: 250px;
-            background-color: #f8f9fa;
-            padding: 20px;
-            position: fixed;
-            height: 100vh;
-            z-index: 1;
+        .main{
+            border-top: #007bff 5px solid;
         }
-
-        /* Main content style */
-        .main-content {
-            margin-left: 250px; /* Width of the sidebar */
-            padding: 20px;
-            overflow-y: auto;
-            height: 100vh;
-            width: 80%;
-            max-height: 100vh; /* Makes the content area scrollable */
-        }
-
-        /* Make the tabs sticky */
         .nav-tabs {
             position: sticky;
             top: 0;
@@ -97,19 +78,19 @@ if (!$sold_books_result || !$sold_programs_result || !$sold_courses_result || !$
         .tab-content {
             margin-top: 20px;
         }
+
     </style>
 </head>
 
 <body>
-<div class="container-fluid">
-    <div class="row">
+<div class="d-flex">
         <!-- Sidebar -->
-        <div class="sidebar">
+        <div>
             <?php include 'sidebar.html'; ?>
         </div>
 
         <!-- Main Content -->
-        <div class="main-content">
+        <div class="main flex-grow-1 justify-content-center">
             <div class="p-3">
                 <h3 class="mb-3">Sales Dashboard</h3>
 
@@ -301,7 +282,6 @@ if (!$sold_books_result || !$sold_programs_result || !$sold_courses_result || !$
                 </div>
             </div>
         </div>
-    </div>
 </div>
 
 <!-- Initialize DataTables -->

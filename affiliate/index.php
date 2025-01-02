@@ -99,14 +99,19 @@ $products = array_merge($books, $courses, $programs);
         <!-- Main Content -->
         <div class="flex-grow-1">
             <div class="p-4 border-bottom">
+            <h3 class="text-dark">Hello <?php echo $_SESSION['customer_name'] ?></h3>
+            <button id="mcusref" class="btn btn-outline-primary m-2 p-2 d-sm-none" onclick="copyCusRef()">Refer A Customer</button>
+            <button id="maffref" class="btn btn-outline-primary p-2 d-sm-none" onclick="copyAffiliateRef()">Refer Another Affiliate</button>
+
                 <h5 class="text-dark">Products You Promote</h5>
             </div>
 
             <!-- Product selection here -->
-            <div class=" p-2 d-flex align-items-center mb-3">
+            <div class=" p-4 d-flex align-items-center mb-3">
                 <div class="me-auto">
                     <h6>All Products</h6>
-                    <select class="form-select mb-3 selectpicker" data-live-search="true" id="productSelect">
+                    <select class="form-select mb-3 selectpicker" data-live-search="true" id="productSelect" style="background-color:#007bff; color:white;">
+
                         <option value="">Select a product</option>
                         <?php foreach ($products as $product): ?>
                             <option value="<?php echo htmlspecialchars($product['id']); ?>">
@@ -115,8 +120,8 @@ $products = array_merge($books, $courses, $programs);
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <button class="btn btn-outline-primary m-2 p-2" onclick="copyCusRef()">Refer A Customer</button>
-                <button class="btn btn-outline-primary p-2" onclick="copyAffiliateRef()">Refer Another Affiliate</button>
+                <button class="btn btn-outline-primary m-2 p-2 d-none d-sm-inline-block" onclick="copyCusRef()">Refer A Customer</button>
+                <button class="btn btn-outline-primary p-2 d-none d-sm-inline-block" onclick="copyAffiliateRef()">Refer Another Affiliate</button>
             </div>
 
             <!-- Affiliate Earning Table -->

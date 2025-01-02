@@ -3,7 +3,7 @@ include '../db/connection.php';
 
 function getReferralTree($affiliate_id, $mysqli) {
     $referrals = [];
-    $sql = "SELECT a.id, a.affiliate_id, c.name AS customer_name
+    $sql = "SELECT a.id, c.name AS customer_name, c.email AS customer_email 
             FROM affiliates a
             LEFT JOIN customers c ON a.customer_id = c.id
             WHERE a.referrer_id = ?";

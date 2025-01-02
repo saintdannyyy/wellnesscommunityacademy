@@ -53,46 +53,100 @@ $total_earnings = array_sum(array_column($data, 'amount'));
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+        }
+
+        #date-filter {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            width: 250px;
+        }
+
+        .chart-container {
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-title {
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #495057;
+        }
+
+        #pie-chart, #line-chart, #bar-chart {
+            height: 400px;
+        }
+
+        @media (max-width: 768px) {
+            .chart-container {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-<div class="d-flex">
-        <!-- Include Sidebar -->
+    <div class="d-flex">
+        <!-- Sidebar -->
         <div>
             <?php include 'sidebar/sidebar.html'; ?>
         </div>
 
-    <div class="container mt-4">
-        <h1 class="text-center mb-4">Analytics Dashboard</h1>
-        <div class="row">
-            <!-- Pie Chart -->
-            <div class="col-md-6">
-                <div id="pie-chart" style="width: 100%; height: 400px;"></div>
+        <!-- Main Content -->
+        <div class="container mt-4">
+            <h1 class="text-center mb-4">Analytics Dashboard</h1>
+
+            <!-- Date Filter -->
+            <div class="mb-4 d-flex justify-content-end">
+                <label for="date-filter" class="me-2">Filter by Date:</label>
+                <input type="text" id="date-filter" />
             </div>
-            <!-- Line Chart -->
-            <div class="col-md-6">
-                <div id="line-chart" style="width: 100%; height: 400px;"></div>
+
+            <!-- Charts Section -->
+            <div class="row">
+                <!-- Pie Chart -->
+                <div class="col-md-6">
+                    <div class="chart-container">
+                        <div class="chart-title">Pie Chart</div>
+                        <div id="pie-chart"></div>
+                    </div>
+                </div>
+                <!-- Line Chart -->
+                <div class="col-md-6">
+                    <div class="chart-container">
+                        <div class="chart-title">Line Chart</div>
+                        <div id="line-chart"></div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="row mt-4">
-            <!-- Bar Chart -->
-            <div class="col-md-12">
-                <div id="bar-chart" style="width: 100%; height: 400px;"></div>
+
+            <div class="row mt-4">
+                <!-- Bar Chart -->
+                <div class="col-md-12">
+                    <div class="chart-container">
+                        <div class="chart-title">Bar Chart</div>
+                        <div id="bar-chart"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-
 <!-- Include Daterangepicker -->
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/moment/min/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
-<!-- Date Filter Input -->
-<div style="margin: 10px;">
-    <label for="date-filter">Filter by Date:</label>
-    <input type="text" id="date-filter" style="padding: 5px; border-radius: 5px; border: 1px solid #ccc;" />
-</div>
 
 <script>
     // Initialize Date Range Picker
