@@ -68,7 +68,8 @@ $response = [
         exit();
     }
         
-    $amount = $total_earnings; // Payout amount
+    $amount = round($total_earnings);
+    $amount = intval($amount.'.00'); // Payout amount
     echo $affiliate['account_name'];
     $phone ='233' . $affiliate['phone_number'];
     echo $phone;
@@ -85,7 +86,7 @@ $response = [
 
     var_dump($mobile_money_data);
 
-    $ch = curl_init('https://api.paystack.co/transferrecipient');
+    $ch = curl_init('https://api.paystack.co/transfer');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($mobile_money_data));
@@ -108,6 +109,8 @@ $response = [
         'response' => $recipient_response,
         'payload' => $mobile_money_data,
     ]);
+
+    echo 'Amount being sent: '. $amount;
 
     if ($http_code === 200 && $response_data['status']) {
         echo "Recipient created successfully.";
