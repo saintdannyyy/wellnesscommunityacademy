@@ -45,7 +45,7 @@
         <div class="main flex-grow-1 justify-content-center">
             <div class="p-3">
                 <h3 class="mb-3">Affiliate Management</h3>
-                <table id="affiliateTable" class="table table-bordered">
+                <table id="affiliateTable" class="table table-bordered table-hover table-responsive w-100 d-block d-md-table">
                     <thead>
                         <tr>
                             <th>Customer Name</th>
@@ -124,7 +124,14 @@
                             return row.status == 1 ? "Active" : "Inactive";
                         }
                     },
-                    { data: 'created_at' },
+                    {
+                        data: 'created_at',
+                        render: function (data, type, row) {
+                            const date = new Date(data);
+                            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+                            return date.toLocaleDateString('en-GB', options);
+                        }
+                    },
                     {
                         data: null,
                         render: function (data, type, row) {
