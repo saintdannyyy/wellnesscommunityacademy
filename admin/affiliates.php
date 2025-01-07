@@ -71,6 +71,33 @@
                         </div>
                     </div>
                 </div>
+                <!-- Links Modal -->
+                <div class="modal fade" id="linksModal" tabindex="-1" aria-labelledby="linksModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="linksModalLabel">Affiliate Links</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="cusRefLink" class="form-label">Customer Referral Link</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="cusRefLink" readonly>
+                                        <button class="btn btn-outline-secondary" type="button" id="copyCusRefLink">Copy</button>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="affiliateRefLink" class="form-label">Affiliate Referral Link</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="affiliateRefLink" readonly>
+                                        <button class="btn btn-outline-secondary" type="button" id="copyAffiliateRefLink">Copy</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -85,6 +112,7 @@
 
     <script>
         $(document).ready(function () {
+            let cus_ref, affiliate_ref;
             // Initialize DataTable
             const table = $('#affiliateTable').DataTable({
                 ajax: 'api/fetch_affiliates.php',
@@ -101,18 +129,58 @@
                         data: null,
                         render: function (data, type, row) {
                             return `
-                                <button class="btn btn-sm btn-primary activate-btn" data-id="${row.id}">Activate</button>
-                                <button class="btn btn-sm btn-danger deactivate-btn" data-id="${row.id}">Deactivate</button>
-                                <button class="btn btn-sm btn-secondary view-referrals-btn" data-id="${row.id}">View Referrals</button>
+                                <button class="btn btn-sm btn-primary activate-btn" data-id="${row.id}" title="Activate">
+                                    <i class="bi bi-check-circle"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger deactivate-btn" data-id="${row.id}" title="Deactivate">
+                                    <i class="bi bi-x-circle"></i>
+                                </button>
+                                <button class="btn btn-sm btn-secondary view-referrals-btn" data-id="${row.id}" title="View Referrals">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-warning view-links-btn" data-id="${row.id}" data-customer-name="${row.customer_name}" data-cus-ref="${row.cus_ref}" data-affiliate-ref="${row.affiliate_ref}" title="View Links">
+                                    <i class="bi bi-link-45deg"></i>
+                                </button>
                             `;
                         }
                     }
                 ]
             });
 
+            // View Links Button Click Handler
+            $('#affiliateTable').on('click', '.view-links-btn', function () {
+                const cusRef = $(this).data('cus-ref');
+                const affiliateRef = $(this).data('affiliate-ref');
+                const customerName = $(this).data('customer-name');
+                // console.log("Customer Referral Link:", cusRef);
+                // console.log("Affiliate Referral Link:", affiliateRef);
+                $('#cusRefLink').val(cusRef);
+                $('#affiliateRefLink').val(affiliateRef);
+                $('#linksModal').modal('show');
+            });
+
+            // Copy to Clipboard Function
+            function copyToClipboard(elementId) {
+                const copyText = document.getElementById(elementId);
+                copyText.select();
+                copyText.setSelectionRange(0, 99999); // For mobile devices
+                document.execCommand("copy");
+            }
+
+            // Copy Customer Referral Link
+            $('#copyCusRefLink').click(function () {
+                copyToClipboard('cusRefLink');
+                alert(`${customerName}'s Customer Referral Link copied to clipboard`);
+            });
+
+            // Copy Affiliate Referral Link
+            $('#copyAffiliateRefLink').click(function () {
+                copyToClipboard('affiliateRefLink');
+                alert(`${customerName}'s Affiliate Referral Link copied to clipboard!`);
+            });
             // Activate Button Click Handler
             $('#affiliateTable').on('click', '.activate-btn', function () {
-                const id = $(this).data('id');
+                const id = $(this).data('id');                
                 updateStatus(id, 1);
             });
 
@@ -192,7 +260,7 @@
                 return html;
             }
         });
-    </script>
+</script>
 </body>
 
 </html>
