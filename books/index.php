@@ -167,7 +167,6 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
 
         body.modal-open {
             overflow: hidden;
-            overflow-x: ;
         }
 
         #page_background_color {
@@ -184,12 +183,6 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
             visibility: hidden;
         }
     </style>
-    <script>
-        var google_analytics = null; <
-        !--Global site tag(gtag.js) - Google Analytics-- >
-            <
-            script async src = "https://www.googletagmanager.com/gtag/js?id=UA-175519445-2" >
-    </script>
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -391,8 +384,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                             </button>
                         </div>
                         <div id="navbar_HjFs14RpbR"
-                            class="navbar-collapse collapse nav-elem-col js_kartra_component_holder navbar-collapse--md-sm-padding-right-none"
-                            style="">
+                            class="navbar-collapse collapse nav-elem-col js_kartra_component_holder navbar-collapse--md-sm-padding-right-none">
                             <div
                                 class="navbar-collapse__inner navbar-collapse__inner--sm-padding-top-big-tiny navbar-collapse__inner--sm-padding-bottom-tiny navbar-collapse__inner--md-sm-vertical-center navbar-collapse__inner--md-sm-justify-content-end js_kartra_component_holder">
                                 <ul
@@ -1051,6 +1043,10 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                                         document.getElementById('usd_price').innerText = data.data.price_usd;
                                                         document.getElementById('book_id').value = bookId;
                                                         document.getElementById('modal_price').value = data.data.price_ghs;
+                                                        priceInUSD = data.data.price_usd;
+                                                        priceInNGN = parseFloat(data.data.price_ngn);
+                                                        console.log("Price in USD:", priceInUSD);
+                                                        console.log("Price in NGN:", priceInNGN, typeof priceInNGN);
                                                     
                                                         // Show the modal
                                                         document.getElementById('paymentModal').style.display = 'flex';
@@ -1936,8 +1932,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                         </div>
                                         <div class="col-xs-7 col-md-8 column--vertical-center"
                                             style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-width: 0px; border-style: none; padding: 0px 15px 0px 25px; background-image: none;">
-                                            <div class="js_kartra_component_holder" style="
-">
+                                            <div class="js_kartra_component_holder">
                                                 <div id="Oo6wSmDgX4" data-component="headline">
                                                     <div class="kartra_headline kartra_headline--h2 kartra_headline--sapphire-blue kartra_headline--alegreya-sans-font kartra_headline--text-left kartra_headline--margin-bottom-none"
                                                         style="position: relative; margin: 0px;">
@@ -2710,8 +2705,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                         </div>
                                         <div class="col-xs-7 col-md-8 column--vertical-center"
                                             style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-width: 0px; border-style: none; padding: 0px 15px 0px 25px; background-image: none;">
-                                            <div class="js_kartra_component_holder" style="
-">
+                                            <div class="js_kartra_component_holder">
                                                 <div id="Oo6wSmDgX4" data-component="headline">
                                                     <div class="kartra_headline kartra_headline--h2 kartra_headline--sapphire-blue kartra_headline--alegreya-sans-font kartra_headline--text-left kartra_headline--margin-bottom-none"
                                                         style="position: relative; margin: 0px;">
