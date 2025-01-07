@@ -3,7 +3,7 @@ include '../db/connection.php';
 
 $sql = "SELECT a.id, c.name AS customer_name, 
                r.id AS referrer_affiliate_id, rc.name AS referrer_name, 
-               a.status, a.created_at
+               a.status, a.created_at, a.cus_ref, a.affiliate_ref
         FROM affiliates a
         LEFT JOIN customers c ON a.customer_id = c.id
         LEFT JOIN affiliates r ON a.referrer_id = r.id
