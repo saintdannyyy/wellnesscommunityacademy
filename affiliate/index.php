@@ -28,6 +28,14 @@ $encodedReferral = encodeReferralId($affiliateId);
 $affiliateRef = "https://wellnesscommunityacademy.com/affiliate/auth/register.php?rf=" . urlencode($encodedReferral);
 $cusRef = "https://wellnesscommunityacademy.com?rf=" . urlencode($encodedReferral);
 
+//Inserting referral links into database
+$sqlAddLinks = "UPDATE affiliates SET cus_ref = ?, affiliate_ref = ? WHERE id = ?";
+$stmt = $mysqli->prepare($sqlAddLinks);
+$stmt->bind_param('ssi', $cusRef, $affiliateRef, $affiliateId);
+$stmt->execute();
+$stmt->close();
+
+
 // Fetching all books
 $books = [];
 $sqlFetchBooks = "SELECT id, title FROM books";
