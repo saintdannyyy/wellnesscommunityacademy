@@ -163,7 +163,6 @@ if (!empty($referralCodeFromUrl)) {
 
         body.modal-open {
             overflow: hidden;
-            overflow-x: ;
         }
 
         #page_background_color {
@@ -181,10 +180,9 @@ if (!empty($referralCodeFromUrl)) {
         }
     </style>
     <script>
-        var google_analytics = null; <
-        !--Global site tag(gtag.js) - Google Analytics-- >
-            <
-            script async src = "https://www.googletagmanager.com/gtag/js?id=UA-175519445-2" >
+        var google_analytics = null; 
+        // Global site tag(gtag.js) - Google Analytics
+        src = "https://www.googletagmanager.com/gtag/js?id=UA-175519445-2"
     </script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -388,7 +386,7 @@ if (!empty($referralCodeFromUrl)) {
                         </div>
                         <div id="navbar_HjFs14RpbR"
                             class="navbar-collapse collapse nav-elem-col js_kartra_component_holder navbar-collapse--md-sm-padding-right-none"
-                            style="">
+                            >
                             <div
                                 class="navbar-collapse__inner navbar-collapse__inner--sm-padding-top-big-tiny navbar-collapse__inner--sm-padding-bottom-tiny navbar-collapse__inner--md-sm-vertical-center navbar-collapse__inner--md-sm-justify-content-end js_kartra_component_holder">
                                 <ul
@@ -1329,7 +1327,7 @@ if (!empty($referralCodeFromUrl)) {
                                                             </div>
                                                             <div class="kartra_optin_cg">
                                                                 <div class="js_gdpr_wrapper clearfix kartra_optin_gdpr_wrppr"
-                                                                    style="">
+                                                                    >
                                                                     <div
                                                                         class="gdpr_communications js_gdpr_communications kartra_optin_cg kartra_optin_gdpr_terms">
                                                                         <div class="kartra-optin-checkbox">
@@ -1450,21 +1448,21 @@ if (!empty($referralCodeFromUrl)) {
                                                 </li>
                                             </ol>
                                             <div class="carousel-inner" style="border-radius: inherit;">
-                                                <div class="item active js-bg-next-gen" style=""
+                                                <div class="item active js-bg-next-gen"
                                                     data-bg="url('https://d11n7da8rpqbjy.cloudfront.net/cooperwellness/9319516_1587509248039Transformation_to_healthier_you_course_banner.png')">
                                                     <div class="carousel-caption">
                                                         <h3>Transformation to a Healthier You</h3>
                                                         <p></p>
                                                     </div>
                                                 </div>
-                                                <div class="item js-bg-next-gen" style=""
+                                                <div class="item js-bg-next-gen"
                                                     data-bg="url('https://d11n7da8rpqbjy.cloudfront.net/cooperwellness/30996546_642619c6df5b4_14D2AH-Course-Banner-640x640.png')">
                                                     <div class="carousel-caption">
                                                         <h3>14 Days to Amazing Health Course</h3>
                                                         <p></p>
                                                     </div>
                                                 </div>
-                                                <div class="item" style=""
+                                                <div class="item"
                                                     data-bg="url('https://d11n7da8rpqbjy.cloudfront.net/cooperwellness/270608314774woman_kneeling_beside_man.jpg')">
                                                     <div class="carousel-caption">
                                                         <h3>Become a Certified Health Coach</h3>
@@ -1927,18 +1925,18 @@ if (!empty($referralCodeFromUrl)) {
                                         style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "open sans";'
                                         data-project-id="3" data-page-id="261" target="_parent">8 Weeks to
                                         Wellness</a>
-                                    <!--<a-->
-                                    <!--    class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant toggle_pagelink"-->
-                                    <!--    href="https://cooperwellness.kartra.com/page/weightloss"-->
-                                    <!--    data-frame-id="_6723f824ea44e"-->
-                                    <!--    style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "Open Sans";'-->
-                                    <!--    target="_blank">Weight Loss</a>-->
                                     <a
+                                       class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant toggle_pagelink"
+                                       href="affiliate"
+                                       data-frame-id="_6723f824ea44e"
+                                       style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "Open Sans";'
+                                    target="_blank">Affiliate program</a>
+                                    <!-- <a
                                         class="kartra_list__link kartra_list__link--open-sans-font kartra_list__link--font-weight-regular kartra_list__link--margin-bottom-extra-small kartra_list__link--semi-pro-white kartra_list__link--hover-opacity-giant toggle_pagelink"
                                         href="programs"
                                         data-frame-id="_6723f824ea44e"
                                         style='color: rgba(255, 255, 255, 0.8); font-weight: 400; font-family: "open sans";'
-                                        data-project-id="3" data-page-id="201" target="_parent">Programs</a>
+                                        data-project-id="3" data-page-id="201" target="_parent">Programs</a> -->
 
 
 
@@ -2222,7 +2220,7 @@ if (!empty($referralCodeFromUrl)) {
     </footer>
     <!-- GDPR cookie BANNER -->
     <!-- GDPR cookie BANNER -->
-    <!-- <div class="gdpr_flapjack_banner js_gdpr_flapjack_banner lang-var-{language_code}" style="display: none;">
+    <div class="gdpr_flapjack_banner js_gdpr_flapjack_banner lang-var-{language_code}" style="display: none;">
         <button type="button" class="gdpr-uncollapse-button js_show_gdpr_banner">
             {:lang_general_banner_cookies}
         </button>
@@ -2273,7 +2271,7 @@ if (!empty($referralCodeFromUrl)) {
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
     <!--// GDPR cookie BANNER -->
 
     <script src="//app.kartra.com/resources/js/kartra_embed_wild_card?type=kartra_page&amp;owner=DpwDQa6g"></script>

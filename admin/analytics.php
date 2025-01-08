@@ -1,62 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Analytics Dashboard</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- DataTables JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
-    <style>
-        /* Sidebar style */
-        .sidebar {
-            min-width: 200px;
-            max-width: 250px;
-            background-color: #f8f9fa;
-            padding: 20px;
-            position: fixed;
-            height: 100vh;
-            z-index: 1;
-        }
-
-        /* Main content style */
-        .main-content {
-            margin-left: 250px; /* Width of the sidebar */
-            padding: 20px;
-            overflow-y: auto;
-            height: 100vh;
-            max-height: 100vh; /* Makes the content area scrollable */
-        }
-
-        /* Make the tabs sticky */
-        .nav-tabs {
-            position: sticky;
-            top: 0;
-            z-index: 0;
-            background-color: #fff; /* Make sure tabs have a background */
-        }
-
-        /* Optional: To prevent overlap of tabs with content */
-        .tab-content {
-            margin-top: 20px;
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
-<div class="container-fluid">
-    <div class="row">
+    <div class="d-flex">
         <!-- Sidebar -->
-        <div class="sidebar">
+        <div>
             <?php include 'sidebar.html'; ?>
         </div>
 
         <!-- Main Content -->
-        <div class="main-content">
+        <div class="flex-grow-1" style="border-top: 5px solid #007bff;">
             <div class="p-3">
-                <h3 class="mb-3">Analytics</h3>
+                <h3 class="mb-3">Analytics Dashboard</h3>
+            </div>
+            <div class="container mt-5">
+                <div class="row">
+                    <!-- Number of Affiliates -->
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Number of Affiliates</h4>
+                            </div>
+                            <div class="card-body">
+                                <h2 id="totalAffiliates" style="text-align: center;"></h2>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Total Sales -->
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Total Sales (GHC)</h4>
+                            </div>
+                            <div class="card-body">
+                                <h2 id="totalSales" style="text-align: center;"></h2>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Top Affiliates -->
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Top Affiliates</h4>
+                            </div>
+                            <div class="card-body">
+                                <ul id="topAffiliates" class="list-group">
+                                    <!-- Top affiliates will be appended here -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <!-- Sales by Month -->
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Sales by Month</h4>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="salesByMonthChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Affiliate Growth -->
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Affiliate Growth</h4>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="affiliateGrowthChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Fetch analytics data
+            $.ajax({
+                url: 'api/fetch_analytics.php',
+                type: 'GET',
+                success: function(response) {
+                    var data = JSON.parse(response);
+
+                    // Number of Affiliates
+                    $('#totalAffiliates').text(data.totalAffiliates);
+
+                    // Total Sales
+                    $('#totalSales').text(data.totalSales.toFixed(2));
+
+                    // Top Affiliates
+                    var topAffiliates = data.topAffiliates;
+                    topAffiliates.forEach(function(affiliate) {
+                        $('#topAffiliates').append('<li class="list-group-item">' + affiliate.name + ' - $' + parseFloat(affiliate.sales).toFixed(2) + '</li>');
+                    });
+
+
+                    // Sales by Month Chart
+                    var salesByMonthCtx = document.getElementById('salesByMonthChart').getContext('2d');
+                    var salesByMonthChart = new Chart(salesByMonthCtx, {
+                        type: 'line',
+                        data: {
+                            labels: data.salesByMonth.labels,
+                            datasets: [{
+                                label: 'Sales',
+                                data: data.salesByMonth.data,
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1,
+                                fill: false
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+
+                    // Affiliate Growth Chart
+                    var affiliateGrowthCtx = document.getElementById('affiliateGrowthChart').getContext('2d');
+                    var affiliateGrowthChart = new Chart(affiliateGrowthCtx, {
+                        type: 'line',
+                        data: {
+                            labels: data.affiliateGrowth.labels,
+                            datasets: [{
+                                label: 'Growth',
+                                data: data.affiliateGrowth.data,
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1,
+                                fill: false
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

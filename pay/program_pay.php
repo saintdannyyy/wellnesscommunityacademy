@@ -31,20 +31,10 @@ if ($_ENV['APP_ENV'] === 'dev') {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
-    $smtpHost = $_ENV['SMTP_dev_HOST'];
-    $smtpUser = $_ENV['SMTP_dev_USER'];
-    $smtpPwd = $_ENV['SMTP_dev_PWD'];
-    $smtpPort = $_ENV['SMTP_dev_PORT'];
-    $smtpSecure = $_ENV['SMTP_dev_SECURE'];
     $adminMail = $_ENV['ADMIN_dev_EMAIL'];
 } else {
     ini_set('display_errors', 0);
-    $smtpHost = $_ENV['SMTP_prod_HOST'];
-    $smtpUser = $_ENV['SMTP_prod_USER'];
-    $smtpPwd = $_ENV['SMTP_prod_PWD'];
-    $smtpPort = $_ENV['SMTP_prod_PORT'];
-    $smtpSecure = $_ENV['SMTP_prod_SECURE'];
-    $adminMail = $_ENV['ADMIN_prod_EMAIL'];
+    $adminMail = $_ENV['ADMIN_EMAIL'];
 }
 
 // Get reference from query string
@@ -95,12 +85,12 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
     $mail = new PHPMailer(true);
     try {
         $mail->isSMTP();
-        $mail->Host = $smtpHost;
+        $mail->Host = $_ENV['SMTP_HOST'];
         $mail->SMTPAuth = true;
-        $mail->Username =$smtpUser;
-        $mail->Password = $smtpPwd;
-        $mail->SMTPSecure =$smtpSecure;
-        $mail->Port = $smtpPort;
+        $mail->Username = $_ENV['SMTP_USER'];
+        $mail->Password = $_ENV['SMTP_PWD'];
+        $mail->SMTPSecure = $_ENV['SMTP_SECURE'];
+        $mail->Port = $_ENV['SMTP_PORT'];
 
         $mail->setFrom('noreply@wellnesscommunityacademy.com', 'Wellness Community Academy');
         $mail->addAddress($adminMail);
@@ -110,10 +100,52 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
         $mail->Body = "
             <!DOCTYPE html>
             <html lang='en'>
-            <head>
-                <meta charset='UTF-8'>
-                <style>/* Your CSS styling here */</style>
-            </head>
+                <head>
+                    <meta charset='UTF-8'>
+                    <style>
+                        body {
+                        font-family: Arial, sans-serif;
+                        background-color: #f4f4f9;
+                        margin: 0;
+                        padding: 0;
+                        }
+                        .container {
+                            background-color: #fff;
+                            max-width: 600px;
+                            margin: 20px auto;
+                            padding: 20px;
+                            border-radius: 8px;
+                            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                        }
+                        h1 {
+                            font-size: 24px;
+                            color: #333;
+                            border-bottom: 2px solid #007bff;
+                            padding-bottom: 10px;
+                        }
+                        p {
+                            font-size: 16px;
+                            color: #555;
+                            margin: 10px 0;
+                        }
+                        .content {
+                            margin-top: 20px;
+                            padding: 15px;
+                            background-color: #f9f9f9;
+                            border-radius: 6px;
+                            border: 1px solid #ddd;
+                        }
+                        .content p {
+                            margin: 8px 0;
+                        }
+                        .footer {
+                            margin-top: 20px;
+                            text-align: center;
+                            font-size: 14px;
+                            color: #999;
+                        }
+                    </style>
+                </head>
             <body>
                 <div class='container'>
                     <h1>PROGRAM PURCHASE</h1>
@@ -124,11 +156,53 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
                         <p><b>Program Purchased:</b> $prog</p>
                         <p><b>Amount Paid:</b>GHC $amount</p>
                     </div>
+                    <div class='footer'>
+                        <p>This is an automated notification from the Wellness Community Academy system.</p>
+                    </div>
+
                 </div>
             </body>
             </html>";
 
         if ($mail->send()) {
+            // Customer Thank-You Email
+            $mail->clearAddresses();
+            $mail->clearBCCs();
+            $mail->addAddress($email);
+            $mail->addBCC($_ENV['BCC_EMAIL']);
+            
+            // Attach the book file if it exists
+            // if ($bookpath && file_exists($bookpath)) {
+            //     $mail->addAttachment($bookpath, basename($bookpath));
+            // }
+            
+            $mail->Subject = 'Thank You for Your Purchase!';
+            $mail->Body = "
+                <!DOCTYPE html>
+                <html lang='en'>
+                <head>
+                    <meta charset='UTF-8'>
+                    <style>
+                        body { font-family: Arial, sans-serif; line-height: 1.6; }
+                        .container { padding: 20px; }
+                        h1 { color: #007bff; }
+                        p { font-size: 1rem; }
+                    </style>
+                </head>
+                <body>
+                    <div class='container'>
+                        <h1>Thank You for Your Purchase!</h1>
+                        <p>Dear $email,</p>
+                        <p>Thank you for purchasing <b>$prog</b> from Wellness Community Academy.</p>
+                        <p>Your payment of GHC $amount has been successfully processed. The book is attached to this email for your convenience.</p>
+                        <p>If you have any questions or need support, feel free to contact us.</p>
+                        <p>Best regards,<br><b>Wellness Community Academy Team</b></p>
+                    </div>
+                </body>
+                </html>";
+            $mail->send(); // Send customer email
+
+                            
             $stmt = $mysqli->prepare("INSERT INTO sold_programs (program, email, amount, reference) VALUES (?, ?, ?, ?)");
             $status = 'success';
             $stmt->bind_param("ssis", $prog, $email, $amount, $reference);
@@ -152,7 +226,6 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
             
             $typeof_purchase = "L1 Purchase";
             $sqlL1Affiliate = "SELECT affiliate_referrer_id FROM customers WHERE id = ?";
-            echo "making purchase:", $_SESSION['customer_id'], $_SESSION['customer_name'];
             $stmtL1 = $mysqli->prepare($sqlL1Affiliate);
             $stmtL1->bind_param("i", $_SESSION['customer_id']);
             $stmtL1->execute();
@@ -190,7 +263,6 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
                 }
             }
             
-    
             echo "<script>
                 Swal.fire({
                     icon: 'success',
@@ -201,7 +273,6 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
                     window.location.href = 'https://wellnesscommunityacademy.com/programs';
                 });
             </script>";
-    
         } else {
             // Display failure alert with SweetAlert and redirect
             echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
@@ -232,5 +303,5 @@ if ($responseData['status'] && $responseData['data']['status'] === 'success') {
         });
     </script>";
 }
-mysqli_close($mysqli);
+$mysqli->close();
 ?>
