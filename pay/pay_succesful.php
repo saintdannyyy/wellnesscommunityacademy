@@ -4,14 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Payment Status</title>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- SweetAlert2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 </head>
 </head>
 <body>
 
 </body>
 </html>
-
 <?php
     session_start();
 
@@ -36,16 +39,24 @@
     require '../PHPMailer-master/src/PHPMailer.php';
     require '../PHPMailer-master/src/SMTP.php';
 
-    $secretKey = ($_ENV['APP_ENV'] === 'prod')
-        ? $_ENV['PAYSTACK_SECRET_KEY_LIVE']
-        : $_ENV['PAYSTACK_SECRET_KEY_TEST'];
-
-    // Example usage
-    // echo "Using Paystack secret Key: " . $secretKey;
-
+    $secretKey = ($_ENV['APP_ENV'] === 'prod') ? $_ENV['PAYSTACK_SECRET_KEY_LIVE'] : $_ENV['PAYSTACK_SECRET_KEY_TEST'];
 
     // Get reference from query string
     $reference = $_GET['reference'];
+    if (!isset($_GET['reference'])) {
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Missing Reference',
+                text: 'Invalid transaction. Please try again.',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.href = 'https://wellnesscommunityacademy.com/books';
+            });
+        </script>";
+        exit;
+    }
+
 
     // Initialize cURL
     $ch = curl_init();
@@ -71,7 +82,6 @@
         $bookId = $responseData['data']['metadata']['custom_fields'][1]['value'];
         $bookName = $responseData['data']['metadata']['custom_fields'][2]['value'];
         $bookpath = $responseData['data']['metadata']['custom_fields'][3]['value'];
-        // echo $bookpath;
         $isAffiliate=0;
 
         // Checking if user already exists
@@ -82,12 +92,15 @@
         $userExist = $stmt->get_result();
         $stmt->close();
         if ($userExist->num_rows == 0) {
-            $referralCodeFromUrl = isset($_COOKIE['referralCode']) ? $_COOKIE['referralCode'] : null;
-            $sqlAddCus = "INSERT INTO customers (name, email, phone, affiliate, affiliate_referrer_id) VALUES (?, ?, ?, ?, ?)";
+            $referralCodeFromUrl = isset($_COOKIE['referralCode']) ? filter_var($_COOKIE['referralCode'], FILTER_SANITIZE_NUMBER_INT) : null;
+            $sqlAddCus = "INSERT INTO customers (email, phone, affiliate, affiliate_referrer_id) VALUES (?, ?, ?, ?)";
             $stmtAddCus = $mysqli->prepare($sqlAddCus);
-            $stmtAddCus->bind_param("sssii", $name, $email, $phone, $isAffiliate, $referralCodeFromUrl);
+            $stmtAddCus->bind_param("ssii", $email, $phone, $isAffiliate, $referralCodeFromUrl);
             $stmtAddCus->execute();
             $stmtAddCus->close();
+
+            $customerId = $stmtAddCus->insert_id;
+            $_SESSION['customer_id'] = $customerId;
         }
                 
         $mail = new PHPMailer(true);
@@ -210,10 +223,18 @@
                     </html>";
                 $mail->send(); // Send customer email
 
-                $stmt = $mysqli->prepare("INSERT INTO Transactions (reference, email, book_id, amount, status) VALUES (?, ?, ?, ?, ?)");
+                 $stmt = $mysqli->prepare("INSERT INTO transactions (reference, email, book_id, amount, status) VALUES (?, ?, ?, ?, ?)");
+                if (!$stmt) {
+                    error_log("Prepare failed: " . $mysqli->error);
+                    throw new Exception("Database query failed.");
+                }
                 $status = 'success';
                 $stmt->bind_param("ssids", $reference, $email, $bookId, $amount, $status);
                 $stmt->execute();
+                if ($stmt->error) {
+                    error_log("Execute failed: " . $stmt->error);
+                    throw new Exception("Database query failed.");
+                }
                 $stmt->close();
 
                 function addAffiliateEarnings($mysqli, $affiliate_id, $commission, $bookId, $bookName, $typeof_purchase) {
@@ -224,7 +245,13 @@
                         }
                         $stmt->bind_param("idiss", $affiliate_id, $commission, $bookId, $bookName, $typeof_purchase);
                         $stmt->execute();
+                        if (!$stmt) {
+                            error_log("SQL Error: " . $mysqli->error);
+                            throw new Exception("Database query failed.");
+                        }
                         $stmt->close();
+                        
+                        
                     } catch (Exception $e) {
                         // Handle errors (log or display)
                         error_log("Affiliate Earnings Error: " . $e->getMessage());
@@ -233,7 +260,6 @@
                 
                 $typeof_purchase = "L1 Purchase";
                 $sqlL1Affiliate = "SELECT affiliate_referrer_id FROM customers WHERE id = ?";
-                // echo "making purchase:", $_SESSION['customer_id'], $_SESSION['customer_name'];
                 $stmtL1 = $mysqli->prepare($sqlL1Affiliate);
                 $stmtL1->bind_param("i", $_SESSION['customer_id']);
                 $stmtL1->execute();
