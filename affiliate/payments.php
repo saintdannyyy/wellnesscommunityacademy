@@ -72,7 +72,6 @@ foreach ($result as $row) {
                         <tr>
                             <th>#</th>
                             <th>Product</th>
-                            <th>Amount (GHS)</th>
                             <th>Earnings (GHS)</th>
                             <th>Status</th>
                             <th>Date</th>
@@ -98,7 +97,6 @@ foreach ($result as $row) {
                                 <td>{$counter}</td>
                                 <td>{$row['product_name']}</td>
                                 <td>" . number_format($row['amount'], 2) . "</td>
-                                <td>" . number_format($earnings, 2) . "</td>
                                 <td>" . ucfirst($row['status']) . "</td>
                                 <td>{$formattedDate}</td>
                                 <td>";

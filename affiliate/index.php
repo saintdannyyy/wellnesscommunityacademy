@@ -2,6 +2,8 @@
 session_start();
 require_once __DIR__ . '../../config/loadENV.php';
 include('../conn/conn.php');
+require_once 'aff_api/urlShortener.php';
+$apiKey = $_ENV['TINY_KEY']; 
 
 // Environment settings
 if ($_ENV['APP_ENV'] === 'dev') {
@@ -25,8 +27,11 @@ function encodeReferralId($affiliateId)
     return base64_encode(openssl_encrypt($affiliateId, 'aes-256-cbc', $key, 0, substr($key, 0, 16)));
 }
 $encodedReferral = encodeReferralId($affiliateId);
-$affiliateRef = "https://wellnesscommunityacademy.com/affiliate/auth/register.php?rf=" . urlencode($encodedReferral);
-$cusRef = "https://wellnesscommunityacademy.com?rf=" . urlencode($encodedReferral);
+$affiliateRef1 = "https://wellnesscommunityacademy.com/affiliate/auth/register.php?rf=" . urlencode($encodedReferral);
+$cusRe1 = "https://wellnesscommunityacademy.com?rf=" . urlencode($encodedReferral);
+
+$affiliateRef = shortenUrl($affiliateRef1 , $apiKey);
+$cusRef = shortenUrl($cusRe1, $apiKey);
 
 //Inserting referral links into database
 $sqlAddLinks = "UPDATE affiliates SET cus_ref = ?, affiliate_ref = ? WHERE id = ?";
