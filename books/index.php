@@ -628,13 +628,13 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                         <h2>Book a Virtual Meeting</h2>
                                         <form id="visitForm" onsubmit="payWithPaystack(event)">
                                             <label for="name">Name:</label>
-                                            <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($_SESSION['customer_name']) ?>" required>
+                                            <input type="text" id="name" name="name" required>
 
                                             <label for="email">Email:</label>
-                                            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($_SESSION['customer_email']) ?>" required>
+                                            <input type="email" id="email" name="email" required>
 
                                             <label for="number">Phone Number:</label>
-                                            <input type="number" id="number" name="number" value="<?php echo htmlspecialchars($_SESSION['customer_phone']) ?>" required>
+                                            <input type="number" id="number" name="number" required>
 
                                             <label for="visitDateTime">Preferred Date and Time:</label>
                                             <input type="datetime-local" id="visitDateTime" name="visitDateTime"
@@ -1659,10 +1659,10 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="row" id="accordion-hNUQVoeruR"
+                    <div class="row" id="accordion-hNUQVoeruR"
                         style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-width: 0px; border-style: none; margin-top: 0px; margin-bottom: 80px; background-image: none;"
-                        data-component="grid"> -->
-                    <!-- <div class="col-md-4">
+                        data-component="grid">
+                    <div class="col-md-4">
                             <div class="js_kartra_component_holder">
                                 <div href="javascript: void(0);" data-component="image" id="esS6uTmRrP">
                                     <picture>
@@ -1680,14 +1680,14 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                     </picture>
                                 </div>
                             </div>
-                        </div> -->
-                    <!-- <div class="col-md-8">
-                            <div class="js_kartra_component_holder"> -->
-                    <!-- <div class="kartra_headline_block__index js_kartra_component_holder">
+                        </div>
+                    <div class="col-md-8">
+                            <div class="js_kartra_component_holder">
+                    <div class="kartra_headline_block__index js_kartra_component_holder">
                                     <div class="row row--equal" id="zcwnT"
                                         style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-width: 0px; border-style: none; margin-top: 0px; margin-bottom: 20px; background-image: none;"
-                                        data-component="grid"> -->
-                    <!-- <div class="col-xs-2 col-md-1 column--vertical-center">
+                                        data-component="grid">
+                    <div class="col-xs-2 col-md-1 column--vertical-center">
                                             <div class="js_kartra_component_holder">
                                                 <div id="dJ6xv" data-component="headline">
                                                     <div class="kartra_headline kartra_headline--h3 kartra_headline--white kartra_headline--lato-font kartra_headline--font-weight-bold kartra_headline--vertical-center kartra_headline--size-extra-small kartra_headline--xs-size-tiny kartra_headline--margin-bottom-none"
@@ -1700,8 +1700,8 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div> -->
-                    <!-- <div class="col-xs-7 col-md-8 column--vertical-center"
+                                        </div>
+                    <div class="col-xs-7 col-md-8 column--vertical-center"
                                             style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-width: 0px; border-style: none; padding: 0px 15px 0px 25px; background-image: none;">
                                             <div class="js_kartra_component_holder">
                                                 <div id="accordion-1IF2TRY3F3" data-component="headline">
@@ -1713,29 +1713,29 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div> -->
-                    <!-- <div class="col-xs-3 col-md-3 column--vertical-center"
+                                        </div>
+                    <div class="col-xs-3 col-md-3 column--vertical-center"
                                             style="background-color: rgba(0, 0, 0, 0);border-radius: 0px;border-width: 0px;border-style: none;padding: 0px 15px 0px 25px;background-image: none;">
-                                            <div class="js_kartra_component_holder"> -->
-                    <!--<div id="50LPAYMYF6" data-component="button"><a-->
-                    <!--        class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-right toggle_product default_checkout"-->
-                    <!--        style="background-color: rgb(49, 85, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 400; padding: 8px 12px; font-family: Lato;"-->
-                    <!--        href="https://app.kartra.com/redirect_to/?asset=checkout&amp;id=b596454b8c65d11b46e3b64532b20e58"-->
-                    <!--        data-frame-id="_jdqqkwtyf" data-kt-layout="0"-->
-                    <!--        data-kt-type="checkout" data-kt-owner="DpwDQa6g"-->
-                    <!--        data-kt-value="b596454b8c65d11b46e3b64532b20e58"-->
-                    <!--        data-funnel-id="228785" data-product-id="228785"-->
-                    <!--        data-price-point="b596454b8c65d11b46e3b64532b20e58"-->
-                    <!--        data-asset-id="3" target="_parent">LEARN MORE </a></div>-->
-                    <!-- </div>
-                                        </div> -->
-                    <!-- </div>
-                                </div> -->
-                    <!-- <div id="accordion-N1LJq53bEO" data-component="divider">
+                                            <div class="js_kartra_component_holder">
+                    <div id="50LPAYMYF6" data-component="button"><a
+                           class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-right toggle_product default_checkout"
+                           style="background-color: rgb(49, 85, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 400; padding: 8px 12px; font-family: Lato;"
+                           href="https://app.kartra.com/redirect_to/?asset=checkout&amp;id=b596454b8c65d11b46e3b64532b20e58"
+                           data-frame-id="_jdqqkwtyf" data-kt-layout="0"
+                           data-kt-type="checkout" data-kt-owner="DpwDQa6g"
+                           data-kt-value="b596454b8c65d11b46e3b64532b20e58"
+                           data-funnel-id="228785" data-product-id="228785"
+                           data-price-point="b596454b8c65d11b46e3b64532b20e58"
+                           data-asset-id="3" target="_parent">LEARN MORE </a></div>
+                    </div>
+                                        </div>
+                    </div>
+                                </div>
+                    <div id="accordion-N1LJq53bEO" data-component="divider">
                                     <hr class="kartra_divider kartra_divider--border-tiny kartra_divider--border-full-light-grey kartra_divider--full"
                                         style="margin: 0px auto; width: 100%; border-top: 1px solid rgb(204, 204, 204); border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-right-color: rgb(204, 204, 204); border-bottom-color: rgb(204, 204, 204); border-left-color: rgb(204, 204, 204);">
-                                </div> -->
-                    <!-- <div data-component="text">
+                                </div>
+                    <div data-component="text">
                                     <div class="kartra_text kartra_text--text-left kartra_text--sm-text-center kartra_text--light-grey"
                                         style="position: relative;">
                                         <h1>This is a set of eight physical bible study guides which emphasize God’s
@@ -1753,8 +1753,8 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                         </ol>
                                         <p> </p>
                                     </div>
-                                </div> -->
-                    <!-- <div id="80wDsbD9Af" data-component="button">
+                                </div>
+                    <div id="80wDsbD9Af" data-component="button">
                                     <a
                                         class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-left toggle_pagelink"
                                         style="background-color: rgb(243, 113, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 700; padding: 8px 12px; font-family: Lato;"
@@ -1765,14 +1765,14 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                             style="color: rgb(255, 255, 255); border-color: rgb(255, 255, 255); font-weight: 700;"></span>
                                         GET YOUR COPY
                                     </a>
-                                </div> -->
-                    <!-- <div id="Vi75H0mwXX" data-component="divider">
+                                </div>
+                    <div id="Vi75H0mwXX" data-component="divider">
                                     <hr class="kartra_divider kartra_divider--border-tiny kartra_divider--border-full-light-grey kartra_divider--full"
                                         style="margin: 0px auto;width: 100%;border-top: 1px solid rgb(204, 204, 204);border-right-style: solid;border-bottom-style: solid;border-left-style: solid;border-right-color: rgb(204, 204, 204);border-bottom-color: rgb(204, 204, 204);border-left-color: rgb(204, 204, 204);padding-bottom: 10px;">
-                                </div> -->
-                    <!-- </div>
-                        </div> -->
-                    <!-- </div> -->
+                                </div>
+                    </div>
+                        </div>
+                    </div>
                     <div class="row" id="accordion-hNUQVoeruR"
                         style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-width: 0px; border-style: none; margin-top: 0px; margin-bottom: 80px; background-image: none;"
                         data-component="grid">
