@@ -5,7 +5,7 @@ include('../../conn/conn.php');
 // Check if request method is POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Sanitize and validate input
-    $username = filter_var(trim($_POST['username']), FILTER_SANITIZE_STRING);
+    $username = filter_var(trim($_POST['username']));
     $password = trim($_POST['password']);
 
     // Prepare SQL statement to prevent SQL injection
