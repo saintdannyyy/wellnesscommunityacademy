@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         Swal.fire({
                             icon: 'error',
                             title: 'Sign-In Failed',
-                            text: 'You must be a registered customer and an affiliate to log in.',
+                            text: 'You must be a registered affiliate to log in.',
                             timer: 2000, // 2-second timeout
                             timerProgressBar: true
                         });
