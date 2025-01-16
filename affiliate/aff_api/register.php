@@ -85,7 +85,7 @@ try {
         echo "<script> console.log('User registered successfully.'); </script>";
         $stmt->close();
         $customerId = $mysqli->insert_id;
-        echo "<script> console.log('Customer ID: $customerId'); </script>";
+        // echo "<script> console.log('Customer ID: $customerId'); </script>";
 
         // Add affiliate record
         if ($isAffiliate === 1) {
