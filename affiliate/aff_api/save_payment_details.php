@@ -8,22 +8,14 @@ $response = [
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $input = file_get_contents('php://input');
-    $data = json_decode($input, true);
-
-    if (!isset($_SESSION['affiliate_id'])) {
-        echo json_encode(['status' => 'error', 'message' => 'Unauthorized access.']);
-        exit;
-    }
-
-    $affiliate_id = $_SESSION['affiliate_id'];
-    $service_provider = $data['service_provider'] ?? null;
-    $phone_number = $data['phone_number'] ?? null;
-    $account_holder = $data['accountHolder'] ?? null;
-
-    if ($account_holder && $phone_number && $service_provider) {
+    $affiliate_id = $_POST['affiliate_id'];
+    $service_provider = $_POST['service_provider'];
+    $phone_number = $_POST['phone_number'];
+    $accountHolder = $_POST['accountHolder'];
+    
+    if ($accountHolder && $phone_number && $service_provider) {
         $stmt = $mysqli->prepare("UPDATE affiliates SET account_name = ?, phone_number = ?, service_provider = ? WHERE id = ?");
-        $stmt->bind_param('sisi', $account_holder, $phone_number, $service_provider, $affiliate_id);
+        $stmt->bind_param('sisi', $accountHolder, $phone_number, $service_provider, $affiliate_id);
 
         if ($stmt->execute()) {
             $response['status'] = 'success';
@@ -31,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $response['message'] = 'Failed to save payment details. Please try again.';
             $response['debug'] = [
-                'account_name' => $account_holder,
+                'account_name' => $accountHolder,
                 'phone_number' => $phone_number,
                 'service_provider' => $service_provider,
                 'affiliate_id' => $affiliate_id,
@@ -42,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $response['message'] = 'All fields are required.';
         $response['details'] = [
-            'account_holder' => $account_holder,
+            'accountHolder' => $accountHolder,
             'phone_number' => $phone_number,
             'service_provider' => $service_provider,
             'affiliate_id' => $affiliate_id
