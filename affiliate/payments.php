@@ -1,5 +1,17 @@
 <?php
 session_start();
+
+require_once __DIR__ . '/../config/loadENV.php';
+if ($_ENV['APP_ENV'] === 'dev') {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+    $adminMail = $_ENV['ADMIN_dev_EMAIL'];
+} else {
+    ini_set('display_errors', 0);
+    ini_set('display_startup_errors', 0);
+    $adminMail = $_ENV['ADMIN_EMAIL'];
+}
 require('../conn/conn.php');
 
 // Ensure the affiliate ID is available
@@ -44,14 +56,36 @@ foreach ($result as $row) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css">
-    <!-- jQuery (must come before DataTables) -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js" 
-        integrity="sha384-UG8ao2jwOWB7/oDdObZc6ItJmwUkR/PfMyt9Qs5AwX7PsnYn1CRKCTWyncPTWvaS" 
-        crossorigin="anonymous"></script>
+    <!-- jQuery (MUST be loaded first) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
     <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+
+    <!-- DataTables CSS (optional, for styling) -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+
+    <script>
+        $(document).ready(function() {
+                $('#paymentsTable').DataTable({
+                    "order": [
+                        [4, "desc"]
+                    ], // Order by Date column (descending)
+                    "pageLength": 10,
+                    "lengthMenu": [5, 10, 25, 50],
+                    "responsive": true,
+                    "language": {
+                        "search": "Search:",
+                        "lengthMenu": "Show _MENU_ entries",
+                        "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+                        "paginate": {
+                            "previous": "Previous",
+                            "next": "Next"
+                        }
+                    }
+                });
+            });
+    </script>
 </head>
 
 
@@ -127,31 +161,15 @@ foreach ($result as $row) {
 
                 <!-- Payout Button -->
                 <button class="btn btn-primary mt-3" id="payout-btn">Request Payout</button>
+                </div>
             </div>
         </div>
 
         <script>
-            $(document).ready(function() {
-                $('#paymentsTable').DataTable({
-                    "order": [
-                        [4, "desc"]
-                    ], // Order by Date column (descending)
-                    "pageLength": 10,
-                    "lengthMenu": [5, 10, 25, 50],
-                    "responsive": true,
-                    "language": {
-                        "search": "Search:",
-                        "lengthMenu": "Show _MENU_ entries",
-                        "info": "Showing _START_ to _END_ of _TOTAL_ entries",
-                        "paginate": {
-                            "previous": "Previous",
-                            "next": "Next"
-                        }
-                    }
-                });
-
                 // Payout Logic
-                $('#payout-btn').on('click', function() {
+                $('#payout-btn').click(function() {
+                    const paymentId = $(this).data('id');
+                    console.log("Payout commenced!!");
                     let service_provider;
                     let phone_number;
                     let accountHolder;
@@ -161,8 +179,8 @@ foreach ($result as $row) {
                         method: 'POST',
                         success: function(response) {
                             const data = JSON.parse(response);
-                            console.log(data);
-                            console.log(response);
+                            // console.log(data);
+                            // console.log(response);
                             if (data.status === 'exists') {
                                 Swal.fire({
                                     title: 'Confirm Payout',
@@ -289,7 +307,7 @@ foreach ($result as $row) {
                         }
                     });
                 });
-            });
+            // });
         </script>
 </body>
 
