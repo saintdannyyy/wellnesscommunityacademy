@@ -992,8 +992,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                             science, people are still developing chronic diseases and dying at an
                                             alarming rate. This has propelled her to offer a better alternative, one
                                             that will attack the root causes of diseases, build stronger immune systems,
-                                            and promote good health and longevity. <strong><em>(Available in hardcover,
-                                                    paperback, and eBook)</em></strong></p>
+                                            and promote good health and longevity.</p>
                                     </div>
                                 </div>
                                 <div id="iEWaRVp6DQ" data-component="button">
@@ -1096,8 +1095,8 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                             <label for="currency" style="align-self: flex-start; font-size: 14px; margin-bottom: 5px; color: #333;">Currency:</label>
                                             <select id="currency" name="currency" required style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
                                                 <option value="GHS">GHS Cedis</option>
-                                                <option value="USD">USD Dollars</option>
-                                                <option value="NGN">NGN Naira</option>
+                                                <option value="USD" disabled>USD Dollars</option>
+                                                <option value="NGN" disabled>NGN Naira</option>
                                             </select>
                                             <button type="submit" id="paymentproceed" style="padding: 10px 20px; background-color: #f37121; color: #fff; border: none; border-radius: 4px; font-size: 18px; cursor: pointer; font-weight: bold;">Proceed to Payment</button>
                                             <script>
@@ -1275,7 +1274,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                 <div data-component="text" id="ue8xu86KGT">
                                     <div class="kartra_text kartra_text--text-left kartra_text--sm-text-center kartra_text--light-grey"
                                         style="position: relative;">
-                                        <p style="text-align: justify;"><strong>This book can save your
+                                        <p style="text-align: justify;"><strong>This ebook can save your
                                                 life!</strong> It is the Ultimate Prescription and Practical Solution
                                             for Living Disease-free. Dr. Dona Cooper-Dockery reveals the 9 secret
                                             pillars of health to live a longer, stronger, and energetic life. You will
@@ -1283,10 +1282,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                             them from your doctor but they are the cornerstone secrets to vibrant well
                                             being, longevity, and disease prevention. This unique program has
                                             revolutionized the health of Dr. Cooper’s patients, many of whom are now
-                                            disease-free. Others are enjoying better health on fewer medications. <a
-                                                href="https://www.amazon.com/Sea-Saludable-Por-Vida-Secretos/dp/0997337915/ref=tmm_pap_swatch_0?_encoding=UTF8&amp;qid=&amp;sr="
-                                                target="_blank" data-frame-id="_jdqqkwtyf"><em><strong>(Also available
-                                                        in Spanish)</strong></em></a></p>
+                                            disease-free. Others are enjoying better health on fewer medications.</p>
                                     </div>
                                 </div>
                                 <div id="ZGYUfrttFC" data-component="button">
@@ -1516,7 +1512,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                             hundred delicious, healthy recipes.</p>
                                     </div>
                                 </div>
-                                <div id="xVqPUWaGED" data-component="button">
+                                <!-- <div id="xVqPUWaGED" data-component="button">
                                     <a
                                         class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-left toggle_pagelink"
                                         style="background-color: rgb(243, 113, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 700; padding: 8px 12px; font-family: Lato;"
@@ -1527,7 +1523,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                             style="color: rgb(255, 255, 255); border-color: rgb(255, 255, 255); font-weight: 700;"></span>
                                         GET YOUR COPY
                                     </a>
-                                </div>
+                                </div> -->
                                 <div id="Vi75H0mwXX" data-component="divider">
                                     <hr class="kartra_divider kartra_divider--border-tiny kartra_divider--border-full-light-grey kartra_divider--full"
                                         style="margin: 0px auto;width: 100%;border-top: 1px solid rgb(204, 204, 204);border-right-style: solid;border-bottom-style: solid;border-left-style: solid;border-right-color: rgb(204, 204, 204);border-bottom-color: rgb(204, 204, 204);border-left-color: rgb(204, 204, 204);padding-bottom: 10px;">
@@ -1659,7 +1655,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                             </div>
                         </div>
                     </div>
-                    <div class="row" id="accordion-hNUQVoeruR"
+                    <!-- <div class="row" id="accordion-hNUQVoeruR"
                         style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-width: 0px; border-style: none; margin-top: 0px; margin-bottom: 80px; background-image: none;"
                         data-component="grid">
                     <div class="col-md-4">
@@ -1772,7 +1768,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                 </div>
                     </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row" id="accordion-hNUQVoeruR"
                         style="background-color: rgba(0, 0, 0, 0); border-radius: 0px; border-width: 0px; border-style: none; margin-top: 0px; margin-bottom: 80px; background-image: none;"
                         data-component="grid">
@@ -2527,7 +2523,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                         <p> </p>
                                     </div>
                                 </div>
-                                <div id="SyiOPIV3DN" data-component="button">
+                                <!-- <div id="SyiOPIV3DN" data-component="button">
                                     <a
                                         class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-left toggle_pagelink"
                                         style="background-color: rgb(243, 113, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 700; padding: 8px 12px; font-family: Lato;"
@@ -2538,7 +2534,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                             style="color: rgb(255, 255, 255); border-color: rgb(255, 255, 255); font-weight: 700;"></span>
                                         GET YOUR COPY
                                     </a>
-                                </div>
+                                </div> -->
                                 <div id="Vi75H0mwXX" data-component="divider">
                                     <hr class="kartra_divider kartra_divider--border-tiny kartra_divider--border-full-light-grey kartra_divider--full"
                                         style="margin: 0px auto;width: 100%;border-top: 1px solid rgb(204, 204, 204);border-right-style: solid;border-bottom-style: solid;border-left-style: solid;border-right-color: rgb(204, 204, 204);border-bottom-color: rgb(204, 204, 204);border-left-color: rgb(204, 204, 204);padding-bottom: 10px;">
@@ -2633,7 +2629,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                         </p>
                                     </div>
                                 </div>
-                                <div id="BpDSstJHng" data-component="button">
+                                <!-- <div id="BpDSstJHng" data-component="button">
                                     <a
                                         class="kartra_button1 kartra_button1--default kartra_button1--box-shadow-inset-bottom kartra_button1--solid kartra_button1--small kartra_button1--squared pull-left toggle_pagelink"
                                         style="background-color: rgb(243, 113, 33); color: rgb(255, 255, 255); margin: 0px; font-weight: 700; padding: 8px 12px; font-family: Lato;"
@@ -2644,7 +2640,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                             style="color: rgb(255, 255, 255); border-color: rgb(255, 255, 255); font-weight: 700;"></span>
                                         GET YOUR COPY
                                     </a>
-                                </div>
+                                </div> -->
                                 <div id="Vi75H0mwXX" data-component="divider">
                                     <hr class="kartra_divider kartra_divider--border-tiny kartra_divider--border-full-light-grey kartra_divider--full"
                                         style="margin: 0px auto;width: 100%;border-top: 1px solid rgb(204, 204, 204);border-right-style: solid;border-bottom-style: solid;border-left-style: solid;border-right-color: rgb(204, 204, 204);border-bottom-color: rgb(204, 204, 204);border-left-color: rgb(204, 204, 204);padding-bottom: 10px;">

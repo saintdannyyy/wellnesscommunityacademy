@@ -8,28 +8,35 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-    
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- SweetAlert2 CSS -->
+    <!-- <link rel="stylesheet" href="../assets/sweetalert2/package/dist/sweetalert2.min.css"> -->
     <style>
         .main {
             border-top: 5px solid #007bff;
         }
 
         .modal-backdrop {
-            z-index: 1040 !important; /* Ensure backdrop doesn't block modal */
+            z-index: 1040 !important;
+            /* Ensure backdrop doesn't block modal */
         }
 
         .modal {
-            z-index: 1050 !important; /* Ensure modal is above the backdrop */
+            z-index: 1050 !important;
+            /* Ensure modal is above the backdrop */
         }
 
         body.modal-open {
-            overflow: hidden; /* Prevent background scrolling when modal is open */
+            overflow: hidden;
+            /* Prevent background scrolling when modal is open */
         }
     </style>
 </head>
@@ -48,6 +55,7 @@
                 <table id="affiliateTable" class="table table-bordered table-hover table-responsive w-100 d-block d-md-table">
                     <thead>
                         <tr>
+                            <th>No.</th>
                             <th>Customer Name</th>
                             <th>Referrer</th>
                             <th>Status</th>
@@ -102,46 +110,66 @@
         </div>
     </div>
 
-     <!-- jQuery -->
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <!-- SweetAlert2 JS -->
+    <!-- <script src="../assets/sweetalert2/package/dist/sweetalert2.all.min.js"></script> -->
+    <!-- SweetAlert2 CSS -->
+    <!-- <link rel="stylesheet" href="../assets/sweetalert2/package/dist/sweetalert2.min.css"> -->
 
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             let cus_ref, affiliate_ref;
             // Initialize DataTable
             const table = $('#affiliateTable').DataTable({
                 ajax: 'api/fetch_affiliates.php',
                 columns: [
-                    { data: 'customer_name' },
-                    { data: 'referrer_name' },
                     {
-                        data: function (row) {
+                        data: null,
+                        render: function(data, type, row, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        data: 'customer_name'
+                    },
+                    {
+                        data: 'referrer_name'
+                    },
+                    {
+                        data: function(row) {
                             return row.status == 1 ? "Active" : "Inactive";
                         }
                     },
                     {
                         data: 'created_at',
-                        render: function (data, type, row) {
+                        render: function(data, type, row) {
                             const date = new Date(data);
-                            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+                            const options = {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric'
+                            };
                             return date.toLocaleDateString('en-GB', options);
                         }
                     },
                     {
                         data: null,
-                        render: function (data, type, row) {
+                        render: function(data, type, row) {
                             return `
-                                <button class="btn btn-sm btn-primary activate-btn" data-id="${row.id}" title="Activate">
-                                    <i class="bi bi-check-circle"></i>
-                                </button>
-                                <button class="btn btn-sm btn-danger deactivate-btn" data-id="${row.id}" title="Deactivate">
-                                    <i class="bi bi-x-circle"></i>
-                                </button>
+                    ${row.status == 1 ? 
+                        `<button class="btn btn-sm btn-danger deactivate-btn" data-id="${row.id}" title="Deactivate">
+                        <i class="bi bi-x-circle"></i>
+                        </button>` : 
+                        `<button class="btn btn-sm btn-primary activate-btn" data-id="${row.id}" title="Activate">
+                        <i class="bi bi-check-circle"></i>
+                        </button>`
+                    }
                                 <button class="btn btn-sm btn-secondary view-referrals-btn" data-id="${row.id}" title="View Referrals">
                                     <i class="bi bi-eye"></i>
                                 </button>
@@ -155,7 +183,7 @@
             });
 
             // View Links Button Click Handler
-            $('#affiliateTable').on('click', '.view-links-btn', function () {
+            $('#affiliateTable').on('click', '.view-links-btn', function() {
                 const cusRef = $(this).data('cus-ref');
                 const affiliateRef = $(this).data('affiliate-ref');
                 const customerName = $(this).data('customer-name');
@@ -175,35 +203,37 @@
             }
 
             // Copy Customer Referral Link
-            $('#copyCusRefLink').click(function () {
+            $('#copyCusRefLink').click(function() {
                 copyToClipboard('cusRefLink');
                 alert(`${customerName}'s Customer Referral Link copied to clipboard`);
             });
 
             // Copy Affiliate Referral Link
-            $('#copyAffiliateRefLink').click(function () {
+            $('#copyAffiliateRefLink').click(function() {
                 copyToClipboard('affiliateRefLink');
                 alert(`${customerName}'s Affiliate Referral Link copied to clipboard!`);
             });
             // Activate Button Click Handler
-            $('#affiliateTable').on('click', '.activate-btn', function () {
-                const id = $(this).data('id');                
+            $('#affiliateTable').on('click', '.activate-btn', function() {
+                const id = $(this).data('id');
                 updateStatus(id, 1);
             });
 
             // Deactivate Button Click Handler
-            $('#affiliateTable').on('click', '.deactivate-btn', function () {
+            $('#affiliateTable').on('click', '.deactivate-btn', function() {
                 const id = $(this).data('id');
                 updateStatus(id, 0);
             });
 
             // View Referrals Button Click Handler
-            $('#affiliateTable').on('click', '.view-referrals-btn', function () {
+            $('#affiliateTable').on('click', '.view-referrals-btn', function() {
                 const id = $(this).data('id');
 
                 // Fetch referrals for the selected affiliate
-                $.get('api/fetch_referrals.php', { affiliate_id: id })
-                    .done(function (data) {
+                $.get('api/fetch_referrals.php', {
+                        affiliate_id: id
+                    })
+                    .done(function(data) {
                         let referrals;
 
                         // Parse the response
@@ -219,15 +249,18 @@
                         $('#referralTree').html(renderTree(referrals));
                         $('#referralModal').modal('show');
                     })
-                    .fail(function () {
+                    .fail(function() {
                         alert('Failed to fetch referrals. Please try again.');
                     });
             });
 
             // Update Status Function
             function updateStatus(id, status) {
-                $.post('api/update_status.php', { id, status })
-                    .done(function (response) {
+                $.post('api/update_status.php', {
+                        id,
+                        status
+                    })
+                    .done(function(response) {
                         let data;
 
                         // Parse the response
@@ -235,19 +268,35 @@
                             data = typeof response === 'string' ? JSON.parse(response) : response;
                         } catch (error) {
                             console.error('Failed to parse response:', error);
-                            alert('Unexpected server response. Please try again.');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Unexpected server response. Please try again.'
+                            });
                             return;
                         }
 
                         if (data.success) {
-                            alert('Status updated successfully!');
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Status updated successfully!'
+                            });
                             table.ajax.reload(); // Reload DataTable
                         } else {
-                            alert(data.message || 'Failed to update status. Please try again.');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: data.message || 'Failed to update status. Please try again.'
+                            });
                         }
                     })
-                    .fail(function () {
-                        alert('An error occurred while updating the status. Please try again.');
+                    .fail(function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'An error occurred while updating the status. Please try again.'
+                        });
                     });
             }
 
@@ -267,7 +316,7 @@
                 return html;
             }
         });
-</script>
+    </script>
 </body>
 
 </html>
