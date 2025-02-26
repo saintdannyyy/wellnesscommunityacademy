@@ -69,59 +69,63 @@ $response = [
     }
         
     $amount = $total_earnings; // Payout amount
-    $phone ='0' . $affiliate['phone_number'];
-    $provider = strtolower(trim($affiliate['service_provider'])) === 'vodafone' ? 'vodafonecash' : strtolower(trim($affiliate['service_provider']));
+    $phone ='233' . $affiliate['phone_number'];
+    $provider = strtolower(trim($affiliate['service_provider']));
     
     
-    //from paystack
+    // Paystack API URL for creating a transfer recipient
     $url = "https://api.paystack.co/transferrecipient";
-
+    
+    // Prepare the mobile money recipient data
     $mobile_money_data = [
         "type" => "mobile_money",
         "name" => $affiliate['account_name'],
         "phone" => $phone,
         "provider" => $provider,
         "currency" => "GHS",
-    ];
-
+        "metadata" => [
+            "affiliate_id" => $affiliate_id
+        ]
+    ];    
     $mobile_money_data = json_encode($mobile_money_data);
-    // echo $mobile_money_data;
-
-    //open connection
+    echo "<script>console.log($mobile_money_data);</script>";
+    
+    // Initialize cURL
     $ch = curl_init();
-  
-    //set the url, number of POST vars, POST data
-    curl_setopt($ch, CURLOPT_URL, $url . '?' . http_build_query(json_decode($mobile_money_data, true)));
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    
+    // Set cURL options
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $mobile_money_data);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
         "Authorization: Bearer " . $paystack_secret_key,
         "Content-Type: application/json"
-    ));
-  
-    //So that curl_exec returns the contents of the cURL; rather than echoing it
-    curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+    ]);
     
-    //execute post
+    // Execute the request
     $recipient_response = curl_exec($ch);
     curl_close($ch);
     
+    // Decode the response
     $recipient_data = json_decode($recipient_response, true);
+    echo "<script>console.log(" . json_encode($recipient_data) . ");</script>";
     
-    // print_r($recipient_data['data'][0]['recipient_code']);
-
-
     if (!isset($recipient_data['status']) || !$recipient_data['status']) {
         echo json_encode(['status' => 'error', 'message' => 'Failed to create mobile money recipient.', 'data' => $recipient_data]);
         exit();
     }
     
-    $recipient_code = $recipient_data['data'][0]['recipient_code'];
-            
-    // Step 2: Initiate a Transfer
+    // Retrieve recipient code
+    $recipient_code = $recipient_data['data']['recipient_code'];
+    
+    // Step 2: Initiate Transfer (Without OTP Approval)
     $transfer_data = [
         'source' => 'balance',
         'amount' => $amount * 100, // Convert amount to pesewas
         'recipient' => $recipient_code,
         'reason' => 'Affiliate payout',
+        'require_approval' => false, // Disable OTP requirement
     ];
     
     $ch = curl_init('https://api.paystack.co/transfer');
@@ -138,22 +142,19 @@ $response = [
     curl_close($ch);
     
     $transfer_data = json_decode($transfer_response, true);
-    // print_r($transfer_data['data']);
     
     if ($http_code === 200 && isset($transfer_data['data']) && $transfer_data['data']) {
-        if ($transfer_data['data']['status'] === 'otp') {
-            $transfer_code = $transfer_data['data']['transfer_code'];
-    
-            // Store pending transfer in the database
+        if ($transfer_data['data']['status'] === 'success') {
+            // Store successful transfer in the database
             $stmt = $mysqli->prepare("
                 INSERT INTO payouts (affiliate_id, amount, recipient_code, transaction_id, status)
-                VALUES (?, ?, ?, ?, 'pending')
+                VALUES (?, ?, ?, ?, 'completed')
             ");
-            $stmt->bind_param('iiss', $affiliate_id, $amount, $recipient_code, $transfer_code);
+            $stmt->bind_param('iiss', $affiliate_id, $amount, $recipient_code, $transfer_data['data']['transfer_code']);
             $stmt->execute();
             $stmt->close();
     
-            echo json_encode(['status' => 'pending', 'message' => 'Transfer pending OTP finalization.', 'transfer_code' => $transfer_code]);
+            echo json_encode(['status' => 'success', 'message' => 'Transfer successful.', 'data' => $transfer_data]);
             exit();
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Failed to process payout.', 'data' => $transfer_data]);
@@ -163,4 +164,4 @@ $response = [
         echo json_encode(['status' => 'error', 'message' => 'Error processing payout.', 'data' => $transfer_data]);
         exit();
     }
-?>
+?>    
