@@ -1274,7 +1274,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                 <div data-component="text" id="ue8xu86KGT">
                                     <div class="kartra_text kartra_text--text-left kartra_text--sm-text-center kartra_text--light-grey"
                                         style="position: relative;">
-                                        <p style="text-align: justify;"><strong>This book can save your
+                                        <p style="text-align: justify;"><strong>This ebook can save your
                                                 life!</strong> It is the Ultimate Prescription and Practical Solution
                                             for Living Disease-free. Dr. Dona Cooper-Dockery reveals the 9 secret
                                             pillars of health to live a longer, stronger, and energetic life. You will
@@ -1282,10 +1282,7 @@ $paystackPublicKey = ($_ENV['APP_ENV'] === 'prod')
                                             them from your doctor but they are the cornerstone secrets to vibrant well
                                             being, longevity, and disease prevention. This unique program has
                                             revolutionized the health of Dr. Cooper’s patients, many of whom are now
-                                            disease-free. Others are enjoying better health on fewer medications. <a
-                                                href="https://www.amazon.com/Sea-Saludable-Por-Vida-Secretos/dp/0997337915/ref=tmm_pap_swatch_0?_encoding=UTF8&amp;qid=&amp;sr="
-                                                target="_blank" data-frame-id="_jdqqkwtyf"><em><strong>(Also available
-                                                        in Spanish)</strong></em></a></p>
+                                            disease-free. Others are enjoying better health on fewer medications.</p>
                                     </div>
                                 </div>
                                 <div id="ZGYUfrttFC" data-component="button">
