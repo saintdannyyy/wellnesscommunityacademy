@@ -14,7 +14,11 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- SweetAlert2 CSS -->
+    <!-- <link rel="stylesheet" href="../assets/sweetalert2/package/dist/sweetalert2.min.css"> -->
     <style>
         .main {
             border-top: 5px solid #007bff;
@@ -112,6 +116,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <!-- SweetAlert2 JS -->
+    <!-- <script src="../assets/sweetalert2/package/dist/sweetalert2.all.min.js"></script> -->
+    <!-- SweetAlert2 CSS -->
+    <!-- <link rel="stylesheet" href="../assets/sweetalert2/package/dist/sweetalert2.min.css"> -->
 
 
     <script>
@@ -260,19 +268,35 @@
                             data = typeof response === 'string' ? JSON.parse(response) : response;
                         } catch (error) {
                             console.error('Failed to parse response:', error);
-                            alert('Unexpected server response. Please try again.');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Unexpected server response. Please try again.'
+                            });
                             return;
                         }
 
                         if (data.success) {
-                            alert('Status updated successfully!');
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Status updated successfully!'
+                            });
                             table.ajax.reload(); // Reload DataTable
                         } else {
-                            alert(data.message || 'Failed to update status. Please try again.');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: data.message || 'Failed to update status. Please try again.'
+                            });
                         }
                     })
                     .fail(function() {
-                        alert('An error occurred while updating the status. Please try again.');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'An error occurred while updating the status. Please try again.'
+                        });
                     });
             }
 
