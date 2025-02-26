@@ -51,6 +51,7 @@
                 <table id="affiliateTable" class="table table-bordered table-hover table-responsive w-100 d-block d-md-table">
                     <thead>
                         <tr>
+                            <th>No.</th>
                             <th>Customer Name</th>
                             <th>Referrer</th>
                             <th>Status</th>
@@ -119,7 +120,14 @@
             // Initialize DataTable
             const table = $('#affiliateTable').DataTable({
                 ajax: 'api/fetch_affiliates.php',
-                columns: [{
+                columns: [
+                    {
+                        data: null,
+                        render: function(data, type, row, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    {
                         data: 'customer_name'
                     },
                     {
